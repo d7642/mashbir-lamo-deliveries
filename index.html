@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משביר לעמו - ניהול והדפסת שילוט משלוחים</title>
-    <meta name="theme-color" content="#dc2626">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    <title>ניהול והדפסת משלוחים – המשביר לעמו</title>
     
-    <!-- PWA Manifest Link with New Icon -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%20-%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
+    <!-- הגדרות שם האפליקציה למכשירים ניידים -->
+    <meta name="apple-mobile-web-app-title" content="ניהול והדפסת משלוחים – המשביר לעמו">
+    <meta name="application-name" content="ניהול והדפסת משלוחים – המשביר לעמו">
+    <meta name="theme-color" content="#dc2626">
+    
+    <!-- אייקון האפליקציה (התמונה השנייה) -->
+    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    
+    <!-- PWA Manifest Link with App Icon -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%95%D7%94%D7%93%D7%A4%D7%A1%D7%AA%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20%E2%80%93%20%D7%94%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -54,12 +61,12 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <!-- Header with Image Logo & Install Button -->
+    <!-- Header with Print Logo (First Image) & Install Button -->
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-            <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-12 w-12 object-cover bg-white rounded-full p-0.5 shadow-md">
+            <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-12 object-cover bg-white rounded-full p-0.5 shadow-md">
             <div>
-                <h1 class="font-black text-lg">משביר לעמו - ניהול והדפסת שילוט</h1>
+                <h1 class="font-black text-lg">ניהול והדפסת משלוחים – המשביר לעמו</h1>
                 <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה עם קטלוג ענק ומקיף</p>
             </div>
         </div>
@@ -179,7 +186,7 @@
 
         <!-- Live Preview & Print Queue -->
         <div class="lg:col-span-3 space-y-6 flex flex-col">
-            <!-- Live Preview Card with Image Logo -->
+            <!-- Live Preview Card with Print Logo (First Image) -->
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center">
                 <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
                 <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
@@ -190,7 +197,7 @@
                     </div>
 
                     <div class="text-center mt-4">
-                        <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-14 w-14 object-cover mx-auto rounded-full shadow-md">
+                        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-14 w-14 object-cover mx-auto rounded-full shadow-md">
                     </div>
 
                     <div class="space-y-2 my-auto text-right">
@@ -700,7 +707,7 @@
                             </div>
 
                             <div style="text-align: center; margin-top: 14px;">
-                                <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" style="height: 68px; width: 68px; object-fit: cover; margin: 0 auto; border-radius: 50%;">
+                                <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 68px; width: 68px; object-fit: cover; margin: 0 auto; border-radius: 50%;">
                             </div>
                             
                             <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
@@ -778,7 +785,6 @@
                 `;
             }
 
-            printHeader = pagesContent; // fallback variable
             printSection.innerHTML = pagesContent;
             
             setTimeout(() => {
@@ -799,8 +805,8 @@
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
-            constReader = new FileReader();
-            constReader.onload = function(e) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     customers = imported;
@@ -811,7 +817,7 @@
                     alert('קובץ שגוי או פגום.');
                 }
             };
-            constReader.readAsText(file);
+            reader.readAsText(file);
         }
     </script>
 </body>
