@@ -58,7 +58,6 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <!-- Header ראשי אדום -->
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
             <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
@@ -72,13 +71,12 @@
         </button>
     </header>
 
-    <!-- שורת חיווי סניף פעיל מיד מתחת להדר האדום (כפי שביקשת) -->
     <div class="bg-white border-b shadow-sm py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-sm">
             <div class="flex items-center gap-2 font-bold text-gray-800">
                 <span class="text-lg">📍</span>
-                <span>שלום! מחובר אוטומטית לסניף:</span>
-                <span id="top-branch-name" class="text-red-700 font-black text-base">מזהה...</span>
+                <span>שלום סניפי:</span>
+                <span id="top-branch-name" class="text-red-700 font-black text-base">ירושלים 9, בני ברק</span>
             </div>
             <button onclick="openBranchModal()" class="text-xs bg-red-50 text-red-700 border border-red-200 font-bold px-3 py-1.5 rounded-xl hover:bg-red-100 transition">
                 שנה סניף ידנית
@@ -273,7 +271,6 @@
 
     </main>
 
-    <!-- מודל בחירת סניף ידנית -->
     <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
             <h3 class="text-lg font-black text-gray-900">בחירת סניף ידנית</h3>
@@ -307,21 +304,19 @@
         </div>
     </div>
 
-    <!-- פוטר דיסקרטי למטה שכולל גם את האפשרות "זה לא הסניף שלי?" -->
     <footer class="text-center py-4 px-6 text-xs text-gray-500 bg-white border-t mt-auto flex flex-col sm:flex-row justify-between items-center gap-2">
         <div>
             <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
             <p dir="ltr">
-                <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%ל%D7%91%D7%AA%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
+                <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%ל%D7%91%D7%ת%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
             </p>
         </div>
         <div class="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-700 flex items-center gap-2">
-            <span>סניף: <strong id="footer-branch-name" class="text-red-700">מזהה...</strong></span>
+            <span>סניף: <strong id="footer-branch-name" class="text-red-700">ירושלים 9, בני ברק</strong></span>
             <button onclick="openBranchModal()" class="text-blue-600 underline font-bold hover:text-blue-800 ml-1">זה לא הסניף שלי?</button>
         </div>
     </footer>
 
-    <!-- Firebase Scripts and Main Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
         import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -339,7 +334,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // רשימת 9 הסניפים המלאה עם קואורדינטות מדויקות
         const branches = [
             { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק', lat: 32.0833, lng: 34.8333 },
             { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק', lat: 32.0850, lng: 34.8300 },
@@ -352,7 +346,7 @@
             { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד', lat: 32.0520, lng: 34.9530 }
         ];
 
-        let currentBranchId = '';
+        let currentBranchId = 'bnei_brak_jerusalem9';
         let customers = {};
         let printQueueItems = [];
         let selectedProducts = [];
@@ -415,8 +409,7 @@
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = 
                 Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             return R * c;
         }
@@ -431,24 +424,25 @@
                 select.appendChild(opt);
             });
 
-            // עדיפות עליונה לבחירה היدנית הקודמת של המשתמש אם קיימת
+            // בדיקה אם יש בחירה ידנית שמורה קודם לכן
             const savedManualBranch = localStorage.getItem('mashbir_manual_branch');
             if (savedManualBranch && branches.some(b => b.id === savedManualBranch)) {
                 setBranch(savedManualBranch);
                 return;
             }
 
-            // זיהוי אוטומטי במידה ואין בחירה ידנית קודמת
+            // ברירת מחדל ראשונית מיידית כדי שלא יישאר "מזהה..."
+            setBranch('bnei_brak_jerusalem9');
+
+            // נסיון זיהוי GPS ברקע במידה וקיים
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const userLat = position.coords.latitude;
                     const userLng = position.coords.longitude;
                     findClosestBranch(userLat, userLng);
                 }, () => {
-                    setBranch(branches[0].id);
-                }, { timeout: 10000, maximumAge: 60000 });
-            } else {
-                setBranch(branches[0].id);
+                    // אם ה-GPS נכשל או נדחה, נשארים בירושלים 9 כברירת מחדל מושלמת
+                }, { timeout: 7000, maximumAge: 60000 });
             }
         }
 
@@ -462,7 +456,10 @@
                     closest = b;
                 }
             });
-            setBranch(closest.id);
+            // אם המשתמש לא בחר ידנית בעבר, נעדכן לפי ה-GPS הקרוב ביותר
+            if (!localStorage.getItem('mashbir_manual_branch')) {
+                setBranch(closest.id);
+            }
         }
 
         window.setBranch = async function(branchId, isManual = false) {
@@ -473,11 +470,10 @@
             const branchObj = branches.find(b => b.id === branchId);
             const branchNameText = branchObj ? branchObj.name : branchId;
             
-            // עדכון שתי התצוגות (גם למעלה מתחת להדר וגם בפוטר)
             document.getElementById('top-branch-name').innerText = branchNameText;
             document.getElementById('footer-branch-name').innerText = branchNameText;
-            
             document.getElementById('manual-branch-select').value = branchId;
+            
             await loadCustomersFromCloud();
         }
 
@@ -918,7 +914,7 @@
             }, 400);
         }
 
-        window.exportData = function() { בחירת סניף ידנית
+        window.exportData = function() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customers));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
