@@ -5,48 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משביר לעמו - ניהול והדפסת שילוט משלוחים</title>
     <meta name="theme-color" content="#dc2626">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
     
+    <!-- PWA Manifest Link with New Icon -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%20-%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Heebo', sans-serif; background-color: #f3f4f6; }
+        
         @media print {
-            body * { visibility: hidden; }
-            #print-section, #print-section * { visibility: visible; }
+            @page {
+                size: A4 portrait;
+                margin: 0 !important;
+            }
+            body > *:not(#print-section) {
+                display: none !important;
+            }
             #print-section {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+                display: block !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 210mm !important;
+                background: white !important;
+                z-index: 999999 !important;
             }
             .page-break {
-                page-break-after: always;
-                break-after: page;
+                width: 210mm !important;
+                height: 297mm !important;
+                max-height: 297mm !important;
+                position: relative !important;
+                overflow: hidden !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
-        }
-        .label-box {
-            border: 2px dashed #9ca3af;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 16px;
-            background: #fff;
-            position: relative;
-            box-sizing: border-box;
+            .page-break:last-of-type {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 text-center flex flex-col items-center justify-center">
-        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-16 w-auto object-contain mb-2 bg-white rounded-full p-1 shadow-md">
-        <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה</p>
+    <!-- Header with Image Logo & Install Button -->
+    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-12 w-12 object-cover bg-white rounded-full p-0.5 shadow-md">
+            <div>
+                <h1 class="font-black text-lg">משביר לעמו - ניהול והדפסת שילוט</h1>
+                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה עם קטלוג ענק ומקיף</p>
+            </div>
+        </div>
+        <!-- Install App Button (Visible when available) -->
+        <button id="install-btn" style="display: none;" onclick="installApp()" class="bg-white text-red-700 hover:bg-red-50 px-4 py-2 rounded-2xl font-black text-xs shadow-md transition flex items-center gap-1.5">
+            <span>📲</span> התקן אפליקציה במחשב/נייד
+        </button>
     </header>
 
+    <!-- Main Container -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
+        <!-- Form Section -->
         <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl p-6 flex flex-col justify-between border border-gray-100">
             <div>
                 <div class="flex justify-between items-center mb-6 border-b pb-3">
@@ -65,48 +91,69 @@
                         <div id="autocomplete-list" class="absolute z-20 w-full bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 max-h-40 overflow-y-auto hidden"></div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div class="md:col-span-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">רחוב ומספר בניין</label>
+                            <input type="text" id="street" required oninput="updatePreview()"
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: ירושלים 9">
+                        </div>
+                        <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">עיר</label>
                             <input type="text" id="city" value="בני ברק" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">כתובת / רחוב ומספר</label>
-                            <input type="text" id="street" required oninput="updatePreview()"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: ירושלים 9">
-                        </div>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-3">
+                    <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">דירה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר דירה</label>
                             <input type="text" id="apartment" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="דירה">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">קומה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר קומה</label>
                             <input type="text" id="floor" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="קומה">
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">טלפון נייד</label>
                             <input type="tel" id="phone" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="050-0000000">
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">הערות למשלוח (אופציונלי)</label>
-                            <input type="text" id="notes" oninput="updatePreview()"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: לצלצל באינטרקום">
-                        </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">עותקים</label>
-                            <input type="number" id="copies" value="1" min="1" max="20"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">כמות ארגזים (עותקים)</label>
+                            <input type="number" id="copies" value="1" min="1" max="20" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
+                    </div>
+
+                    <!-- Smart Product Search for Extras -->
+                    <div class="relative">
+                        <label class="block text-sm font-bold text-gray-700 mb-1">שישיות ותוספות חיצוניות (חפש מוצר מהקטלוג)</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
+                                placeholder="הקלד לחיפוש מהיר (למשל: סודה טמפו, מי עדן, נביעות, קולה)...">
+                        </div>
+                        <!-- Product Suggestions Popup -->
+                        <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
+                    </div>
+
+                    <!-- Selected Products List Display -->
+                    <div id="selected-extras-wrapper" class="hidden">
+                        <label class="block text-xs font-bold text-gray-500 mb-1">מוצרים שנבחרו להזמנה:</label>
+                        <div id="selected-extras-chips" class="flex flex-wrap gap-2 p-2 bg-red-50 rounded-2xl border border-red-200"></div>
+                    </div>
+                    <!-- Hidden input to store extras string -->
+                    <input type="hidden" id="extras" value="">
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">הערות למשלוח</label>
+                        <input type="text" id="notes" oninput="updatePreview()"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: לצלצל באינטרקום">
                     </div>
                 </form>
             </div>
@@ -130,39 +177,61 @@
             </div>
         </div>
 
+        <!-- Live Preview & Print Queue -->
         <div class="lg:col-span-3 space-y-6 flex flex-col">
+            <!-- Live Preview Card with Image Logo -->
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center">
                 <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
-                <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 flex flex-col justify-between bg-white text-right">
+                <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
                     
-                    <div class="text-center">
-                        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 mx-auto object-contain">
+                    <!-- Box Number Badge Preview -->
+                    <div id="prev-box-badge" class="absolute top-3 left-3 bg-gray-100 text-gray-900 text-xs font-black px-3 py-1 rounded-full border-2 border-gray-400">
+                        ארגז 1 מתוך 1
                     </div>
 
-                    <div class="space-y-2.5 my-auto text-right">
+                    <div class="text-center mt-4">
+                        <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-14 w-14 object-cover mx-auto rounded-full shadow-md">
+                    </div>
+
+                    <div class="space-y-2 my-auto text-right">
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">שם:</span>
-                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">שם:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-name" class="text-base font-black text-gray-900">שם הלקוח</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">כתובת:</span>
-                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
-                                <span id="prev-street" class="text-sm font-bold text-gray-800">רחוב ומספר</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">כתובת:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
+                                <span id="prev-street" class="text-sm font-bold text-gray-900">רחוב ומספר</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">מיקום:</span>
-                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
-                                <span id="prev-city" class="text-xs font-bold text-gray-700">בני ברק</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">דירה:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
+                                <span id="prev-apartment" class="text-sm font-bold text-gray-900">-</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">טלפון:</span>
-                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
-                                <span id="prev-phone" class="text-sm font-black text-red-600">050-0000000</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">קומה:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
+                                <span id="prev-floor" class="text-sm font-bold text-gray-900">-</span>
                             </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">עיר:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
+                                <span id="prev-city" class="text-sm font-bold text-gray-900">בני ברק</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">טלפון:</span>
+                            <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
+                                <span id="prev-phone" class="text-base font-black text-gray-900">050-0000000</span>
+                            </div>
+                        </div>
+                        <div id="prev-extras-container" class="hidden text-sm bg-red-100 text-red-900 p-2 rounded-lg font-black border-2 border-red-300">
+                            תוספות: <span id="prev-extras"></span>
                         </div>
                     </div>
 
@@ -170,6 +239,7 @@
                 </div>
             </div>
 
+            <!-- Print Queue -->
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex-1 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -187,6 +257,7 @@
             </div>
         </div>
 
+        <!-- Saved Customers Sidebar -->
         <div class="lg:col-span-3 bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col">
             <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים</h3>
             <div id="saved-customers-list" class="flex-1 overflow-y-auto space-y-2 max-h-[450px]">
@@ -196,29 +267,134 @@
 
     </main>
 
-    <div id="print-section" class="hidden"></div>
+    <!-- Hidden Print Area -->
+    <div id="print-section" style="display: none;"></div>
 
-    <footer class="text-center py-6 text-xs text-gray-400">
-        משביר לעמו - מערכת שילוט מתקדמת &copy; 2026
+    <!-- Toast Notification for Print Status -->
+    <div id="print-toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 text-sm font-bold hidden transition-all duration-300 flex items-center gap-2">
+        <span>🖨️</span> מכין עמודי הדפסה מהאתר...
+    </div>
+
+    <!-- Quantity Prompt Modal -->
+    <div id="qty-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
+            <h3 id="modal-product-title" class="text-lg font-black text-gray-900">בחר כמות למוצר</h3>
+            <div class="flex items-center justify-center gap-4">
+                <button onclick="adjustModalQty(-1)" class="w-12 h-12 bg-gray-100 text-gray-800 text-xl font-bold rounded-2xl hover:bg-gray-200 transition">-</button>
+                <input type="number" id="modal-qty-input" value="1" min="1" max="50" class="w-20 text-center py-3 text-2xl font-black bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none">
+                <button onclick="adjustModalQty(1)" class="w-12 h-12 bg-gray-100 text-gray-800 text-xl font-bold rounded-2xl hover:bg-gray-200 transition">+</button>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="closeQtyModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition">ביטול</button>
+                <button onclick="confirmAddProduct()" class="bg-red-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-red-700 transition">הוסף להזמנה</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-xs text-gray-500 space-y-1 bg-white border-t mt-auto">
+        <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
+        <p dir="ltr">
+            <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%9C%D7%91%D7%AA%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
+        </p>
     </footer>
 
     <script>
+        // PWA Installation Script
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) installBtn.style.display = 'flex';
+        });
+
+        async function installApp() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                document.getElementById('install-btn').style.display = 'none';
+            }
+            deferredPrompt = null;
+        }
+
+        // Massive Comprehensive Catalog (approx. 70 items of waters, sodas and soft drinks)
+        const productCatalog = [
+            // --- COCA COLA & SOFT DRINKS ---
+            "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)",
+            "קוקה קולה ליטר רגיל (רביעה)", "קוקה קולה ליטר זירו (רביעה)",
+            "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)",
+            "סבן אפ רגיל (שישייה)", "סבן אפ זירו (שישייה)",
+            "ספרייט רגיל (שישייה)", "ספרייט זירו (שישייה)",
+            "מרינדה (שישייה)", "פאנטה (שישייה)",
+            "RC קולה רגיל (שישייה)", "RC קולה זירו (שישייה)",
+            "תות פלב (שישייה)", "אשכוליות (שישייה)",
+
+            // --- SODAS (סודה - טמפו, שוופס, מי עדן ועוד) ---
+            "סודה טמפו (שישייה)", "סודה טמפו בקבוקי ליטר (רביעה)",
+            "סודה שוופס רגיל (שישייה / רביעה)", "סודה שוופס בטעמים (שישייה)",
+            "מי עדן סודה / הגזה חזקה (שישייה)", "מי עדן סודה בקבוקי ליטר",
+            "נביעות סודה (שישייה)", "עין גדי סודה (שישייה)",
+            "סודה קריסטל / מותגים נוספים (שישייה)", "סודה עדינה / הגזה עדינה",
+
+            // --- NEVIOT (נביעות) WATER ---
+            "נביעות - שישיית חצי ליטר (0.5L)", "נביעות - שישיית ליטר וחצי (1.5L)",
+            "נביעות - שישיית ליטר (1L)", "נביעות - שישיית שני ליטר (2L)",
+            "נביעות - מארז 12 בקבוקי חצי ליטר", "נביעות - מארז 24 בקבוקי חצי ליטר",
+            "נביעות בטעמים - שישייה (אפרסק/תפוח/ענבים)",
+
+            // --- EDEN (מי עדן) WATER ---
+            "מי עדן - שישיית חצי ליטר (0.5L)", "מי עדן - שישיית ליטר וחצי (1.5L)",
+            "מי עדן - שישיית ליטר (1L)", "מי עדן - שישיית שני ליטר (2L)",
+            "מי עדן - מארז 12 בקבוקי חצי ליטר", "מי עדן - מארז 24 בקבוקי חצי ליטר",
+            "מי עדן בטעמים - שישייה",
+
+            // --- EIN GEDI (עין גדי) WATER ---
+            "עין גדי - שישיית חצי ליטר (0.5L)", "עין גדי - שישיית ליטר וחצי (1.5L)",
+            "עין גדי - שישיית ליטר (1L)", "עין גדי - שישיית שני ליטר (2L)",
+            "עין גדי - מארז 12 בקבוקי חצי ליטר", "עין גדי - מארז 24 בקבוקי חצי ליטר",
+
+            // --- SAN BENEDETTO (סן בנדיטו) WATER ---
+            "סן בנדיטו - שישיית חצי ליטר (0.5L)", "סן בנדיטו - שישיית ליטר וחצי (1.5L)",
+            "סן בנדיטו - שישיית ליטר (1L)", "סן בנדיטו - מארז יוקרתי / ספורט",
+
+            // --- OTHER WATER BRANDS & GENERAL ---
+            "סן פלגרינו מים מוגזים (בקבוקי זכוכית / שישייה)", "פריר מים מינרליים (שישייה)",
+            "המלכה / מים מינרליים כללי (שישיית חצי ליטר)", "המלכה / מים מינרליים כללי (שישיית ליטר וחצי)",
+            "מים מינרליים - מארז קרטון גדול", "ג'רמל / מים מינרליים מיובאים (שישייה)",
+            
+            // --- JUICES & EXTRAS ---
+            "מיץ ענבים תירוש (בקבוק ליטר)", "מיץ תפוזים טבעי / סחוט (בקבוק)",
+            "מיץ אשכוליות / תפוחים (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)"
+        ];
+
+        let selectedProducts = [];
+        let activeProductToAdd = "";
+
         let customers = JSON.parse(localStorage.getItem('mashbir_customers') || '{}');
         let printQueueItems = [];
 
         const customerNameInput = document.getElementById('customer-name');
         const autocompleteList = document.getElementById('autocomplete-list');
-        const cityInput = document.getElementById('city');
         const streetInput = document.getElementById('street');
+        const cityInput = document.getElementById('city');
         const apartmentInput = document.getElementById('apartment');
         const floorInput = document.getElementById('floor');
         const phoneInput = document.getElementById('phone');
+        const extrasInput = document.getElementById('extras');
         const notesInput = document.getElementById('notes');
         const copiesInput = document.getElementById('copies');
+
+        const productSearchInput = document.getElementById('product-search');
+        const productSuggestions = document.getElementById('product-suggestions');
+        const qtyModal = document.getElementById('qty-modal');
+        const modalProductTitle = document.getElementById('modal-product-title');
+        const modalQtyInput = document.getElementById('modal-qty-input');
 
         updateSavedCustomersUI();
         updatePreview();
 
+        // Customer Autocomplete
         customerNameInput.addEventListener('input', function() {
             const val = this.value.trim();
             autocompleteList.innerHTML = '';
@@ -246,12 +422,110 @@
             autocompleteList.classList.remove('hidden');
         });
 
+        // Product Catalog Search & Filtering
+        function filterProducts() {
+            const val = productSearchInput.value.trim().toLowerCase();
+            productSuggestions.innerHTML = '';
+            if (!val) {
+                productSuggestions.classList.add('hidden');
+                return;
+            }
+
+            const matches = productCatalog.filter(p => p.toLowerCase().includes(val));
+            if (matches.length === 0) {
+                // Allow adding custom text if not found
+                const div = document.createElement('div');
+                div.className = 'p-3 hover:bg-red-50 cursor-pointer text-sm font-bold text-red-600';
+                div.textContent = `הוסף כטקסט חופשי: "${productSearchInput.value}"`;
+                div.onclick = () => {
+                    openQtyModal(productSearchInput.value);
+                    productSearchInput.value = '';
+                    productSuggestions.classList.add('hidden');
+                };
+                productSuggestions.appendChild(div);
+            } else {
+                matches.forEach(prod => {
+                    const div = document.createElement('div');
+                    div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b border-gray-100 last:border-0 flex justify-between items-center';
+                    div.innerHTML = `<span>💧🥤 ${prod}</span> <span class="text-xs text-red-600 font-bold bg-red-50 px-2 py-1 rounded-lg">בחר</span>`;
+                    div.onclick = () => {
+                        openQtyModal(prod);
+                        productSearchInput.value = '';
+                        productSuggestions.classList.add('hidden');
+                    };
+                    productSuggestions.appendChild(div);
+                });
+            }
+            productSuggestions.classList.remove('hidden');
+        }
+
+        function openQtyModal(productName) {
+            activeProductToAdd = productName;
+            modalProductTitle.textContent = `כמה יחידות מ: ${productName}?`;
+            modalQtyInput.value = "1";
+            qtyModal.classList.remove('hidden');
+        }
+
+        function adjustModalQty(amount) {
+            let current = parseInt(modalQtyInput.value) || 1;
+            current += amount;
+            if (current < 1) current = 1;
+            modalQtyInput.value = current;
+        }
+
+        function closeQtyModal() {
+            qtyModal.classList.add('hidden');
+            activeProductToAdd = "";
+        }
+
+        function confirmAddProduct() {
+            const qty = parseInt(modalQtyInput.value) || 1;
+            selectedProducts.push({ name: activeProductToAdd, qty: qty });
+            closeQtyModal();
+            updateSelectedProductsUI();
+            updatePreview();
+        }
+
+        function removeSelectedProduct(index) {
+            selectedProducts.splice(index, 1);
+            updateSelectedProductsUI();
+            updatePreview();
+        }
+
+        function updateSelectedProductsUI() {
+            const wrapper = document.getElementById('selected-extras-wrapper');
+            const chips = document.getElementById('selected-extras-chips');
+            
+            if (selectedProducts.length === 0) {
+                wrapper.classList.add('hidden');
+                extrasInput.value = "";
+                return;
+            }
+
+            chips.innerHTML = '';
+            let stringSummaryParts = [];
+
+            selectedProducts.forEach((item, idx) => {
+                stringSummaryParts.push(`${item.name} (${item.qty})`);
+                const chip = document.createElement('div');
+                chip.className = 'flex items-center gap-1.5 bg-white border border-red-300 text-red-900 px-3 py-1.5 rounded-xl text-xs font-black shadow-sm';
+                chip.innerHTML = `
+                    <span>💧🥤 ${item.name} <span class="text-red-600 bg-red-100 px-1.5 py-0.5 rounded-md">(${item.qty})</span></span>
+                    <button type="button" onclick="removeSelectedProduct(${idx})" class="text-gray-400 hover:text-red-600 mr-1 font-bold">✕</button>
+                `;
+                chips.appendChild(chip);
+            });
+
+            extrasInput.value = stringSummaryParts.join(", ");
+            wrapper.classList.remove('hidden');
+        }
+
         function fillCustomerData(name) {
             const data = customers[name];
             if (!data) return;
             customerNameInput.value = name;
-            cityInput.value = data.city || 'בני ברק';
             streetInput.value = data.street || '';
+            cityInput.value = data.city || 'בני ברק';
             apartmentInput.value = data.apartment || '';
             floorInput.value = data.floor || '';
             phoneInput.value = data.phone || '';
@@ -261,16 +535,23 @@
 
         function updatePreview() {
             document.getElementById('prev-name').textContent = customerNameInput.value.trim() || 'שם הלקוח';
-            
-            const street = streetInput.value.trim() || 'רחוב ומספר';
-            const apt = apartmentInput.value.trim() ? `דירה ${apartmentInput.value.trim()}` : '';
-            document.getElementById('prev-street').textContent = apt ? `${street} ${apt}` : street;
-            
-            const floor = floorInput.value.trim() ? `קומה ${floorInput.value.trim()}` : '';
-            const city = cityInput.value.trim() || 'בני ברק';
-            document.getElementById('prev-city').textContent = floor ? `${floor} | ${city}` : city;
-            
+            document.getElementById('prev-street').textContent = streetInput.value.trim() || 'רחוב ומספר';
+            document.getElementById('prev-apartment').textContent = apartmentInput.value.trim() || '-';
+            document.getElementById('prev-floor').textContent = floorInput.value.trim() || '-';
+            document.getElementById('prev-city').textContent = cityInput.value.trim() || 'בני ברק';
             document.getElementById('prev-phone').textContent = phoneInput.value.trim() || '050-0000000';
+
+            const copies = parseInt(copiesInput.value) || 1;
+            document.getElementById('prev-box-badge').textContent = `ארגז 1 מתוך ${copies}`;
+
+            const extras = extrasInput.value.trim();
+            const extrasContainer = document.getElementById('prev-extras-container');
+            if (extras) {
+                document.getElementById('prev-extras').textContent = extras;
+                extrasContainer.classList.remove('hidden');
+            } else {
+                extrasContainer.classList.add('hidden');
+            }
         }
 
         function saveCurrentCustomer() {
@@ -278,8 +559,8 @@
             if (!name) return;
 
             customers[name] = {
-                city: cityInput.value.trim(),
                 street: streetInput.value.trim(),
+                city: cityInput.value.trim(),
                 apartment: apartmentInput.value.trim(),
                 floor: floorInput.value.trim(),
                 phone: phoneInput.value.trim(),
@@ -323,6 +604,9 @@
         function clearForm() {
             document.getElementById('delivery-form').reset();
             cityInput.value = 'בני ברק';
+            copiesInput.value = '1';
+            selectedProducts = [];
+            updateSelectedProductsUI();
             updatePreview();
         }
 
@@ -340,11 +624,12 @@
 
             const item = {
                 name,
-                city: cityInput.value.trim(),
                 street,
+                city: cityInput.value.trim(),
                 apartment: apartmentInput.value.trim(),
                 floor: floorInput.value.trim(),
                 phone,
+                extras: extrasInput.value.trim(),
                 notes: notesInput.value.trim(),
                 copies: parseInt(copiesInput.value) || 1
             };
@@ -371,7 +656,7 @@
                 div.innerHTML = `
                     <div>
                         <span class="font-bold text-gray-800">${item.name}</span>
-                        <span class="text-xs text-gray-500 block">${item.street}, ${item.city} (עותקים: ${item.copies})</span>
+                        <span class="text-xs text-gray-500 block">${item.street}, ${item.city} (ארגזים: ${item.copies})</span>
                     </div>
                     <button onclick="removeFromQueue(${index})" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 font-bold">הסר</button>
                 `;
@@ -389,78 +674,116 @@
             updateQueueUI();
         }
 
+        function showToast(message) {
+            const toast = document.getElementById('print-toast');
+            toast.innerHTML = `<span>🖨️</span> ${message}`;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
         function printQueue() {
             if (printQueueItems.length === 0) return;
 
-            let labelsHTML = '';
-            printQueueItems.forEach(item => {
-                const apt = item.apartment ? `דירה ${item.apartment}` : '';
-                const flr = item.floor ? `קומה ${item.floor}` : '';
-                const nts = item.notes ? `הערות: ${item.notes}` : '';
+            showToast("מכין עמודי הדפסה מהאתר...");
 
-                for (let i = 0; i < item.copies; i++) {
-                    labelsHTML += `
-                        <div class="label-box">
-                            <div class="text-center">
-                                <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 45px; margin: 0 auto; object-fit: contain;">
+            let allLabelsHTML = [];
+            printQueueItems.forEach(item => {
+                const totalCopies = item.copies;
+                for (let i = totalCopies; i >= 1; i--) {
+                    allLabelsHTML.push(`
+                        <div style="border: 2px dashed #374151; width: 105mm; height: 148.5mm; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 14px 14px 14px; background: #fff; box-sizing: border-box; position: relative;">
+                            
+                            <div style="position: absolute; top: 14px; left: 14px; background: #f3f4f6; color: #111827; font-size: 13px; font-weight: 900; padding: 3px 10px; border-radius: 9999px; border: 2px solid #9ca3af;">
+                                ארגז ${i} מתוך ${totalCopies}
+                            </div>
+
+                            <div style="text-align: center; margin-top: 14px;">
+                                <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" style="height: 68px; width: 68px; object-fit: cover; margin: 0 auto; border-radius: 50%;">
                             </div>
                             
-                            <div style="display: flex; flex-direction: column; gap: 10px; margin: auto 0;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">שם:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
-                                        <span style="font-size: 18px; font-weight: 900; color: #111827;">${item.name}</span>
+                            <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">שם:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 19px; font-weight: 900; color: #111827;">${item.name}</span>
                                     </div>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">כתובת:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
-                                        <span style="font-size: 14px; font-weight: bold; color: #1f2937;">${item.street} ${apt}</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">כתובת:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.street}</span>
                                     </div>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">מיקום:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
-                                        <span style="font-size: 12px; font-weight: bold; color: #374151;">${flr} | ${item.city}</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">דירה:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.apartment || '-'}</span>
                                     </div>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">טלפון:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
-                                        <span style="font-size: 16px; font-weight: 900; color: #dc2626;">${item.phone}</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">קומה:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.floor || '-'}</span>
                                     </div>
                                 </div>
-                                ${nts ? `<div style="font-size: 11px; color: #4b5563; margin-top: 4px;">הערות: ${nts}</div>` : ''}
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">עיר:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 16px; font-weight: bold; color: #1f2937;">${item.city}</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">טלפון:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
+                                        <span style="font-size: 18px; font-weight: 900; color: #111827;">${item.phone}</span>
+                                    </div>
+                                </div>
+                                ${item.extras ? `<div style="font-size: 14px; font-weight: 900; background: #fee2e2; color: #991b1b; padding: 6px 8px; border-radius: 8px; border: 2px solid #fecaca; margin-top: 4px;">תוספות: ${item.extras}</div>` : ''}
+                                ${item.notes ? `<div style="font-size: 13px; font-weight: bold; color: #374151; margin-top: 2px;">הערות: ${item.notes}</div>` : ''}
                             </div>
 
                             <div></div>
                         </div>
-                    `;
+                    `);
                 }
             });
 
             const printSection = document.getElementById('print-section');
             printSection.innerHTML = '';
 
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = labelsHTML;
-            const boxes = Array.from(tempDiv.children);
-
             let pagesContent = '';
-            for (let i = 0; i < boxes.length; i += 4) {
-                const pageChunk = boxes.slice(i, i + 4);
-                let gridItemsHTML = '';
-                pageChunk.forEach(box => gridItemsHTML += box.outerHTML);
+            for (let i = 0; i < allLabelsHTML.length; i += 4) {
+                const chunk = allLabelsHTML.slice(i, i + 4);
+                
+                let pageInner = '';
+                chunk.forEach((labelHtml, index) => {
+                    const col = index % 2;
+                    const row = Math.floor(index / 2);
+                    const leftPos = col * 105;
+                    const topPos = row * 148.5;
+
+                    pageInner += `
+                        <div style="position: absolute; left: ${leftPos}mm; top: ${topPos}mm; width: 105mm; height: 148.5mm;">
+                            ${labelHtml}
+                        </div>
+                    `;
+                });
 
                 pagesContent += `
-                    <div class="page-break" style="width: 210mm; height: 297mm; padding: 15mm; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10mm; background: white;">
-                        ${gridItemsHTML}
+                    <div class="page-break">
+                        ${pageInner}
                     </div>
                 `;
             }
 
+            printHeader = pagesContent; // fallback variable
             printSection.innerHTML = pagesContent;
-            window.print();
+            
+            setTimeout(() => {
+                window.print();
+            }, 400);
         }
 
         function exportData() {
@@ -476,8 +799,8 @@
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
+            constReader = new FileReader();
+            constReader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     customers = imported;
@@ -488,7 +811,7 @@
                     alert('קובץ שגוי או פגום.');
                 }
             };
-            reader.readAsText(file);
+            constReader.readAsText(file);
         }
     </script>
 </body>
