@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משביר לעמו - ניהול והדפסת שילוט משלוחים</title>
-    <meta name="theme-color" content="#dc2626">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    <title>ניהול והדפסת משלוחים – המשביר לעמו</title>
     
-    <!-- PWA Manifest Link with New Icon -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%20-%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
+    <meta name="apple-mobile-web-app-title" content="ניהול והדפסת משלוחים – המשביר לעמו">
+    <meta name="application-name" content="ניהול והדפסת משלוחים – המשביר לעמו">
+    <meta name="theme-color" content="#dc2626">
+    
+    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%95%D7%94%D7%93%D7%A4%D7%A1%D7%AA%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20%E2%80%93%20%D7%94%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -54,25 +58,34 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <!-- Header with Image Logo & Install Button -->
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-            <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-12 w-12 object-cover bg-white rounded-full p-0.5 shadow-md">
+            <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
             <div>
-                <h1 class="font-black text-lg">משביר לעמו - ניהול והדפסת שילוט</h1>
-                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה עם קטלוג ענק ומקיף</p>
+                <h1 class="font-black text-lg">ניהול והדפסת משלוחים – המשביר לעמו</h1>
+                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה מחוברת לענן</p>
             </div>
         </div>
-        <!-- Install App Button (Visible when available) -->
         <button id="install-btn" style="display: none;" onclick="installApp()" class="bg-white text-red-700 hover:bg-red-50 px-4 py-2 rounded-2xl font-black text-xs shadow-md transition flex items-center gap-1.5">
             <span>📲</span> התקן אפליקציה במחשב/נייד
         </button>
     </header>
 
-    <!-- Main Container -->
+    <div class="bg-white border-b shadow-sm py-2.5 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-sm">
+            <div class="flex items-center gap-2 font-bold text-gray-800">
+                <span class="text-lg">📍</span>
+                <span>שלום סניפי:</span>
+                <span id="top-branch-name" class="text-red-700 font-black text-base">ירושלים 9, בני ברק</span>
+            </div>
+            <button onclick="openBranchModal()" class="text-xs bg-red-50 text-red-700 border border-red-200 font-bold px-3 py-1.5 rounded-xl hover:bg-red-100 transition">
+                שנה סניף ידנית
+            </button>
+        </div>
+    </div>
+
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Form Section -->
         <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl p-6 flex flex-col justify-between border border-gray-100">
             <div>
                 <div class="flex justify-between items-center mb-6 border-b pb-3">
@@ -87,7 +100,7 @@
                         <label class="block text-sm font-bold text-gray-700 mb-1">שם לקוח</label>
                         <input type="text" id="customer-name" required autocomplete="off" oninput="updatePreview()"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition font-medium"
-                            placeholder="הקלד או בחר לקוח שמור...">
+                            placeholder="הקלד או בחר לקוח שמור מהענן...">
                         <div id="autocomplete-list" class="absolute z-20 w-full bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 max-h-40 overflow-y-auto hidden"></div>
                     </div>
 
@@ -130,24 +143,20 @@
                         </div>
                     </div>
 
-                    <!-- Smart Product Search for Extras -->
                     <div class="relative">
                         <label class="block text-sm font-bold text-gray-700 mb-1">שישיות ותוספות חיצוניות (חפש מוצר מהקטלוג)</label>
                         <div class="flex gap-2">
                             <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
-                                placeholder="הקלד לחיפוש מהיר (למשל: סודה טמפו, מי עדן, נביעות, קולה)...">
+                                placeholder="הקלד לחיפוש מהיר מהקטלוג הענק...">
                         </div>
-                        <!-- Product Suggestions Popup -->
                         <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
                     </div>
 
-                    <!-- Selected Products List Display -->
                     <div id="selected-extras-wrapper" class="hidden">
                         <label class="block text-xs font-bold text-gray-500 mb-1">מוצרים שנבחרו להזמנה:</label>
                         <div id="selected-extras-chips" class="flex flex-wrap gap-2 p-2 bg-red-50 rounded-2xl border border-red-200"></div>
                     </div>
-                    <!-- Hidden input to store extras string -->
                     <input type="hidden" id="extras" value="">
 
                     <div>
@@ -177,20 +186,17 @@
             </div>
         </div>
 
-        <!-- Live Preview & Print Queue -->
         <div class="lg:col-span-3 space-y-6 flex flex-col">
-            <!-- Live Preview Card with Image Logo -->
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center">
                 <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
                 <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
                     
-                    <!-- Box Number Badge Preview -->
                     <div id="prev-box-badge" class="absolute top-3 left-3 bg-gray-100 text-gray-900 text-xs font-black px-3 py-1 rounded-full border-2 border-gray-400">
                         ארגז 1 מתוך 1
                     </div>
 
-                    <div class="text-center mt-4">
-                        <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" class="h-14 w-14 object-cover mx-auto rounded-full shadow-md">
+                    <div class="text-center mt-3">
+                        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-16 w-auto object-contain mx-auto">
                     </div>
 
                     <div class="space-y-2 my-auto text-right">
@@ -239,7 +245,6 @@
                 </div>
             </div>
 
-            <!-- Print Queue -->
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex-1 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -257,25 +262,33 @@
             </div>
         </div>
 
-        <!-- Saved Customers Sidebar -->
         <div class="lg:col-span-3 bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col">
-            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים</h3>
+            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים בסניף בענן</h3>
             <div id="saved-customers-list" class="flex-1 overflow-y-auto space-y-2 max-h-[450px]">
-                <p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>
+                <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
             </div>
         </div>
 
     </main>
 
-    <!-- Hidden Print Area -->
+    <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
+            <h3 class="text-lg font-black text-gray-900">בחירת סניף ידנית</h3>
+            <p class="text-xs text-gray-500">בחר את הסניף שאליו ברצונך להתחבר כעת (הבחירה תיזכר תמיד):</p>
+            <select id="manual-branch-select" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none font-bold text-sm"></select>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="closeBranchModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition">ביטול</button>
+                <button onclick="confirmManualBranch()" class="bg-blue-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition">שמור סניף</button>
+            </div>
+        </div>
+    </div>
+
     <div id="print-section" style="display: none;"></div>
 
-    <!-- Toast Notification for Print Status -->
     <div id="print-toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 text-sm font-bold hidden transition-all duration-300 flex items-center gap-2">
         <span>🖨️</span> מכין עמודי הדפסה מהאתר...
     </div>
 
-    <!-- Quantity Prompt Modal -->
     <div id="qty-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
             <h3 id="modal-product-title" class="text-lg font-black text-gray-900">בחר כמות למוצר</h3>
@@ -291,88 +304,66 @@
         </div>
     </div>
 
-    <footer class="text-center py-6 text-xs text-gray-500 space-y-1 bg-white border-t mt-auto">
-        <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
-        <p dir="ltr">
-            <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%9C%D7%91%D7%AA%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
-        </p>
+    <footer class="text-center py-4 px-6 text-xs text-gray-500 bg-white border-t mt-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div>
+            <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
+            <p dir="ltr">
+                <a href="mailto:hacker.david.7642@gmail.com" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
+            </p>
+        </div>
+        <div class="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-700 flex items-center gap-2">
+            <span>סניף: <strong id="footer-branch-name" class="text-red-700">ירושלים 9, בני ברק</strong></span>
+            <button onclick="openBranchModal()" class="text-blue-600 underline font-bold hover:text-blue-800 ml-1">זה לא הסניף שלי?</button>
+        </div>
     </footer>
 
-    <script>
-        // PWA Installation Script
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const installBtn = document.getElementById('install-btn');
-            if (installBtn) installBtn.style.display = 'flex';
-        });
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-        async function installApp() {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                document.getElementById('install-btn').style.display = 'none';
-            }
-            deferredPrompt = null;
-        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjDztTO4rTps9J7gF-9jL1Tb0bF_KeFXo",
+            authDomain: "mashbir-delivery.firebaseapp.com",
+            projectId: "mashbir-delivery",
+            storageBucket: "mashbir-delivery.firebasestorage.app",
+            messagingSenderId: "584747007833",
+            appId: "1:584747007833:web:da22e420efc16a33aa1648",
+            measurementId: "G-1M51Q4HRLZ"
+        };
 
-        // Massive Comprehensive Catalog (approx. 70 items of waters, sodas and soft drinks)
-        const productCatalog = [
-            // --- COCA COLA & SOFT DRINKS ---
-            "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)",
-            "קוקה קולה ליטר רגיל (רביעה)", "קוקה קולה ליטר זירו (רביעה)",
-            "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)",
-            "סבן אפ רגיל (שישייה)", "סבן אפ זירו (שישייה)",
-            "ספרייט רגיל (שישייה)", "ספרייט זירו (שישייה)",
-            "מרינדה (שישייה)", "פאנטה (שישייה)",
-            "RC קולה רגיל (שישייה)", "RC קולה זירו (שישייה)",
-            "תות פלב (שישייה)", "אשכוליות (שישייה)",
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-            // --- SODAS (סודה - טמפו, שוופס, מי עדן ועוד) ---
-            "סודה טמפו (שישייה)", "סודה טמפו בקבוקי ליטר (רביעה)",
-            "סודה שוופס רגיל (שישייה / רביעה)", "סודה שוופס בטעמים (שישייה)",
-            "מי עדן סודה / הגזה חזקה (שישייה)", "מי עדן סודה בקבוקי ליטר",
-            "נביעות סודה (שישייה)", "עין גדי סודה (שישייה)",
-            "סודה קריסטל / מותגים נוספים (שישייה)", "סודה עדינה / הגזה עדינה",
-
-            // --- NEVIOT (נביעות) WATER ---
-            "נביעות - שישיית חצי ליטר (0.5L)", "נביעות - שישיית ליטר וחצי (1.5L)",
-            "נביעות - שישיית ליטר (1L)", "נביעות - שישיית שני ליטר (2L)",
-            "נביעות - מארז 12 בקבוקי חצי ליטר", "נביעות - מארז 24 בקבוקי חצי ליטר",
-            "נביעות בטעמים - שישייה (אפרסק/תפוח/ענבים)",
-
-            // --- EDEN (מי עדן) WATER ---
-            "מי עדן - שישיית חצי ליטר (0.5L)", "מי עדן - שישיית ליטר וחצי (1.5L)",
-            "מי עדן - שישיית ליטר (1L)", "מי עדן - שישיית שני ליטר (2L)",
-            "מי עדן - מארז 12 בקבוקי חצי ליטר", "מי עדן - מארז 24 בקבוקי חצי ליטר",
-            "מי עדן בטעמים - שישייה",
-
-            // --- EIN GEDI (עין גדי) WATER ---
-            "עין גדי - שישיית חצי ליטר (0.5L)", "עין גדי - שישיית ליטר וחצי (1.5L)",
-            "עין גדי - שישיית ליטר (1L)", "עין גדי - שישיית שני ליטר (2L)",
-            "עין גדי - מארז 12 בקבוקי חצי ליטר", "עין גדי - מארז 24 בקבוקי חצי ליטר",
-
-            // --- SAN BENEDETTO (סן בנדיטו) WATER ---
-            "סן בנדיטו - שישיית חצי ליטר (0.5L)", "סן בנדיטו - שישיית ליטר וחצי (1.5L)",
-            "סן בנדיטו - שישיית ליטר (1L)", "סן בנדיטו - מארז יוקרתי / ספורט",
-
-            // --- OTHER WATER BRANDS & GENERAL ---
-            "סן פלגרינו מים מוגזים (בקבוקי זכוכית / שישייה)", "פריר מים מינרליים (שישייה)",
-            "המלכה / מים מינרליים כללי (שישיית חצי ליטר)", "המלכה / מים מינרליים כללי (שישיית ליטר וחצי)",
-            "מים מינרליים - מארז קרטון גדול", "ג'רמל / מים מינרליים מיובאים (שישייה)",
-            
-            // --- JUICES & EXTRAS ---
-            "מיץ ענבים תירוש (בקבוק ליטר)", "מיץ תפוזים טבעי / סחוט (בקבוק)",
-            "מיץ אשכוליות / תפוחים (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)"
+        const branches = [
+            { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק', lat: 32.0833, lng: 34.8333 },
+            { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק', lat: 32.0850, lng: 34.8300 },
+            { id: 'bnei_brak_abravanel101', name: 'אברבנל 101, בני ברק', lat: 32.0880, lng: 34.8320 },
+            { id: 'bnei_brak_pardo1', name: 'פרדו 1, בני ברק', lat: 32.0800, lng: 34.8280 },
+            { id: 'bnei_brak_giborey11', name: 'גיבורי ישראל 11, בני ברק', lat: 32.0790, lng: 34.8350 },
+            { id: 'bnei_brak_shevtey15', name: 'שבטי ישראל 15, בני ברק', lat: 32.0910, lng: 34.8340 },
+            { id: 'bnei_brak_rabiorakiva142', name: 'רבי עקיבא 142, בני ברק', lat: 32.0865, lng: 34.8360 },
+            { id: 'bnei_brak_nehemia7', name: 'נחמיה 7, בני ברק', lat: 32.0840, lng: 34.8310 },
+            { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד', lat: 32.0520, lng: 34.9530 }
         ];
 
+        let currentBranchId = 'bnei_brak_jerusalem9';
+        let customers = {};
+        let printQueueItems = [];
         let selectedProducts = [];
         let activeProductToAdd = "";
 
-        let customers = JSON.parse(localStorage.getItem('mashbir_customers') || '{}');
-        let printQueueItems = [];
+        const productCatalog = [
+            "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)", "קוקה קולה ליטר רגיל (רביעה)", "קוקה קולה ליטר זירו (רביעה)",
+            "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)", "סבן אפ רגיל (שישייה)", "סבן אפ זירו (שישייה)",
+            "ספרייט רגיל (שישייה)", "ספרייט זירו (שישייה)", "מרינדה (שישייה)", "פאנטה (שישייה)",
+            "RC קולה רגיל (שישייה)", "RC קולה זירו (שישייה)", "תות פלב (שישייה)", "אשכוליות (שישייה)",
+            "סודה טמפו (שישייה)", "סודה טמפו בקבוקי ליטר (רביעה)", "סודה שוופס רגיל (שישייה / רביעה)", "סודה שוופס בטעמים (שישייה)",
+            "מי עדן סודה / הגזה חזקה (שישייה)", "מי עדן סודה בקבוקי ליטר", "נביעות סודה (שישייה)", "עין גדי סודה (שישייה)",
+            "סודה קריסטל / מותגים נוספים (שישייה)", "סודה עדינה / הגזה עדינה", "נביעות - שישיית חצי ליטר (0.5L)", "נביעות - שישיית ליטר וחצי (1.5L)",
+            "מי עדן - שישיית חצי ליטר (0.5L)", "מי עדן - שישיית ליטר וחצי (1.5L)", "עין גדי - שישיית חצי ליטר (0.5L)", "עין גדי - שישיית ליטר וחצי (1.5L)",
+            "סן בנדיטו - שישיית חצי ליטר (0.5L)", "סן בנדיטו - שישיית ליטר וחצי (1.5L)", "סן פלגרינו מים מוגזים", "מיץ ענבים תירוש (בקבוק ליטר)",
+            "מיץ תפוזים טבעי / סחוט (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)"
+        ];
 
         const customerNameInput = document.getElementById('customer-name');
         const autocompleteList = document.getElementById('autocomplete-list');
@@ -391,10 +382,106 @@
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalQtyInput = document.getElementById('modal-qty-input');
 
-        updateSavedCustomersUI();
-        updatePreview();
+        function initAppBranches() {
+            const select = document.getElementById('manual-branch-select');
+            select.innerHTML = '';
+            branches.forEach(b => {
+                let opt = document.createElement('option');
+                opt.value = b.id;
+                opt.innerText = b.name;
+                select.appendChild(opt);
+            });
 
-        // Customer Autocomplete
+            const savedManualBranch = localStorage.getItem('mashbir_manual_branch');
+            if (savedManualBranch && branches.some(b => b.id === savedManualBranch)) {
+                setBranch(savedManualBranch);
+                return;
+            }
+
+            setBranch('bnei_brak_jerusalem9');
+        }
+
+        window.setBranch = async function(branchId, isManual = false) {
+            currentBranchId = branchId;
+            if (isManual) {
+                localStorage.setItem('mashbir_manual_branch', branchId);
+            }
+            const branchObj = branches.find(b => b.id === branchId);
+            const branchNameText = branchObj ? branchObj.name : branchId;
+            
+            document.getElementById('top-branch-name').innerText = branchNameText;
+            document.getElementById('footer-branch-name').innerText = branchNameText;
+            document.getElementById('manual-branch-select').value = branchId;
+            
+            await loadCustomersFromCloud();
+        }
+
+        window.openBranchModal = function() {
+            document.getElementById('branch-modal').classList.remove('hidden');
+        }
+
+        window.closeBranchModal = function() {
+            document.getElementById('branch-modal').classList.add('hidden');
+        }
+
+        window.confirmManualBranch = function() {
+            const selectedId = document.getElementById('manual-branch-select').value;
+            setBranch(selectedId, true);
+            closeBranchModal();
+        }
+
+        async function loadCustomersFromCloud() {
+            customers = {};
+            const container = document.getElementById('saved-customers-list');
+            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>';
+            try {
+                const q = query(collection(db, "branch_customers"), where("branchId", "==", currentBranchId));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    customers[data.customerName] = {
+                        street: data.street,
+                        city: data.city,
+                        apartment: data.apartment,
+                        floor: data.floor,
+                        phone: data.phone,
+                        notes: data.notes
+                    };
+                });
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה בטעינת לקוחות:", e);
+                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בטעינה. ודא שחוקי Firestore פתוחים.</p>';
+            }
+        }
+
+        async function saveCustomerToCloud(name, data) {
+            try {
+                await setDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`), {
+                    branchId: currentBranchId,
+                    customerName: name,
+                    ...data,
+                    updatedAt: new Date()
+                });
+                customers[name] = data;
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה בשמירת לקוח בענן:", e);
+                alert("שגיאה בשמירת הלקוח לענן. בדוק את חיבור האינטרנט וחוקי ה-Firebase שלך.");
+            }
+        }
+
+        window.deleteCustomer = async function(name) {
+            if(!confirm(`האם למחוק את הלקוח ${name}?`)) return;
+            try {
+                await deleteDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`));
+                delete customers[name];
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה במחיקת לקוח:", e);
+            }
+        }
+
         customerNameInput.addEventListener('input', function() {
             const val = this.value.trim();
             autocompleteList.innerHTML = '';
@@ -422,8 +509,7 @@
             autocompleteList.classList.remove('hidden');
         });
 
-        // Product Catalog Search & Filtering
-        function filterProducts() {
+        window.filterProducts = function() {
             const val = productSearchInput.value.trim().toLowerCase();
             productSuggestions.innerHTML = '';
             if (!val) {
@@ -433,7 +519,6 @@
 
             const matches = productCatalog.filter(p => p.toLowerCase().includes(val));
             if (matches.length === 0) {
-                // Allow adding custom text if not found
                 const div = document.createElement('div');
                 div.className = 'p-3 hover:bg-red-50 cursor-pointer text-sm font-bold text-red-600';
                 div.textContent = `הוסף כטקסט חופשי: "${productSearchInput.value}"`;
@@ -459,26 +544,26 @@
             productSuggestions.classList.remove('hidden');
         }
 
-        function openQtyModal(productName) {
+        window.openQtyModal = function(productName) {
             activeProductToAdd = productName;
             modalProductTitle.textContent = `כמה יחידות מ: ${productName}?`;
             modalQtyInput.value = "1";
             qtyModal.classList.remove('hidden');
         }
 
-        function adjustModalQty(amount) {
+        window.adjustModalQty = function(amount) {
             let current = parseInt(modalQtyInput.value) || 1;
             current += amount;
             if (current < 1) current = 1;
             modalQtyInput.value = current;
         }
 
-        function closeQtyModal() {
+        window.closeQtyModal = function() {
             qtyModal.classList.add('hidden');
             activeProductToAdd = "";
         }
 
-        function confirmAddProduct() {
+        window.confirmAddProduct = function() {
             const qty = parseInt(modalQtyInput.value) || 1;
             selectedProducts.push({ name: activeProductToAdd, qty: qty });
             closeQtyModal();
@@ -486,7 +571,7 @@
             updatePreview();
         }
 
-        function removeSelectedProduct(index) {
+        window.removeSelectedProduct = function(index) {
             selectedProducts.splice(index, 1);
             updateSelectedProductsUI();
             updatePreview();
@@ -520,7 +605,7 @@
             wrapper.classList.remove('hidden');
         }
 
-        function fillCustomerData(name) {
+        window.fillCustomerData = function(name) {
             const data = customers[name];
             if (!data) return;
             customerNameInput.value = name;
@@ -533,7 +618,7 @@
             updatePreview();
         }
 
-        function updatePreview() {
+        window.updatePreview = function() {
             document.getElementById('prev-name').textContent = customerNameInput.value.trim() || 'שם הלקוח';
             document.getElementById('prev-street').textContent = streetInput.value.trim() || 'רחוב ומספר';
             document.getElementById('prev-apartment').textContent = apartmentInput.value.trim() || '-';
@@ -554,28 +639,11 @@
             }
         }
 
-        function saveCurrentCustomer() {
-            const name = customerNameInput.value.trim();
-            if (!name) return;
-
-            customers[name] = {
-                street: streetInput.value.trim(),
-                city: cityInput.value.trim(),
-                apartment: apartmentInput.value.trim(),
-                floor: floorInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                notes: notesInput.value.trim()
-            };
-
-            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-            updateSavedCustomersUI();
-        }
-
         function updateSavedCustomersUI() {
             const container = document.getElementById('saved-customers-list');
             const keys = Object.keys(customers);
             if (keys.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>';
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים בסניף זה.</p>';
                 return;
             }
 
@@ -595,13 +663,7 @@
             });
         }
 
-        function deleteCustomer(name) {
-            delete customers[name];
-            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-            updateSavedCustomersUI();
-        }
-
-        function clearForm() {
+        window.clearForm = function() {
             document.getElementById('delivery-form').reset();
             cityInput.value = 'בני ברק';
             copiesInput.value = '1';
@@ -610,7 +672,7 @@
             updatePreview();
         }
 
-        function addToQueue() {
+        window.addToQueue = async function() {
             const name = customerNameInput.value.trim();
             const street = streetInput.value.trim();
             const phone = phoneInput.value.trim();
@@ -620,7 +682,17 @@
                 return;
             }
 
-            saveCurrentCustomer();
+            const customerData = {
+                street: streetInput.value.trim(),
+                city: cityInput.value.trim(),
+                apartment: apartmentInput.value.trim(),
+                floor: floorInput.value.trim(),
+                phone,
+                notes: notesInput.value.trim()
+            };
+
+            // שמירה לענן ועדכון הרשימה מיד
+            await saveCustomerToCloud(name, customerData);
 
             const item = {
                 name,
@@ -664,12 +736,12 @@
             });
         }
 
-        function removeFromQueue(index) {
+        window.removeFromQueue = function(index) {
             printQueueItems.splice(index, 1);
             updateQueueUI();
         }
 
-        function clearQueue() {
+        window.clearQueue = function() {
             printQueueItems = [];
             updateQueueUI();
         }
@@ -683,9 +755,8 @@
             }, 3000);
         }
 
-        function printQueue() {
+        window.printQueue = function() {
             if (printQueueItems.length === 0) return;
-
             showToast("מכין עמודי הדפסה מהאתר...");
 
             let allLabelsHTML = [];
@@ -699,8 +770,8 @@
                                 ארגז ${i} מתוך ${totalCopies}
                             </div>
 
-                            <div style="text-align: center; margin-top: 14px;">
-                                <img src="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg" alt="משביר לעמו" style="height: 68px; width: 68px; object-fit: cover; margin: 0 auto; border-radius: 50%;">
+                            <div style="text-align: center; margin-top: 10px;">
+                                <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 60px; width: auto; object-fit: contain; margin: 0 auto;">
                             </div>
                             
                             <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
@@ -743,7 +814,6 @@
                                 ${item.extras ? `<div style="font-size: 14px; font-weight: 900; background: #fee2e2; color: #991b1b; padding: 6px 8px; border-radius: 8px; border: 2px solid #fecaca; margin-top: 4px;">תוספות: ${item.extras}</div>` : ''}
                                 ${item.notes ? `<div style="font-size: 13px; font-weight: bold; color: #374151; margin-top: 2px;">הערות: ${item.notes}</div>` : ''}
                             </div>
-
                             <div></div>
                         </div>
                     `);
@@ -756,63 +826,49 @@
             let pagesContent = '';
             for (let i = 0; i < allLabelsHTML.length; i += 4) {
                 const chunk = allLabelsHTML.slice(i, i + 4);
-                
                 let pageInner = '';
                 chunk.forEach((labelHtml, index) => {
                     const col = index % 2;
                     const row = Math.floor(index / 2);
-                    const leftPos = col * 105;
-                    const topPos = row * 148.5;
-
-                    pageInner += `
-                        <div style="position: absolute; left: ${leftPos}mm; top: ${topPos}mm; width: 105mm; height: 148.5mm;">
-                            ${labelHtml}
-                        </div>
-                    `;
+                    pageInner += `<div style="position: absolute; left: ${col * 105}mm; top: ${row * 148.5}mm; width: 105mm; height: 148.5mm;">${labelHtml}</div>`;
                 });
-
-                pagesContent += `
-                    <div class="page-break">
-                        ${pageInner}
-                    </div>
-                `;
+                pagesContent += `<div class="page-break">${pageInner}</div>`;
             }
 
-            printHeader = pagesContent; // fallback variable
             printSection.innerHTML = pagesContent;
-            
-            setTimeout(() => {
-                window.print();
-            }, 400);
+            setTimeout(() => { window.print(); }, 400);
         }
 
-        function exportData() {
+        window.exportData = function() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customers));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "mashbir_customers_backup.json");
+            downloadAnchor.setAttribute("download", `mashbir_customers_${currentBranchId}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
         }
 
-        function importData(event) {
+        window.importData = function(event) {
             const file = event.target.files[0];
             if (!file) return;
-            constReader = new FileReader();
-            constReader.onload = function(e) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
-                    customers = imported;
-                    localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-                    updateSavedCustomersUI();
-                    alert('הלקוחות שוחזרו בהצלחה!');
+                    for (const [name, data] of Object.entries(imported)) {
+                        await saveCustomerToCloud(name, data);
+                    }
+                    alert('הלקוחות שוחזרו בהצלחה לענן עבור סניף זה!');
                 } catch(err) {
                     alert('קובץ שגוי או פגום.');
                 }
             };
-            constReader.readAsText(file);
+            reader.readAsText(file);
         }
+
+        initAppBranches();
+        updatePreview();
     </script>
 </body>
 </html>
