@@ -58,13 +58,24 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <!-- Header with Original Logo (No Round Crop) -->
+    <!-- פס עליון לניהול סניפים אוטומטי -->
+    <div class="bg-blue-900 text-white px-4 py-2 flex flex-col sm:flex-row justify-between items-center text-xs md:text-sm shadow-md">
+        <div class="flex items-center gap-2 mb-1 sm:mb-0">
+            <span>📍 סניף פעיל נוכחי:</span>
+            <strong id="current-branch-display" class="bg-blue-800 px-2 py-1 rounded text-yellow-300">מזהה מיקום...</strong>
+        </div>
+        <button onclick="openBranchModal()" class="bg-white text-blue-900 font-bold px-3 py-1 rounded-lg hover:bg-blue-50 transition shadow-sm">
+            🔄 זה לא הסניף שלי? בחר ידנית
+        </button>
+    </div>
+
+    <!-- Header with Original Logo -->
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
             <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
             <div>
                 <h1 class="font-black text-lg">ניהול והדפסת משלוחים – המשביר לעמו</h1>
-                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה עם קטלוג ענק ומקיף</p>
+                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה מחוברת לענן</p>
             </div>
         </div>
         <button id="install-btn" style="display: none;" onclick="installApp()" class="bg-white text-red-700 hover:bg-red-50 px-4 py-2 rounded-2xl font-black text-xs shadow-md transition flex items-center gap-1.5">
@@ -88,7 +99,7 @@
                         <label class="block text-sm font-bold text-gray-700 mb-1">שם לקוח</label>
                         <input type="text" id="customer-name" required autocomplete="off" oninput="updatePreview()"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition font-medium"
-                            placeholder="הקלד או בחר לקוח שמור...">
+                            placeholder="הקלד או בחר לקוח שמור מהענן...">
                         <div id="autocomplete-list" class="absolute z-20 w-full bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 max-h-40 overflow-y-auto hidden"></div>
                     </div>
 
@@ -136,7 +147,7 @@
                         <div class="flex gap-2">
                             <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
-                                placeholder="הקלד לחיפוש מהיר (למשל: סודה טמפו, מי עדן, נביעות, קולה)...">
+                                placeholder="הקלד לחיפוש מהיר מהקטלוג הענק...">
                         </div>
                         <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
                     </div>
@@ -251,13 +262,26 @@
         </div>
 
         <div class="lg:col-span-3 bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col">
-            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים</h3>
+            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים בסניף בענן</h3>
             <div id="saved-customers-list" class="flex-1 overflow-y-auto space-y-2 max-h-[450px]">
-                <p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>
+                <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
             </div>
         </div>
 
     </main>
+
+    <!-- מודל בחירת סניף ידנית -->
+    <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
+            <h3 class="text-lg font-black text-gray-900">בחירת סניף ידנית</h3>
+            <p class="text-xs text-gray-500">בחר את הסניף שאליו ברצונך להתחבר כעת:</p>
+            <select id="manual-branch-select" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none font-bold text-sm"></select>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="closeBranchModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition">ביטול</button>
+                <button onclick="confirmManualBranch()" class="bg-blue-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition">בחר סניף</button>
+            </div>
+        </div>
+    </div>
 
     <div id="print-section" style="display: none;"></div>
 
@@ -287,24 +311,42 @@
         </p>
     </footer>
 
-    <script>
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            const installBtn = document.getElementById('install-btn');
-            if (installBtn) installBtn.style.display = 'flex';
-        });
+    <!-- Firebase Scripts and Main Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-        async function installApp() {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                document.getElementById('install-btn').style.display = 'none';
-            }
-            deferredPrompt = null;
-        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjDztTO4rTps9J7gF-9jL1Tb0bF_KeFXo",
+            authDomain: "mashbir-delivery.firebaseapp.com",
+            projectId: "mashbir-delivery",
+            storageBucket: "mashbir-delivery.firebasestorage.app",
+            messagingSenderId: "584747007833",
+            appId: "1:584747007833:web:da22e420efc16a33aa1648",
+            measurementId: "G-1M51Q4HRLZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // רשימת 9 הסניפים עם קואורדינטות משוערות
+        const branches = [
+            { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק', lat: 32.0833, lng: 34.8333 },
+            { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק', lat: 32.0850, lng: 34.8300 },
+            { id: 'bnei_brak_abravanel101', name: 'אברבנל 101, בני ברק', lat: 32.0880, lng: 34.8320 },
+            { id: 'bnei_brak_pardo1', name: 'פרדו 1, בני ברק', lat: 32.0800, lng: 34.8280 },
+            { id: 'bnei_brak_giborey11', name: 'גיבורי ישראל 11, בני ברק', lat: 32.0790, lng: 34.8350 },
+            { id: 'bnei_brak_shevtey15', name: 'שבטי ישראל 15, בני ברק', lat: 32.0910, lng: 34.8340 },
+            { id: 'bnei_brak_rabiorakiva142', name: 'רבי עקיבא 142, בני ברק', lat: 32.0865, lng: 34.8360 },
+            { id: 'bnei_brak_nehemia7', name: 'נחמיה 7, בני ברק', lat: 32.0840, lng: 34.8310 },
+            { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד', lat: 32.0520, lng: 34.9530 }
+        ];
+
+        let currentBranchId = '';
+        let customers = {};
+        let printQueueItems = [];
+        let selectedProducts = [];
+        let activeProductToAdd = "";
 
         const productCatalog = [
             "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)",
@@ -340,12 +382,6 @@
             "מיץ אשכוליות / תפוחים (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)"
         ];
 
-        let selectedProducts = [];
-        let activeProductToAdd = "";
-
-        let customers = JSON.parse(localStorage.getItem('mashbir_customers') || '{}');
-        let printQueueItems = [];
-
         const customerNameInput = document.getElementById('customer-name');
         const autocompleteList = document.getElementById('autocomplete-list');
         const streetInput = document.getElementById('street');
@@ -363,8 +399,116 @@
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalQtyInput = document.getElementById('modal-qty-input');
 
-        updateSavedCustomersUI();
-        updatePreview();
+        // אתחול מערכת הסניפים והמיקום
+        function initAppBranches() {
+            const select = document.getElementById('manual-branch-select');
+            select.innerHTML = '';
+            branches.forEach(b => {
+                let opt = document.createElement('option');
+                opt.value = b.id;
+                opt.innerText = b.name;
+                select.appendChild(opt);
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    findClosestBranch(userLat, userLng);
+                }, () => {
+                    setBranch(branches[0].id);
+                });
+            } else {
+                setBranch(branches[0].id);
+            }
+        }
+
+        function findClosestBranch(lat, lng) {
+            let closest = branches[0];
+            let minDistance = Infinity;
+            branches.forEach(b => {
+                let dist = Math.hypot(b.lat - lat, b.lng - lng);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    closest = b;
+                }
+            });
+            setBranch(closest.id);
+        }
+
+        window.setBranch = async function(branchId) {
+            currentBranchId = branchId;
+            const branchObj = branches.find(b => b.id === branchId);
+            document.getElementById('current-branch-display').innerText = branchObj ? branchObj.name : branchId;
+            await loadCustomersFromCloud();
+        }
+
+        window.openBranchModal = function() {
+            document.getElementById('branch-modal').classList.remove('hidden');
+        }
+
+        window.closeBranchModal = function() {
+            document.getElementById('branch-modal').classList.add('hidden');
+        }
+
+        window.confirmManualBranch = function() {
+            const selectedId = document.getElementById('manual-branch-select').value;
+            setBranch(selectedId);
+            closeBranchModal();
+        }
+
+        // טעינת לקוחות מהענן לפי סניף
+        async function loadCustomersFromCloud() {
+            customers = {};
+            const container = document.getElementById('saved-customers-list');
+            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>';
+            try {
+                const q = query(collection(db, "branch_customers"), where("branchId", "==", currentBranchId));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    customers[data.customerName] = {
+                        street: data.street,
+                        city: data.city,
+                        apartment: data.apartment,
+                        floor: data.floor,
+                        phone: data.phone,
+                        notes: data.notes
+                    };
+                });
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה בטעינת לקוחות:", e);
+                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בחיבור לענן.</p>';
+            }
+        }
+
+        // שמירת לקוח בענן
+        async function saveCustomerToCloud(name, data) {
+            try {
+                await setDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`), {
+                    branchId: currentBranchId,
+                    customerName: name,
+                    ...data,
+                    updatedAt: new Date()
+                });
+                customers[name] = data;
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה בשמירת לקוח בענן:", e);
+            }
+        }
+
+        // מחיקת לקוח מהענן
+        window.deleteCustomer = async function(name) {
+            try {
+                await deleteDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`));
+                delete customers[name];
+                updateSavedCustomersUI();
+            } catch (e) {
+                console.error("שגיאה במחיקת לקוח:", e);
+            }
+        }
 
         customerNameInput.addEventListener('input', function() {
             const val = this.value.trim();
@@ -393,7 +537,7 @@
             autocompleteList.classList.remove('hidden');
         });
 
-        function filterProducts() {
+        window.filterProducts = function() {
             const val = productSearchInput.value.trim().toLowerCase();
             productSuggestions.innerHTML = '';
             if (!val) {
@@ -428,26 +572,26 @@
             productSuggestions.classList.remove('hidden');
         }
 
-        function openQtyModal(productName) {
+        window.openQtyModal = function(productName) {
             activeProductToAdd = productName;
             modalProductTitle.textContent = `כמה יחידות מ: ${productName}?`;
             modalQtyInput.value = "1";
             qtyModal.classList.remove('hidden');
         }
 
-        function adjustModalQty(amount) {
+        window.adjustModalQty = function(amount) {
             let current = parseInt(modalQtyInput.value) || 1;
             current += amount;
             if (current < 1) current = 1;
             modalQtyInput.value = current;
         }
 
-        function closeQtyModal() {
+        window.closeQtyModal = function() {
             qtyModal.classList.add('hidden');
             activeProductToAdd = "";
         }
 
-        function confirmAddProduct() {
+        window.confirmAddProduct = function() {
             const qty = parseInt(modalQtyInput.value) || 1;
             selectedProducts.push({ name: activeProductToAdd, qty: qty });
             closeQtyModal();
@@ -455,7 +599,7 @@
             updatePreview();
         }
 
-        function removeSelectedProduct(index) {
+        window.removeSelectedProduct = function(index) {
             selectedProducts.splice(index, 1);
             updateSelectedProductsUI();
             updatePreview();
@@ -489,7 +633,7 @@
             wrapper.classList.remove('hidden');
         }
 
-        function fillCustomerData(name) {
+        window.fillCustomerData = function(name) {
             const data = customers[name];
             if (!data) return;
             customerNameInput.value = name;
@@ -502,7 +646,7 @@
             updatePreview();
         }
 
-        function updatePreview() {
+        window.updatePreview = function() {
             document.getElementById('prev-name').textContent = customerNameInput.value.trim() || 'שם הלקוח';
             document.getElementById('prev-street').textContent = streetInput.value.trim() || 'רחוב ומספר';
             document.getElementById('prev-apartment').textContent = apartmentInput.value.trim() || '-';
@@ -523,28 +667,11 @@
             }
         }
 
-        function saveCurrentCustomer() {
-            const name = customerNameInput.value.trim();
-            if (!name) return;
-
-            customers[name] = {
-                street: streetInput.value.trim(),
-                city: cityInput.value.trim(),
-                apartment: apartmentInput.value.trim(),
-                floor: floorInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                notes: notesInput.value.trim()
-            };
-
-            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-            updateSavedCustomersUI();
-        }
-
         function updateSavedCustomersUI() {
             const container = document.getElementById('saved-customers-list');
             const keys = Object.keys(customers);
             if (keys.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>';
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים בסניף זה.</p>';
                 return;
             }
 
@@ -564,13 +691,7 @@
             });
         }
 
-        function deleteCustomer(name) {
-            delete customers[name];
-            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-            updateSavedCustomersUI();
-        }
-
-        function clearForm() {
+        window.clearForm = function() {
             document.getElementById('delivery-form').reset();
             cityInput.value = 'בני ברק';
             copiesInput.value = '1';
@@ -579,7 +700,7 @@
             updatePreview();
         }
 
-        function addToQueue() {
+        window.addToQueue = function() {
             const name = customerNameInput.value.trim();
             const street = streetInput.value.trim();
             const phone = phoneInput.value.trim();
@@ -589,7 +710,16 @@
                 return;
             }
 
-            saveCurrentCustomer();
+            const customerData = {
+                street: streetInput.value.trim(),
+                city: cityInput.value.trim(),
+                apartment: apartmentInput.value.trim(),
+                floor: floorInput.value.trim(),
+                phone,
+                notes: notesInput.value.trim()
+            };
+
+            saveCustomerToCloud(name, customerData);
 
             const item = {
                 name,
@@ -633,12 +763,12 @@
             });
         }
 
-        function removeFromQueue(index) {
+        window.removeFromQueue = function(index) {
             printQueueItems.splice(index, 1);
             updateQueueUI();
         }
 
-        function clearQueue() {
+        window.clearQueue = function() {
             printQueueItems = [];
             updateQueueUI();
         }
@@ -652,7 +782,7 @@
             }, 3000);
         }
 
-        function printQueue() {
+        window.printQueue = function() {
             if (printQueueItems.length === 0) return;
 
             showToast("מכין עמודי הדפסה מהאתר...");
@@ -668,7 +798,6 @@
                                 ארגז ${i} מתוך ${totalCopies}
                             </div>
 
-                            <!-- Natural Logo Render without circular cropping -->
                             <div style="text-align: center; margin-top: 10px;">
                                 <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 60px; width: auto; object-fit: contain; margin: 0 auto;">
                             </div>
@@ -726,7 +855,6 @@
             let pagesContent = '';
             for (let i = 0; i < allLabelsHTML.length; i += 4) {
                 const chunk = allLabelsHTML.slice(i, i + 4);
-                
                 let pageInner = '';
                 chunk.forEach((labelHtml, index) => {
                     const col = index % 2;
@@ -755,33 +883,55 @@
             }, 400);
         }
 
-        function exportData() {
+        window.exportData = function() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customers));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "mashbir_customers_backup.json");
+            downloadAnchor.setAttribute("download", `mashbir_customers_${currentBranchId}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
         }
 
-        function importData(event) {
+        window.importData = function(event) {
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
-                    customers = imported;
-                    localStorage.setItem('mashbir_customers', JSON.stringify(customers));
-                    updateSavedCustomersUI();
-                    alert('הלקוחות שוחזרו בהצלחה!');
+                    for (const [name, data] of Object.entries(imported)) {
+                        await saveCustomerToCloud(name, data);
+                    }
+                    alert('הלקוחות שוחזרו בהצלחה לענן עבור סניף זה!');
                 } catch(err) {
                     alert('קובץ שגוי או פגום.');
                 }
             };
             reader.readAsText(file);
         }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) installBtn.style.display = 'flex';
+        });
+
+        window.installApp = async function() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                document.getElementById('install-btn').style.display = 'none';
+            }
+            deferredPrompt = null;
+        }
+
+        // הפעלה ראשונית של המערכת
+        initAppBranches();
+        updatePreview();
     </script>
 </body>
 </html>
