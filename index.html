@@ -3,85 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניהול והדפסת משלוחים – המשביר לעמו</title>
-    
-    <meta name="apple-mobile-web-app-title" content="ניהול והדפסת משלוחים – המשביר לעמו">
-    <meta name="application-name" content="ניהול והדפסת משלוחים – המשביר לעמו">
+    <title>משביר לעמו - ניהול והדפסת שילוט משלוחים</title>
     <meta name="theme-color" content="#dc2626">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png">
     
-    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Heebo', sans-serif; background-color: #f3f4f6; }
-        
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0 !important;
-            }
-            body > *:not(#print-section) {
-                display: none !important;
-            }
+            body * { visibility: hidden; }
+            #print-section, #print-section * { visibility: visible; }
             #print-section {
-                display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 210mm !important;
-                background: white !important;
-                z-index: 999999 !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
             }
             .page-break {
-                width: 210mm !important;
-                height: 297mm !important;
-                max-height: 297mm !important;
-                position: relative !important;
-                overflow: hidden !important;
-                page-break-after: always !important;
-                break-after: page !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                margin: 0 !important;
-                padding: 0 !important;
+                page-break-after: always;
+                break-after: page;
             }
-            .page-break:last-of-type {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
+        }
+        .label-box {
+            border: 2px dashed #9ca3af;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+            background: #fff;
+            position: relative;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-            <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
-            <div>
-                <h1 class="font-black text-lg">ניהול והדפסת משלוחים – המשביר לעמו</h1>
-                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה מחוברת לענן (לפי סניפים)</p>
-            </div>
-        </div>
+    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 text-center flex flex-col items-center justify-center">
+        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-16 w-auto object-contain mb-2 bg-white rounded-full p-1 shadow-md">
+        <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה</p>
     </header>
-
-    <div class="bg-white border-b shadow-sm py-2.5 px-4">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-sm">
-            <div class="flex items-center gap-2 font-bold text-gray-800">
-                <span class="text-lg">📍</span>
-                <span>סניף פעיל כעת בענן:</span>
-                <span id="top-branch-name" class="text-red-700 font-black text-base">טוען סניף...</span>
-            </div>
-            <button onclick="openBranchModal()" class="text-xs bg-red-50 text-red-700 border border-red-200 font-bold px-3 py-1.5 rounded-xl hover:bg-red-100 transition">
-                שנה סניף (והחלף מסד נתונים)
-            </button>
-        </div>
-    </div>
 
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- טופס הוספה -->
         <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl p-6 flex flex-col justify-between border border-gray-100">
             <div>
                 <div class="flex justify-between items-center mb-6 border-b pb-3">
@@ -96,85 +61,52 @@
                         <label class="block text-sm font-bold text-gray-700 mb-1">שם לקוח</label>
                         <input type="text" id="customer-name" required autocomplete="off" oninput="updatePreview()"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition font-medium"
-                            placeholder="הקלד שם לקוח או בחר מהענן של הסניף...">
+                            placeholder="הקלד או בחר לקוח שמור...">
                         <div id="autocomplete-list" class="absolute z-20 w-full bg-white border border-gray-200 rounded-2xl shadow-xl mt-1 max-h-40 overflow-y-auto hidden"></div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">רחוב ומספר בניין</label>
-                            <input type="text" id="street" required oninput="updatePreview()"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: ירושלים 9">
-                        </div>
-                        <div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="md:col-span-1">
                             <label class="block text-sm font-bold text-gray-700 mb-1">עיר</label>
                             <input type="text" id="city" value="בני ברק" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">כתובת / רחוב ומספר</label>
+                            <input type="text" id="street" required oninput="updatePreview()"
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: ירושלים 9">
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-3 gap-3">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר דירה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">דירה</label>
                             <input type="text" id="apartment" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="דירה">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר קומה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">קומה</label>
                             <input type="text" id="floor" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="קומה">
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">טלפון נייד</label>
                             <input type="tel" id="phone" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="050-0000000">
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1">הערות למשלוח (אופציונלי)</label>
+                            <input type="text" id="notes" oninput="updatePreview()"
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: לצלצל באינטרקום">
+                        </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">כמות ארגזים (עותקים)</label>
-                            <input type="number" id="copies" value="1" min="1" max="20" oninput="updatePreview()"
+                            <label class="block text-sm font-bold text-gray-700 mb-1">עותקים</label>
+                            <input type="number" id="copies" value="1" min="1" max="20"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
-                    </div>
-
-                    <!-- אזור בחירת שתייה ומוצרים מהיר -->
-                    <div class="relative bg-red-50/50 p-4 rounded-2xl border border-red-100">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">💧 שישיות ומשקאות (לחץ להוספה מהירה):</label>
-                        
-                        <!-- חיפוש חופשי -->
-                        <div class="mb-3">
-                            <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
-                                class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition text-sm" 
-                                placeholder="חפש מוצר נוסף מהקטלוג...">
-                            <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
-                        </div>
-
-                        <!-- כפתורי קיצור מהירים לשתייה נפוצה -->
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <button type="button" onclick="openQtyModal('קוקה קולה רגיל (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🥤 קולה רגיל</button>
-                            <button type="button" onclick="openQtyModal('קוקה קולה זירו (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🥤 קולה זירו</button>
-                            <button type="button" onclick="openQtyModal('פפסי רגיל (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🥤 פפסי רגיל</button>
-                            <button type="button" onclick="openQtyModal('פפסי זירו (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🥤 פפסי זירו</button>
-                            <button type="button" onclick="openQtyModal('סבן אפ רגיל (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🍋 סבן אפ</button>
-                            <button type="button" onclick="openQtyModal('ספרייט זירו (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🍋 ספרייט זירו</button>
-                            <button type="button" onclick="openQtyModal('סודה טמפו (שישייה)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">🫧 סודה טמפו</button>
-                            <button type="button" onclick="openQtyModal('נביעות - שישיית חצי ליטר (0.5L)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">💧 נביעות 0.5L</button>
-                            <button type="button" onclick="openQtyModal('נביעות - שישיית ליטר וחצי (1.5L)')" class="bg-white hover:bg-red-100 text-red-900 border border-red-200 text-xs font-bold p-2 rounded-xl transition text-right shadow-sm truncate">💧 נביעות 1.5L</button>
-                        </div>
-                    </div>
-
-                    <div id="selected-extras-wrapper" class="hidden">
-                        <label class="block text-xs font-bold text-gray-500 mb-1">מוצרים שנבחרו להזמנה:</label>
-                        <div id="selected-extras-chips" class="flex flex-wrap gap-2 p-2 bg-red-50 rounded-2xl border border-red-200"></div>
-                    </div>
-                    <input type="hidden" id="extras" value="">
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">הערות למשלוח</label>
-                        <input type="text" id="notes" oninput="updatePreview()"
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="הערות מיוחדות">
                     </div>
                 </form>
             </div>
@@ -182,24 +114,58 @@
             <div class="mt-6 space-y-3">
                 <button type="button" onclick="addToQueue()"
                     class="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black py-4 rounded-2xl shadow-lg hover:from-red-700 hover:to-red-800 transition transform active:scale-98 flex items-center justify-center gap-2 text-lg">
-                    <span>➕</span> הוסף לתור ההדפסה ושמור בענן הסניף
+                    <span>➕</span> הוסף לתור ההדפסה
                 </button>
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="exportData()"
+                        class="bg-gray-100 text-gray-700 font-bold py-2.5 rounded-2xl text-sm hover:bg-gray-200 transition">
+                        💾 גיבוי לקוחות
+                    </button>
+                    <button type="button" onclick="document.getElementById('import-file').click()"
+                        class="bg-gray-100 text-gray-700 font-bold py-2.5 rounded-2xl text-sm hover:bg-gray-200 transition">
+                        📂 שחזור לקוחות
+                    </button>
+                    <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
+                </div>
             </div>
         </div>
 
-        <!-- תצוגה מקדימה ותור -->
         <div class="lg:col-span-3 space-y-6 flex flex-col">
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center">
                 <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
-                <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
-                    <div id="prev-box-badge" class="absolute top-3 left-3 bg-gray-100 text-gray-900 text-xs font-black px-3 py-1 rounded-full border-2 border-gray-400">ארגז 1 מתוך 1</div>
-                    <div class="text-center mt-3"><img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-16 w-auto object-contain mx-auto"></div>
-                    <div class="space-y-2 my-auto text-right">
-                        <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">שם:</span><span id="prev-name" class="text-base font-black text-gray-900">שם הלקוח</span></div>
-                        <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">כתובת:</span><span id="prev-street" class="text-sm font-bold text-gray-900">רחוב ומספר</span></div>
-                        <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">עיר:</span><span id="prev-city" class="text-sm font-bold text-gray-900">בני ברק</span></div>
-                        <div class="flex items-center gap-2"><span class="text-xs font-bold text-gray-600">טלפון:</span><span id="prev-phone" class="text-base font-black text-gray-900">050-0000000</span></div>
+                <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 flex flex-col justify-between bg-white text-right">
+                    
+                    <div class="text-center">
+                        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 mx-auto object-contain">
                     </div>
+
+                    <div class="space-y-2.5 my-auto text-right">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">שם:</span>
+                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
+                                <span id="prev-name" class="text-base font-black text-gray-900">שם הלקוח</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">כתובת:</span>
+                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
+                                <span id="prev-street" class="text-sm font-bold text-gray-800">רחוב ומספר</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">מיקום:</span>
+                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
+                                <span id="prev-city" class="text-xs font-bold text-gray-700">בני ברק</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-gray-500 whitespace-nowrap">טלפון:</span>
+                            <div class="flex-1 border-b-2 border-gray-300 pb-0.5">
+                                <span id="prev-phone" class="text-sm font-black text-red-600">050-0000000</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div></div>
                 </div>
             </div>
@@ -211,244 +177,47 @@
                         <button onclick="clearQueue()" class="text-xs font-bold text-red-500 hover:underline">ניקוי תור</button>
                     </div>
                     <div id="print-queue-list" class="space-y-2 max-h-48 overflow-y-auto">
-                        <p class="text-xs text-gray-400 text-center py-4">התור ריק.</p>
+                        <p class="text-xs text-gray-400 text-center py-4">התור ריק. הוסף משלוחים להדפסה.</p>
                     </div>
                 </div>
                 <button onclick="printQueue()" id="print-btn" disabled
-                    class="mt-4 w-full bg-emerald-600 text-white font-black py-3.5 rounded-2xl shadow-lg hover:bg-emerald-700 transition disabled:opacity-50">
+                    class="mt-4 w-full bg-emerald-600 text-white font-black py-3.5 rounded-2xl shadow-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                     🖨️ הדפס את כל התור (4 בעמוד)
                 </button>
             </div>
         </div>
 
-        <!-- רשימת לקוחות הענן של הסניף הנוכחי -->
         <div class="lg:col-span-3 bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col">
-            <h3 class="text-base font-black text-gray-800 mb-1 border-b pb-2">לקוחות שמורים בסניף בענן</h3>
-            <p id="cloud-status-note" class="text-[11px] text-blue-600 font-bold mb-3">מסונכרן בזמן אמת לסניף הנבחר בלבד</p>
+            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים</h3>
             <div id="saved-customers-list" class="flex-1 overflow-y-auto space-y-2 max-h-[450px]">
-                <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
+                <p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>
             </div>
         </div>
 
     </main>
 
-    <!-- מודל בחירת סניף -->
-    <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
-            <h3 class="text-lg font-black text-gray-900">בחר סניף לעבודה</h3>
-            <p class="text-xs text-gray-500">בחירת סניף תטטעון מיד את מסד הנתונים והלקוחות השמורים שלו מענן ה-Firebase:</p>
-            <select id="manual-branch-select" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none font-bold text-sm"></select>
-            <div class="grid grid-cols-2 gap-3 pt-2">
-                <button onclick="closeBranchModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl">ביטול</button>
-                <button onclick="confirmManualBranch()" class="bg-blue-600 text-white font-bold py-3 rounded-2xl shadow-lg">טען סניף</button>
-            </div>
-        </div>
-    </div>
+    <div id="print-section" class="hidden"></div>
 
-    <div id="print-section" style="display: none;"></div>
+    <footer class="text-center py-6 text-xs text-gray-400">
+        משביר לעמו - מערכת שילוט מתקדמת &copy; 2026
+    </footer>
 
-    <!-- מודל כמות למוצר -->
-    <div id="qty-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
-            <h3 id="modal-product-title" class="text-lg font-black text-gray-900">בחר כמות למוצר</h3>
-            <div class="flex items-center justify-center gap-4">
-                <button onclick="adjustModalQty(-1)" class="w-12 h-12 bg-gray-100 font-bold rounded-2xl">-</button>
-                <input type="number" id="modal-qty-input" value="1" min="1" max="50" class="w-20 text-center py-3 text-2xl font-black bg-gray-50 border rounded-2xl">
-                <button onclick="adjustModalQty(1)" class="w-12 h-12 bg-gray-100 font-bold rounded-2xl">+</button>
-            </div>
-            <div class="grid grid-cols-2 gap-3 pt-2">
-                <button onclick="closeQtyModal()" class="bg-gray-100 font-bold py-3 rounded-2xl">ביטול</button>
-                <button onclick="confirmAddProduct()" class="bg-red-600 text-white font-bold py-3 rounded-2xl">הוסף</button>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-        import { getFirestore, collection, setDoc, doc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCjDztTO4rTps9J7gF-9jL1Tb0bF_KeFXo",
-            authDomain: "mashbir-delivery.firebaseapp.com",
-            projectId: "mashbir-delivery",
-            storageBucket: "mashbir-delivery.firebasestorage.app",
-            messagingSenderId: "584747007833",
-            appId: "1:584747007833:web:da22e420efc16a33aa1648",
-            measurementId: "G-1M51Q4HRLZ"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const branches = [
-            { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק' },
-            { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק' },
-            { id: 'bnei_brak_abravanel101', name: 'אברבנל 101, בני ברק' },
-            { id: 'bnei_brak_pardo1', name: 'פרדו 1, בני ברק' },
-            { id: 'bnei_brak_giborey11', name: 'גיבורי ישראל 11, בני ברק' },
-            { id: 'bnei_brak_shevtey15', name: 'שבטי ישראל 15, בני ברק' },
-            { id: 'bnei_brak_rabiorakiva142', name: 'רבי עקיבא 142, בני ברק' },
-            { id: 'bnei_brak_nehemia7', name: 'נחמיה 7, בני ברק' },
-            { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד' }
-        ];
-
-        let currentBranchId = localStorage.getItem('mashbir_manual_branch') || 'bnei_brak_jerusalem9';
-        let customers = {};
+    <script>
+        let customers = JSON.parse(localStorage.getItem('mashbir_customers') || '{}');
         let printQueueItems = [];
-        let selectedProducts = [];
-        let activeProductToAdd = "";
-        let unsubscribeCloud = null;
-
-        const productCatalog = [
-            "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)", "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)",
-            "סבן אפ רגיל (שישייה)", "ספרייט זירו (שישייה)", "סודה טמפו (שישייה)", "נביעות - שישיית חצי ליטר (0.5L)",
-            "נביעות - שישיית ליטר וחצי (1.5L)", "מי עדן - שישיית חצי ליטר (0.5L)", "מי עדן - שישיית ליטר וחצי (1.5L)"
-        ];
 
         const customerNameInput = document.getElementById('customer-name');
         const autocompleteList = document.getElementById('autocomplete-list');
-        const streetInput = document.getElementById('street');
         const cityInput = document.getElementById('city');
+        const streetInput = document.getElementById('street');
         const apartmentInput = document.getElementById('apartment');
         const floorInput = document.getElementById('floor');
         const phoneInput = document.getElementById('phone');
-        const extrasInput = document.getElementById('extras');
         const notesInput = document.getElementById('notes');
         const copiesInput = document.getElementById('copies');
 
-        function initApp() {
-            const select = document.getElementById('manual-branch-select');
-            select.innerHTML = '';
-            branches.forEach(b => {
-                let opt = document.createElement('option');
-                opt.value = b.id;
-                opt.innerText = b.name;
-                select.appendChild(opt);
-            });
-            select.value = currentBranchId;
-            setBranch(currentBranchId);
-        }
-
-        window.setBranch = function(branchId) {
-            currentBranchId = branchId;
-            localStorage.setItem('mashbir_manual_branch', branchId);
-            const branchObj = branches.find(b => b.id === branchId);
-            const branchNameText = branchObj ? branchObj.name : branchId;
-            
-            document.getElementById('top-branch-name').innerText = branchNameText;
-            document.getElementById('manual-branch-select').value = branchId;
-
-            if (unsubscribeCloud) {
-                unsubscribeCloud();
-            }
-
-            initCloudListenerForBranch(branchId);
-        }
-
-        function initCloudListenerForBranch(branchId) {
-            customers = {};
-            const container = document.getElementById('saved-customers-list');
-            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">מתחבר לענן הסניף...</p>';
-
-            const branchCustomersCol = collection(db, "branches", branchId, "customers_list");
-            
-            unsubscribeCloud = onSnapshot(branchCustomersCol, (snapshot) => {
-                customers = {};
-                container.innerHTML = '';
-                
-                if (snapshot.empty) {
-                    container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים בענן סניף זה.</p>';
-                    return;
-                }
-
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    customers[data.customerName] = {
-                        docId: docSnap.id,
-                        street: data.street,
-                        city: data.city,
-                        apartment: data.apartment,
-                        floor: data.floor,
-                        phone: data.phone,
-                        notes: data.notes
-                    };
-                });
-
-                renderSavedCustomersUI();
-            }, (error) => {
-                console.error("שגיאה בסנכרון ענן:", error);
-                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בטעינת נתוני הענן.</p>';
-            });
-        }
-
-        window.openBranchModal = () => document.getElementById('branch-modal').classList.remove('hidden');
-        window.closeBranchModal = () => document.getElementById('branch-modal').classList.add('hidden');
-        
-        window.confirmManualBranch = function() {
-            const selectedId = document.getElementById('manual-branch-select').value;
-            setBranch(selectedId);
-            closeBranchModal();
-        }
-
-        async function saveCustomerToCloud(name, data) {
-            try {
-                const docRef = doc(db, "branches", currentBranchId, "customers_list", name);
-                await setDoc(docRef, {
-                    customerName: name,
-                    ...data,
-                    updatedAt: new Date()
-                });
-            } catch (e) {
-                console.error("שגיאה בשמירה בענן:", e);
-            }
-        }
-
-        window.deleteCustomerFromCloud = async function(name) {
-            if (confirm(`האם למחוק את הלקוח "${name}" מענן הסניף לצמיתות?`)) {
-                try {
-                    await deleteDoc(doc(db, "branches", currentBranchId, "customers_list", name));
-                } catch (e) {
-                    console.error("שגיאה במחיקה:", e);
-                }
-            }
-        }
-
-        function renderSavedCustomersUI() {
-            const container = document.getElementById('saved-customers-list');
-            const keys = Object.keys(customers);
-            if (keys.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים בסניף זה.</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-            keys.forEach(name => {
-                const data = customers[name];
-                const item = document.createElement('div');
-                item.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-2xl hover:bg-gray-100 transition';
-                item.innerHTML = `
-                    <div class="cursor-pointer flex-1" onclick="fillCustomerData('${name.replace(/'/g, "\\'")}')">
-                        <p class="font-bold text-sm text-gray-800">${name}</p>
-                        <p class="text-xs text-gray-500">${data.street || ''} | ${data.phone || ''}</p>
-                    </div>
-                    <button onclick="deleteCustomerFromCloud('${name.replace(/'/g, "\\'")}')" class="text-red-400 hover:text-red-600 text-xs px-2 py-1 font-bold">מחיקה</button>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        window.fillCustomerData = function(name) {
-            const data = customers[name];
-            if (!data) return;
-            customerNameInput.value = name;
-            streetInput.value = data.street || '';
-            cityInput.value = data.city || 'בני ברק';
-            apartmentInput.value = data.apartment || '';
-            floorInput.value = data.floor || '';
-            phoneInput.value = data.phone || '';
-            notesInput.value = data.notes || '';
-            updatePreview();
-        }
+        updateSavedCustomersUI();
+        updatePreview();
 
         customerNameInput.addEventListener('input', function() {
             const val = this.value.trim();
@@ -457,14 +226,16 @@
                 autocompleteList.classList.add('hidden');
                 return;
             }
+
             const matches = Object.keys(customers).filter(name => name.includes(val));
             if (matches.length === 0) {
                 autocompleteList.classList.add('hidden');
                 return;
             }
+
             matches.forEach(name => {
                 const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b';
+                div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b border-gray-100 last:border-0';
                 div.textContent = name;
                 div.onclick = () => {
                     fillCustomerData(name);
@@ -475,101 +246,87 @@
             autocompleteList.classList.remove('hidden');
         });
 
-        window.filterProducts = function() {
-            const searchInput = document.getElementById('product-search');
-            const val = searchInput.value.trim().toLowerCase();
-            const suggestions = document.getElementById('product-suggestions');
-            suggestions.innerHTML = '';
-            if (!val) {
-                suggestions.classList.add('hidden');
-                return;
-            }
-            const matches = productCatalog.filter(p => p.toLowerCase().includes(val));
-            matches.forEach(prod => {
-                const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b flex justify-between items-center';
-                div.innerHTML = `<span>💧 ${prod}</span> <span class="text-xs text-red-600 font-bold bg-red-50 px-2 py-1 rounded-lg">בחר</span>`;
-                div.onclick = () => {
-                    openQtyModal(prod);
-                    searchInput.value = '';
-                    suggestions.classList.add('hidden');
-                };
-                suggestions.appendChild(div);
-            });
-            suggestions.classList.remove('hidden');
-        }
-
-        window.openQtyModal = function(productName) {
-            activeProductToAdd = productName;
-            document.getElementById('modal-product-title').textContent = `כמה יחידות מ: ${productName}?`;
-            document.getElementById('modal-qty-input').value = "1";
-            document.getElementById('qty-modal').classList.remove('hidden');
-        }
-
-        window.adjustModalQty = function(amount) {
-            let input = document.getElementById('modal-qty-input');
-            let current = parseInt(input.value) || 1;
-            current += amount;
-            if (current < 1) current = 1;
-            input.value = current;
-        }
-
-        window.closeQtyModal = () => document.getElementById('qty-modal').classList.add('hidden');
-
-        window.confirmAddProduct = function() {
-            const qty = parseInt(document.getElementById('modal-qty-input').value) || 1;
-            selectedProducts.push({ name: activeProductToAdd, qty: qty });
-            closeQtyModal();
-            updateSelectedProductsUI();
+        function fillCustomerData(name) {
+            const data = customers[name];
+            if (!data) return;
+            customerNameInput.value = name;
+            cityInput.value = data.city || 'בני ברק';
+            streetInput.value = data.street || '';
+            apartmentInput.value = data.apartment || '';
+            floorInput.value = data.floor || '';
+            phoneInput.value = data.phone || '';
+            notesInput.value = data.notes || '';
             updatePreview();
         }
 
-        window.removeSelectedProduct = function(index) {
-            selectedProducts.splice(index, 1);
-            updateSelectedProductsUI();
-            updatePreview();
-        }
-
-        function updateSelectedProductsUI() {
-            const wrapper = document.getElementById('selected-extras-wrapper');
-            const chips = document.getElementById('selected-extras-chips');
-            if (selectedProducts.length === 0) {
-                wrapper.classList.add('hidden');
-                extrasInput.value = "";
-                return;
-            }
-            chips.innerHTML = '';
-            let parts = [];
-            selectedProducts.forEach((item, idx) => {
-                parts.push(`${item.name} (${item.qty})`);
-                const chip = document.createElement('div');
-                chip.className = 'flex items-center gap-1.5 bg-white border border-red-300 text-red-900 px-3 py-1.5 rounded-xl text-xs font-black';
-                chip.innerHTML = `<span>💧 ${item.name} (${item.qty})</span><button type="button" onclick="removeSelectedProduct(${idx})" class="text-gray-400 font-bold mr-1">✕</button>`;
-                chips.appendChild(chip);
-            });
-            extrasInput.value = parts.join(", ");
-            wrapper.classList.remove('hidden');
-        }
-
-        window.updatePreview = function() {
+        function updatePreview() {
             document.getElementById('prev-name').textContent = customerNameInput.value.trim() || 'שם הלקוח';
-            document.getElementById('prev-street').textContent = streetInput.value.trim() || 'רחוב ומספר';
-            document.getElementById('prev-city').textContent = cityInput.value.trim() || 'בני ברק';
+            
+            const street = streetInput.value.trim() || 'רחוב ומספר';
+            const apt = apartmentInput.value.trim() ? `דירה ${apartmentInput.value.trim()}` : '';
+            document.getElementById('prev-street').textContent = apt ? `${street} ${apt}` : street;
+            
+            const floor = floorInput.value.trim() ? `קומה ${floorInput.value.trim()}` : '';
+            const city = cityInput.value.trim() || 'בני ברק';
+            document.getElementById('prev-city').textContent = floor ? `${floor} | ${city}` : city;
+            
             document.getElementById('prev-phone').textContent = phoneInput.value.trim() || '050-0000000';
-            const copies = parseInt(copiesInput.value) || 1;
-            document.getElementById('prev-box-badge').textContent = `ארגז 1 מתוך ${copies}`;
         }
 
-        window.clearForm = function() {
+        function saveCurrentCustomer() {
+            const name = customerNameInput.value.trim();
+            if (!name) return;
+
+            customers[name] = {
+                city: cityInput.value.trim(),
+                street: streetInput.value.trim(),
+                apartment: apartmentInput.value.trim(),
+                floor: floorInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                notes: notesInput.value.trim()
+            };
+
+            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
+            updateSavedCustomersUI();
+        }
+
+        function updateSavedCustomersUI() {
+            const container = document.getElementById('saved-customers-list');
+            const keys = Object.keys(customers);
+            if (keys.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">אין עדיין לקוחות שמורים.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            keys.reverse().forEach(name => {
+                const data = customers[name];
+                const item = document.createElement('div');
+                item.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-2xl hover:bg-gray-100 transition';
+                item.innerHTML = `
+                    <div class="cursor-pointer flex-1" onclick="fillCustomerData('${name}')">
+                        <p class="font-bold text-sm text-gray-800">${name}</p>
+                        <p class="text-xs text-gray-500">${data.street || ''} | ${data.phone || ''}</p>
+                    </div>
+                    <button onclick="deleteCustomer('${name}')" class="text-red-400 hover:text-red-600 text-xs px-2 py-1 font-bold">מחיקה</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function deleteCustomer(name) {
+            delete customers[name];
+            localStorage.setItem('mashbir_customers', JSON.stringify(customers));
+            updateSavedCustomersUI();
+        }
+
+        function clearForm() {
             document.getElementById('delivery-form').reset();
             cityInput.value = 'בני ברק';
-            copiesInput.value = '1';
-            selectedProducts = [];
-            updateSelectedProductsUI();
             updatePreview();
         }
 
-        window.addToQueue = function() {
+        function addToQueue() {
             const name = customerNameInput.value.trim();
             const street = streetInput.value.trim();
             const phone = phoneInput.value.trim();
@@ -579,24 +336,20 @@
                 return;
             }
 
-            const customerData = {
-                street,
+            saveCurrentCustomer();
+
+            const item = {
+                name,
                 city: cityInput.value.trim(),
+                street,
                 apartment: apartmentInput.value.trim(),
                 floor: floorInput.value.trim(),
                 phone,
-                notes: notesInput.value.trim()
+                notes: notesInput.value.trim(),
+                copies: parseInt(copiesInput.value) || 1
             };
 
-            saveCustomerToCloud(name, customerData);
-
-            printQueueItems.push({
-                name,
-                ...customerData,
-                extras: extrasInput.value.trim(),
-                copies: parseInt(copiesInput.value) || 1
-            });
-
+            printQueueItems.push(item);
             updateQueueUI();
             clearForm();
         }
@@ -607,7 +360,7 @@
             document.getElementById('print-btn').disabled = printQueueItems.length === 0;
 
             if (printQueueItems.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">התור ריק.</p>';
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">התור ריק. הוסף משלוחים להדפסה.</p>';
                 return;
             }
 
@@ -618,68 +371,125 @@
                 div.innerHTML = `
                     <div>
                         <span class="font-bold text-gray-800">${item.name}</span>
-                        <span class="text-xs text-gray-500 block">${item.street}, ${item.city}</span>
+                        <span class="text-xs text-gray-500 block">${item.street}, ${item.city} (עותקים: ${item.copies})</span>
                     </div>
-                    <button onclick="removeFromQueue(${index})" class="text-red-500 text-xs px-2 py-1 font-bold">הסר</button>
+                    <button onclick="removeFromQueue(${index})" class="text-red-500 hover:text-red-700 text-xs px-2 py-1 font-bold">הסר</button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        window.removeFromQueue = (index) => {
+        function removeFromQueue(index) {
             printQueueItems.splice(index, 1);
             updateQueueUI();
         }
 
-        window.clearQueue = () => {
+        function clearQueue() {
             printQueueItems = [];
             updateQueueUI();
         }
 
-        window.printQueue = function() {
+        function printQueue() {
             if (printQueueItems.length === 0) return;
-            let allLabelsHTML = [];
-            
+
+            let labelsHTML = '';
             printQueueItems.forEach(item => {
-                const totalCopies = item.copies;
-                for (let i = totalCopies; i >= 1; i--) {
-                    allLabelsHTML.push(`
-                        <div style="border: 2px dashed #374151; width: 105mm; height: 148.5mm; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 14px; background: #fff; box-sizing: border-box; position: relative;">
-                            <div style="position: absolute; top: 14px; left: 14px; background: #f3f4f6; font-size: 13px; font-weight: 900; padding: 3px 10px; border-radius: 9999px; border: 2px solid #9ca3af;">ארגז ${i} מתוך ${totalCopies}</div>
-                            <div style="text-align: center; margin-top: 10px;"><img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" style="height: 60px; object-fit: contain; margin: 0 auto;"></div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
-                                <div><strong>שם:</strong> <span style="font-size: 18px; font-weight: 900;">${item.name}</span></div>
-                                <div><strong>כתובת:</strong> ${item.street} (דירה: ${item.apartment || '-'}, קומה: ${item.floor || '-'})</div>
-                                <div><strong>עיר:</strong> ${item.city}</div>
-                                <div><strong>טלפון:</strong> <span style="font-size: 16px; font-weight: 900;">${item.phone}</span></div>
-                                ${item.extras ? `<div style="background: #fee2e2; color: #991b1b; padding: 6px; border-radius: 8px; font-weight: bold;">תוספות: ${item.extras}</div>` : ''}
+                const apt = item.apartment ? `דירה ${item.apartment}` : '';
+                const flr = item.floor ? `קומה ${item.floor}` : '';
+                const nts = item.notes ? `הערות: ${item.notes}` : '';
+
+                for (let i = 0; i < item.copies; i++) {
+                    labelsHTML += `
+                        <div class="label-box">
+                            <div class="text-center">
+                                <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 45px; margin: 0 auto; object-fit: contain;">
                             </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 10px; margin: auto 0;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">שם:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
+                                        <span style="font-size: 18px; font-weight: 900; color: #111827;">${item.name}</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">כתובת:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
+                                        <span style="font-size: 14px; font-weight: bold; color: #1f2937;">${item.street} ${apt}</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">מיקום:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
+                                        <span style="font-size: 12px; font-weight: bold; color: #374151;">${flr} | ${item.city}</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 11px; font-weight: bold; color: #6b7280; white-space: nowrap;">טלפון:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #d1d5db; padding-bottom: 2px;">
+                                        <span style="font-size: 16px; font-weight: 900; color: #dc2626;">${item.phone}</span>
+                                    </div>
+                                </div>
+                                ${nts ? `<div style="font-size: 11px; color: #4b5563; margin-top: 4px;">הערות: ${nts}</div>` : ''}
+                            </div>
+
                             <div></div>
                         </div>
-                    `);
+                    `;
                 }
             });
 
             const printSection = document.getElementById('print-section');
             printSection.innerHTML = '';
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = labelsHTML;
+            const boxes = Array.from(tempDiv.children);
+
             let pagesContent = '';
-            
-            for (let i = 0; i < allLabelsHTML.length; i += 4) {
-                let pageInner = '';
-                allLabelsHTML.slice(i, i + 4).forEach((labelHtml, index) => {
-                    const col = index % 2;
-                    const row = Math.floor(index / 2);
-                    pageInner += `<div style="position: absolute; left: ${col * 105}mm; top: ${row * 148.5}mm; width: 105mm; height: 148.5mm;">${labelHtml}</div>`;
-                });
-                pagesContent += `<div class="page-break">${pageInner}</div>`;
+            for (let i = 0; i < boxes.length; i += 4) {
+                const pageChunk = boxes.slice(i, i + 4);
+                let gridItemsHTML = '';
+                pageChunk.forEach(box => gridItemsHTML += box.outerHTML);
+
+                pagesContent += `
+                    <div class="page-break" style="width: 210mm; height: 297mm; padding: 15mm; box-sizing: border-box; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10mm; background: white;">
+                        ${gridItemsHTML}
+                    </div>
+                `;
             }
 
             printSection.innerHTML = pagesContent;
-            setTimeout(() => window.print(), 400);
+            window.print();
         }
 
-        initApp();
-        updatePreview();
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customers));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "mashbir_customers_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    customers = imported;
+                    localStorage.setItem('mashbir_customers', JSON.stringify(customers));
+                    updateSavedCustomersUI();
+                    alert('הלקוחות שוחזרו בהצלחה!');
+                } catch(err) {
+                    alert('קובץ שגוי או פגום.');
+                }
+            };
+            reader.readAsText(file);
+        }
     </script>
 </body>
 </html>
