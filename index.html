@@ -58,18 +58,7 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <!-- פס עליון לניהול סניפים אוטומטי -->
-    <div class="bg-blue-900 text-white px-4 py-2 flex flex-col sm:flex-row justify-between items-center text-xs md:text-sm shadow-md">
-        <div class="flex items-center gap-2 mb-1 sm:mb-0">
-            <span>📍 סניף פעיל נוכחי:</span>
-            <strong id="current-branch-display" class="bg-blue-800 px-2 py-1 rounded text-yellow-300">מזהה מיקום...</strong>
-        </div>
-        <button onclick="openBranchModal()" class="bg-white text-blue-900 font-bold px-3 py-1 rounded-lg hover:bg-blue-50 transition shadow-sm">
-            🔄 זה לא הסניף שלי? בחר ידנית
-        </button>
-    </div>
-
-    <!-- Header with Original Logo -->
+    <!-- Header נקי לחלוטין בלי באנר סניפים מעצבן למעלה -->
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
             <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
@@ -270,7 +259,7 @@
 
     </main>
 
-    <!-- מודל בחירת סניף ידנית -->
+    <!-- מודל בחירת סניף ידנית (נפתח רק כשלוחצים בפוטר) -->
     <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
             <h3 class="text-lg font-black text-gray-900">בחירת סניף ידנית</h3>
@@ -304,11 +293,18 @@
         </div>
     </div>
 
-    <footer class="text-center py-6 text-xs text-gray-500 space-y-1 bg-white border-t mt-auto">
-        <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
-        <p dir="ltr">
-            <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%9C%D7%91%D7%AA%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
-        </p>
+    <!-- פוטר דיסקרטי למטה שכולל את הסניף הנוכחי ואפשרות שינוי קטנה -->
+    <footer class="text-center py-4 px-6 text-xs text-gray-500 bg-white border-t mt-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div>
+            <p class="font-bold">כל הזכויות שמורות לדוד אדלשטיין - אין להעתיק או לשכפל בכל צורה ללא אישור בכתב</p>
+            <p dir="ltr">
+                <a href="mailto:hacker.david.7642@gmail.com?subject=%D7%A4%D7%A0%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%A2%D7%9C%D7%91%D7%AA%20%D7%A0%D7%99%D7%94%D7%95%D7%ל%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20-%20%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%95" class="font-black text-red-600 hover:underline">hacker.david.7642@gmail.com</a> | &copy; 2026
+            </p>
+        </div>
+        <div class="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-700 flex items-center gap-2">
+            <span>📍 סניף: <strong id="current-branch-display" class="text-red-700">מזהה...</strong></span>
+            <button onclick="openBranchModal()" class="text-blue-600 underline font-bold hover:text-blue-800 ml-1">זה לא הסניף שלי?</button>
+        </div>
     </footer>
 
     <!-- Firebase Scripts and Main Application Logic -->
@@ -329,7 +325,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // רשימת 9 הסניפים עם קואורדינטות משוערות
+        // רשימת 9 הסניפים המלאה עם קואורדינטות מדויקות
         const branches = [
             { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק', lat: 32.0833, lng: 34.8333 },
             { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק', lat: 32.0850, lng: 34.8300 },
@@ -399,7 +395,20 @@
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalQtyInput = document.getElementById('modal-qty-input');
 
-        // אתחול מערכת הסניפים והמיקום
+        // פונקציית חישוב מרחק מתקדמת (Haversine Formula) בין המשתמש לסניפים
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // רדיוס כדור הארץ בקילומטרים
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // אתחול מערכת הסניפים והמיקום האוטומטי
         function initAppBranches() {
             const select = document.getElementById('manual-branch-select');
             select.innerHTML = '';
@@ -410,14 +419,23 @@
                 select.appendChild(opt);
             });
 
+            // בדיקה האם יש בחירה ידנית שמורה קודם לכן ב-localStorage
+            const savedManualBranch = localStorage.getItem('mashbir_manual_branch');
+            if (savedManualBranch && branches.some(b => b.id === savedManualBranch)) {
+                setBranch(savedManualBranch);
+                return;
+            }
+
+            // אם אין בחירה ידנית, מנסים לאתר אוטומטית לפי GPS אמיתי
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const userLat = position.coords.latitude;
                     const userLng = position.coords.longitude;
                     findClosestBranch(userLat, userLng);
                 }, () => {
+                    // ברירת מחדל אם המשתמש דחה גישה
                     setBranch(branches[0].id);
-                });
+                }, { timeout: 10000, maximumAge: 60000 });
             } else {
                 setBranch(branches[0].id);
             }
@@ -427,7 +445,7 @@
             let closest = branches[0];
             let minDistance = Infinity;
             branches.forEach(b => {
-                let dist = Math.hypot(b.lat - lat, b.lng - lng);
+                let dist = calculateDistance(lat, lng, b.lat, b.lng);
                 if (dist < minDistance) {
                     minDistance = dist;
                     closest = b;
@@ -436,8 +454,11 @@
             setBranch(closest.id);
         }
 
-        window.setBranch = async function(branchId) {
+        window.setBranch = async function(branchId, isManual = false) {
             currentBranchId = branchId;
+            if (isManual) {
+                localStorage.setItem('mashbir_manual_branch', branchId);
+            }
             const branchObj = branches.find(b => b.id === branchId);
             document.getElementById('current-branch-display').innerText = branchObj ? branchObj.name : branchId;
             await loadCustomersFromCloud();
@@ -453,7 +474,7 @@
 
         window.confirmManualBranch = function() {
             const selectedId = document.getElementById('manual-branch-select').value;
-            setBranch(selectedId);
+            setBranch(selectedId, true);
             closeBranchModal();
         }
 
@@ -929,7 +950,7 @@
             deferredPrompt = null;
         }
 
-        // הפעלה ראשונית של המערכת
+        // הפעלה ראשונית של המערכת וזיהוי המיקום האוטומטי
         initAppBranches();
         updatePreview();
     </script>
