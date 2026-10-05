@@ -174,18 +174,6 @@
                     </div>
                 </div>
 
-                <div class="mb-4 bg-gray-50 border border-gray-200 rounded-2xl p-3">
-                    <p class="text-xs font-black text-gray-500 mb-2" data-i18n="quickWarehouseTitle">⚡ מחסן מהיר (לחיצה מהירה להוספה):</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button type="button" onclick="quickAddProduct('קוקה קולה רגיל (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥤 קולה רגיל</button>
-                        <button type="button" onclick="quickAddProduct('קוקה קולה זירו (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥤 קולה זירו</button>
-                        <button type="button" onclick="quickAddProduct('נייר טואלט 32 גלילים')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🧻 נייר טואלט 32</button>
-                        <button type="button" onclick="quickAddProduct('סודה טמפו (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">💧 סודה טמפו</button>
-                        <button type="button" onclick="quickAddProduct('נביעות - שישיית חצי ליטר (0.5L)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🍼 מים 0.5L</button>
-                        <button type="button" onclick="quickAddProduct('חלב (שקית / קררטון)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥛 חלב</button>
-                    </div>
-                </div>
-
                 <form id="delivery-form" class="space-y-4" onsubmit="event.preventDefault();">
                     <div class="relative">
                         <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="custNameLabel">שם לקוח</label>
@@ -237,12 +225,12 @@
                     <div class="relative">
                         <label class="block text-sm font-bold text-gray-700 mb-1 flex justify-between">
                             <span data-i18n="productLabel">מוצרים (חיפוש או סלנג חכם)</span>
-                            <button type="button" onclick="startVoiceSearch()" class="text-red-600 hover:text-red-800 text-xs font-black">🎙️ חיפוש קולי</button>
+                            <button type="button" onclick="startVoiceSearch()" class="text-red-600 hover:text-red-800 text-xs font-black">🎙️️ חיפוש קולי</button>
                         </label>
                         <div class="flex gap-2">
                             <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
-                                placeholder="הקלד סלנג או מוצר (למשל: טישו, קולה, זירו)...">
+                                placeholder="הקלד סלנג או מוצר (למשל: סודה, טישו, קולה)...">
                         </div>
                         <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
                     </div>
@@ -261,10 +249,14 @@
                 </form>
             </div>
 
-            <div class="mt-6 space-y-3">
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button type="button" onclick="addToQueue()"
-                    class="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black py-4 rounded-2xl shadow-lg hover:from-red-700 hover:to-red-800 transition transform active:scale-98 flex items-center justify-center gap-2 text-lg">
+                    class="w-full bg-gray-800 text-white font-black py-3.5 rounded-2xl shadow-lg hover:bg-gray-900 transition flex items-center justify-center gap-2 text-sm">
                     <span>➕</span> <span data-i18n="addQueueBtn">הוסף לתור ההדפסה</span>
+                </button>
+                <button type="button" onclick="printDirectly()"
+                    class="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black py-3.5 rounded-2xl shadow-lg hover:from-red-700 hover:to-red-800 transition flex items-center justify-center gap-2 text-sm">
+                    <span>🖨️</span> <span data-i18n="printDirectBtn">הדפס משלוח זה מיד</span>
                 </button>
             </div>
         </div>
@@ -430,7 +422,6 @@
                 formTitle: "פרטי משלוח חדש",
                 copySummaryBtn: "📋 העתק סיכום",
                 clearFormBtn: "ניקוי טופס",
-                quickWarehouseTitle: "⚡ מחסן מהיר (לחיצה מהירה להוספה):",
                 custNameLabel: "שם לקוח",
                 streetLabel: "רחוב ומספר בניין",
                 cityLabel: "עיר",
@@ -442,6 +433,7 @@
                 selectedProductsLabel: "מוצרים שנבחרו להזמנה:",
                 notesLabel: "הערות למשלוח",
                 addQueueBtn: "הוסף לתור ההדפסה",
+                printDirectBtn: "הדפס משלוח זה מיד",
                 previewTitle: "תצוגה מקדימה חיה",
                 prevName: "שם:",
                 prevStreet: "כתובת:",
@@ -477,7 +469,6 @@
                 formTitle: "נייע דעליווערי פרטים",
                 copySummaryBtn: "📋 קאָפּירן סיכום",
                 clearFormBtn: "רייניקן פאָרם",
-                quickWarehouseTitle: "⚡ גיך וואַרעהאָוסע:",
                 custNameLabel: "קונה נאָמען",
                 streetLabel: "גאס און נומער",
                 cityLabel: "שטאָט",
@@ -489,6 +480,7 @@
                 selectedProductsLabel: "אויסגעקליבענע פּראָדוקטן:",
                 notesLabel: "באַמערקונגען",
                 addQueueBtn: "לייג צו צום ריי",
+                printDirectBtn: "דרוק גלייך",
                 previewTitle: "לעבעדיגע פריוויע",
                 prevName: "נאָמען:",
                 prevStreet: "אדרעס:",
@@ -524,7 +516,6 @@
                 formTitle: "New Delivery Details",
                 copySummaryBtn: "📋 Copy Summary",
                 clearFormBtn: "Clear Form",
-                quickWarehouseTitle: "⚡ Quick Warehouse (Tap to Add):",
                 custNameLabel: "Customer Name",
                 streetLabel: "Street & Building Number",
                 cityLabel: "City",
@@ -536,6 +527,7 @@
                 selectedProductsLabel: "Selected Products for Order:",
                 notesLabel: "Delivery Notes",
                 addQueueBtn: "Add to Print Queue",
+                printDirectBtn: "Print Delivery Immediately",
                 previewTitle: "Live Preview",
                 prevName: "Name:",
                 prevStreet: "Address:",
@@ -593,7 +585,6 @@
         let activeProductToAdd = "";
         let allCustomersGlobalCache = [];
 
-        // החזרנו את כל הקטלוג המלא המקורי במלואו!
         let productCatalog = [
             "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)", "קוקה קולה ליטר רגיל (רביעה)", "קוקה קולה ליטר זירו (רביעה)",
             "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)", "סבן אפ רגיל (שישייה)", "סבן אפ זירו (שישייה)",
@@ -621,17 +612,16 @@
             "סופט נייר טואלט חתוך", "סושי 6 מגבות הפלא", "סנו מגבות הפלא סושי 12 גלילים", "סנו סושי מגבות הפלא 8 יח"
         ];
 
+        // מילון סלנג משופר שמרחיב לכל סוגי המוצרים המתאימים
         const slangDictionary = {
-            "טישו": "נייר טואלט 32 גלילים",
-            "נייר": "נייר טואלט 32 גלילים",
-            "נייר טואלט": "נייר טואלט 32 גלילים",
-            "קולה": "קוקה קולה רגיל (שישייה)",
-            "קוקה": "קוקה קולה רגיל (שישייה)",
-            "זירו": "קוקה קולה זירו (שישייה)",
-            "סודה": "סודה טמפו (שישייה)",
-            "מים": "נביעות - שישיית חצי ליטר (0.5L)",
-            "חלב": "חלב (שקית / קררטון)",
-            "מגבות": "מגבות הפלא 4 שכבות 'סושי'"
+            "טישו": "נייר טואלט",
+            "נייר": "נייר טואלט",
+            "קולה": "קוקה קולה",
+            "זירו": "זירו",
+            "סודה": "סודה",
+            "מים": "נביעות",
+            "חלב": "חלב",
+            "מגבות": "מגבות"
         };
 
         const customerNameInput = document.getElementById('customer-name');
@@ -987,10 +977,7 @@
             });
         }
 
-        window.quickAddProduct = function(productName) {
-            openQtyModal(productName);
-        }
-
+        // חיפוש סלנג חכם המאפשר להציג את כל התוצאות התואמות
         window.filterProducts = function() {
             let val = productSearchInput.value.trim().toLowerCase();
             productSuggestions.innerHTML = '';
@@ -1207,6 +1194,50 @@
             clearForm();
         }
 
+        // פונקציית הדפסה ישירה חדשה היישר מהטופס
+        window.printDirectly = async function() {
+            const name = customerNameInput.value.trim();
+            const street = streetInput.value.trim();
+            const phone = phoneInput.value.trim();
+
+            if (!name || !street || !phone) {
+                alert('נא למלא לפחות שם לקוח, כתובת וטלפון להדפסה.');
+                return;
+            }
+
+            safeVibrate(50);
+
+            const customerData = {
+                street: streetInput.value.trim(),
+                city: cityInput.value.trim(),
+                apartment: apartmentInput.value.trim(),
+                floor: floorInput.value.trim(),
+                phone,
+                notes: notesInput.value.trim()
+            };
+
+            await saveCustomerToCloud(name, customerData);
+            logActivityToCloud('הדפסה ישירה', name);
+
+            const item = {
+                name, street,
+                city: cityInput.value.trim(),
+                apartment: apartmentInput.value.trim(),
+                floor: floorInput.value.trim(),
+                phone,
+                extras: extrasInput.value.trim(),
+                notes: notesInput.value.trim(),
+                copies: parseInt(copiesInput.value) || 1
+            };
+
+            const tempQueue = [...printQueueItems];
+            printQueueItems = [item];
+            await updatePrintStatsInCloud();
+            executePrintJob();
+            printQueueItems = tempQueue;
+            clearForm();
+        }
+
         function updateQueueUI() {
             const container = document.getElementById('print-queue-list');
             document.getElementById('queue-count').textContent = printQueueItems.length;
@@ -1261,13 +1292,9 @@
             }
         }
 
-        window.printQueue = async function() {
-            if (printQueueItems.length === 0) return;
+        function executePrintJob() {
             showToast("מכין עמודי הדפסה ומפעיל אנימציה...");
-            
             try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); } catch(e){}
-
-            updatePrintStatsInCloud();
 
             let allLabelsHTML = [];
             printQueueItems.forEach(item => {
@@ -1331,6 +1358,12 @@
 
             printSection.innerHTML = pagesContent;
             setTimeout(() => { window.print(); }, 400);
+        }
+
+        window.printQueue = async function() {
+            if (printQueueItems.length === 0) return;
+            await updatePrintStatsInCloud();
+            executePrintJob();
         }
 
         window.printDriverManifest = function() {
