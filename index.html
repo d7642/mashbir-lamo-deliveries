@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניהול והדפסת משלוחים – המשביר לעמו</title>
+    <title id="page-title">ניהול והדפסת משלוחים – המשביר לעמו</title>
     
     <meta name="apple-mobile-web-app-title" content="ניהול והדפסת משלוחים – המשביר לעמו">
     <meta name="application-name" content="ניהול והדפסת משלוחים – המשביר לעמו">
@@ -15,79 +15,74 @@
     <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%A0%D7%99%D7%94%D7%9C%20%D7%95%D7%94%D7%93%D7%A4%D7%A1%D7%AA%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20%E2%80%93%20%D7%94%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22Logo.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Heebo', sans-serif; background-color: #f3f4f6; }
+        body { font-family: 'Heebo', sans-serif; background-color: #f3f4f6; transition: background 0.3s, color 0.3s; }
+        .dark-mode { background-color: #111827 !important; color: #f3f4f6 !important; }
+        .dark-mode .bg-white { background-color: #1f2937 !important; color: #f3f4f6 !important; border-color: #374151 !important; }
+        .dark-mode input, .dark-mode select { background-color: #111827 !important; color: white !important; border-color: #4b5563 !important; }
         
+        #splash-screen {
+            position: fixed; inset: 0; background: linear-gradient(135deg, #991b1b, #dc2626); z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;
+            transition: opacity 0.5s ease;
+        }
+
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0 !important;
-            }
-            body > *:not(#print-section) {
-                display: none !important;
-            }
-            #print-section {
-                display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 210mm !important;
-                background: white !important;
-                z-index: 999999 !important;
-            }
-            .page-break {
-                width: 210mm !important;
-                height: 297mm !important;
-                max-height: 297mm !important;
-                position: relative !important;
-                overflow: hidden !important;
-                page-break-after: always !important;
-                break-after: page !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-            .page-break:last-of-type {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
+            @page { size: A4 portrait; margin: 0 !important; }
+            body > *:not(#print-section) { display: none !important; }
+            #print-section { display: block !important; position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important; background: white !important; z-index: 999999 !important; }
+            .page-break { width: 210mm !important; height: 297mm !important; max-height: 297mm !important; position: relative !important; overflow: hidden !important; page-break-after: always !important; break-after: page !important; page-break-inside: avoid !important; break-inside: avoid !important; margin: 0 !important; padding: 0 !important; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
+
+    <div id="splash-screen">
+        <img src="Logo.jpg" alt="משביר לעמו" class="h-24 w-auto object-contain bg-white rounded-2xl p-2 shadow-2xl mb-4 animate-bounce">
+        <h1 class="text-2xl font-black">המשביר לעמו – ניהול משלוחים</h1>
+        <p class="text-xs text-red-100 mt-2">טוען את המערכת והנתונים מהענן...</p>
+    </div>
 
     <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col items-center justify-between gap-3 relative">
         <div class="flex items-center gap-3 w-full justify-between max-w-6xl mx-auto">
             <div class="flex items-center gap-3">
                 <img src="Logo.jpg" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
                 <div>
-                    <h1 class="font-black text-lg">ניהול והדפסת משלוחים</h1>
-                    <p class="text-xs text-red-100 hidden sm:block">מערכת ניהול והפקת פתקיות משלוחים חכמה</p>
+                    <h1 id="hdr-title" class="font-black text-lg">ניהול והדפסת משלוחים</h1>
+                    <p id="hdr-subtitle" class="text-xs text-red-100 hidden sm:block">מערכת ניהול חכמה מתקדמת</p>
                 </div>
             </div>
             
-            <button onclick="toggleMenu()" class="text-white font-black text-3xl px-2">☰</button>
+            <div class="flex items-center gap-2">
+                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-red-900 text-white border border-red-700 text-xs font-bold rounded-xl px-2 py-1.5 focus:outline-none">
+                    <option value="he">🇮🇱 עברית</option>
+                    <option value="yi">📜 יידיש</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
+                <button onclick="toggleDarkMode()" class="bg-white/10 hover:bg-white/20 p-2 rounded-xl text-sm" title="מצב כהה/בהיר">🌓</button>
+                <button onclick="toggleMenu()" class="text-white font-black text-3xl px-2">☰</button>
+            </div>
         </div>
         
         <div id="overflow-menu" class="hidden absolute top-full left-0 w-full bg-white text-gray-900 border-b border-gray-200 z-40 p-4 shadow-2xl flex flex-col gap-4">
             
             <button onclick="openAdminArea()" class="bg-red-700 text-white hover:bg-red-800 px-4 py-3 rounded-xl font-black text-sm shadow-md transition flex items-center justify-center gap-2">
-                <span>🛡️</span> כניסה לאזור ניהול (מנהלים)
+                <span>🛡️</span> <span data-i18n="adminBtn">כניסה לאזור ניהול (מנהלים)</span>
             </button>
             
             <hr>
 
             <div>
-                <h3 class="text-sm font-black text-gray-800 mb-2">👥 לקוחות שמורים בסניף בענן</h3>
+                <h3 class="text-sm font-black text-gray-800 mb-2" data-i18n="savedCustTitle">👥 לקוחות שמורים בסניף בענן</h3>
                 <div class="grid grid-cols-2 gap-2 mb-2">
-                    <button type="button" onclick="exportData()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition">💾 גיבוי לסניף</button>
-                    <button type="button" onclick="document.getElementById('import-file').click()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition">📂 שחזור לסניף</button>
+                    <button type="button" onclick="exportData()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition" data-i18n="backupBtn">💾 גיבוי לסניף</button>
+                    <button type="button" onclick="document.getElementById('import-file').click()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition" data-i18n="restoreBtn">📂 שחזור לסניף</button>
                     <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
                 </div>
                 <div id="saved-customers-list" class="overflow-y-auto space-y-2 max-h-[300px] border border-gray-100 p-2 rounded-xl bg-gray-50">
-                    <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
+                    <p class="text-xs text-gray-400 text-center py-4" data-i18n="loadingCloud">טוען לקוחות מהענן...</p>
                 </div>
             </div>
 
@@ -98,45 +93,68 @@
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-sm">
             <div class="flex items-center gap-2 font-bold text-gray-800">
                 <span class="text-lg">📍</span>
-                <span>שלום סניפי:</span>
+                <span data-i18n="branchLabel">שלום סניפי:</span>
                 <span id="top-branch-name" class="text-red-700 font-black text-base">ירושלים 9, בני ברק</span>
+                <span id="offline-badge" class="hidden bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-bold" data-i18n="offlineMode">מצב אופליין</span>
             </div>
-            <button onclick="openBranchModal()" class="text-xs bg-red-50 text-red-700 border border-red-200 font-bold px-3 py-1.5 rounded-xl hover:bg-red-100 transition">
+            <button onclick="openBranchModal()" class="text-xs bg-red-50 text-red-700 border border-red-200 font-bold px-3 py-1.5 rounded-xl hover:bg-red-100 transition" data-i18n="changeBranchBtn">
                 שנה סניף ידנית
             </button>
         </div>
     </div>
 
-    <div id="admin-dashboard" class="max-w-6xl mx-auto p-4 md:p-6 hidden">
-        <div class="bg-gray-900 rounded-3xl shadow-2xl p-6 border border-gray-700 text-white">
-            <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
-                <h2 class="text-2xl font-black flex items-center gap-2"><span>🛡️</span> אזור ניהול מערכת</h2>
+    <div id="admin-dashboard" class="max-w-6xl mx-auto p-4 md:p-6 hidden w-full">
+        <div class="bg-gray-900 rounded-3xl shadow-2xl p-6 border border-gray-700 text-white space-y-6">
+            <div class="flex justify-between items-center border-b border-gray-700 pb-4">
+                <h2 class="text-2xl font-black flex items-center gap-2"><span>🛡️</span> אזור ניהול מערכת משוכלל</h2>
                 <div class="flex gap-3">
                     <button onclick="changeAdminPassword()" class="text-sm font-bold text-blue-400 hover:text-blue-300 bg-gray-800 px-3 py-1 rounded-xl">🔑 שנה סיסמה</button>
                     <button onclick="closeAdminArea()" class="text-sm font-bold text-gray-400 hover:text-white bg-gray-800 px-3 py-1 rounded-xl">סגור X</button>
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="bg-gray-800 p-4 rounded-2xl text-center border border-gray-700">
-                    <p class="text-gray-400 text-sm font-bold">סך הכל לקוחות רשומים (ארצי)</p>
-                    <p id="admin-total-customers" class="text-4xl font-black text-red-500 mt-2">טוען...</p>
+                    <p class="text-gray-400 text-sm font-bold">סך הכל לקוחות ארצי</p>
+                    <p id="admin-total-customers" class="text-3xl font-black text-red-500 mt-2">טוען...</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-2xl text-center border border-gray-700">
-                    <p class="text-gray-400 text-sm font-bold">סך הכל הדפסות שבוצעו במערכת</p>
-                    <p id="admin-total-prints" class="text-4xl font-black text-blue-400 mt-2">טוען...</p>
+                    <p class="text-gray-400 text-sm font-bold">סך הכל הדפסות במערכת</p>
+                    <p id="admin-total-prints" class="text-3xl font-black text-blue-400 mt-2">טוען...</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-2xl flex flex-col justify-center gap-2 border border-gray-700">
-                    <a href="https://console.firebase.google.com/project/_/firestore" target="_blank" class="w-full bg-blue-600 text-white font-bold py-2 rounded-xl text-center hover:bg-blue-700 transition text-sm">
-                        ☁️ מעבר לגיבויים ומסד נתונים (Firebase)
-                    </a>
+                    <label class="text-xs text-gray-400">סינון דוחות לפי תקופה:</label>
+                    <select id="admin-date-filter" onchange="filterAdminStats()" class="bg-gray-700 text-white p-2 rounded-xl text-sm font-bold">
+                        <option value="all">הצג הכל (ללא הגבלה)</option>
+                        <option value="today">היום בלבד</option>
+                        <option value="week">השבוע האחרון</option>
+                        <option value="month">החודש האחרון</option>
+                    </select>
                 </div>
             </div>
 
             <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
-                <h3 class="text-lg font-black mb-3">רשימת לקוחות ארצית (מכל הסניפים)</h3>
-                <div id="admin-all-customers-list" class="overflow-y-auto max-h-[300px] space-y-2 pr-2 custom-scrollbar">
-                    <p class="text-sm text-gray-400">טוען לקוחות מכל הארץ...</p>
+                <h3 class="text-lg font-black mb-3 flex items-center gap-2">
+                    <span class="w-3 h-3 bg-emerald-500 rounded-full animate-ping"></span> 
+                    <span>פיד פעילות חי (Live Dispatch Ticker)</span>
+                </h3>
+                <div id="live-activity-ticker" class="space-y-2 max-h-36 overflow-y-auto text-xs font-medium text-gray-300">
+                    <p class="text-gray-500">ממתין לפעילות חדשה בסניפים...</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
+                <h3 class="text-lg font-black mb-3">🏆 השוואת סניפים מובילים</h3>
+                <div id="admin-branch-leaderboard" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <p class="text-sm text-gray-400">טוען נתוני סניפים...</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
+                <h3 class="text-lg font-black mb-3">📦 ניהול מוצרים מהיר</h3>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="new-catalog-item" placeholder="הוסף מוצר חדש לקטלוג הארצי..." class="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-3 py-2 text-white text-sm">
+                    <button onclick="addNewCatalogProduct()" class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-xl font-bold text-sm">הוסף מוצר</button>
                 </div>
             </div>
         </div>
@@ -146,16 +164,31 @@
 
         <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl p-6 flex flex-col justify-between border border-gray-100">
             <div>
-                <div class="flex justify-between items-center mb-6 border-b pb-3">
+                <div class="flex justify-between items-center mb-4 border-b pb-3">
                     <h2 class="text-xl font-black text-gray-800 flex items-center gap-2">
-                        <span>📝</span> פרטי משלוח חדש
+                        <span>📝</span> <span data-i18n="formTitle">פרטי משלוח חדש</span>
                     </h2>
-                    <button onclick="clearForm()" class="text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-full hover:bg-red-100 transition">ניקוי טופס</button>
+                    <div class="flex gap-2">
+                        <button onclick="copyDeliverySummary()" class="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full hover:bg-blue-100 transition" title="העתק סיכום ללוח" data-i18n="copySummaryBtn">📋 העתק סיכום</button>
+                        <button onclick="clearForm()" class="text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-full hover:bg-red-100 transition" data-i18n="clearFormBtn">ניקוי טופס</button>
+                    </div>
+                </div>
+
+                <div class="mb-4 bg-gray-50 border border-gray-200 rounded-2xl p-3">
+                    <p class="text-xs font-black text-gray-500 mb-2" data-i18n="quickWarehouseTitle">⚡ מחסן מהיר (לחיצה מהירה להוספה):</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" onclick="quickAddProduct('קוקה קולה רגיל (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥤 קולה רגיל</button>
+                        <button type="button" onclick="quickAddProduct('קוקה קולה זירו (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥤 קולה זירו</button>
+                        <button type="button" onclick="quickAddProduct('נייר טואלט 32 גלילים')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🧻 נייר טואלט 32</button>
+                        <button type="button" onclick="quickAddProduct('סודה טמפו (שישייה)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">💧 סודה טמפו</button>
+                        <button type="button" onclick="quickAddProduct('נביעות - שישיית חצי ליטר (0.5L)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🍼 מים 0.5L</button>
+                        <button type="button" onclick="quickAddProduct('חלב (שקית / קררטון)')" class="bg-white border border-red-200 hover:bg-red-50 text-red-800 font-bold py-2 px-1 rounded-xl text-xs shadow-sm transition">🥛 חלב</button>
+                    </div>
                 </div>
 
                 <form id="delivery-form" class="space-y-4" onsubmit="event.preventDefault();">
                     <div class="relative">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">שם לקוח</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="custNameLabel">שם לקוח</label>
                         <input type="text" id="customer-name" required autocomplete="off" oninput="updatePreview()"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition font-medium"
                             placeholder="הקלד או בחר לקוח שמור מהענן...">
@@ -164,12 +197,12 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">רחוב ומספר בניין</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="streetLabel">רחוב ומספר בניין</label>
                             <input type="text" id="street" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: ירושלים 9">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">עיר</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="cityLabel">עיר</label>
                             <input type="text" id="city" value="בני ברק" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
@@ -177,12 +210,12 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר דירה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="apartmentLabel">מספר דירה</label>
                             <input type="text" id="apartment" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="דירה">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">מספר קומה</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="floorLabel">מספר קומה</label>
                             <input type="text" id="floor" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="קומה">
                         </div>
@@ -190,35 +223,38 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">טלפון נייד</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="phoneLabel">טלפון נייד</label>
                             <input type="tel" id="phone" required oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="050-0000000">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">כמות ארגזים (עותקים)</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="boxesLabel">כמות ארגזים (עותקים)</label>
                             <input type="number" id="copies" value="1" min="1" max="20" oninput="updatePreview()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition">
                         </div>
                     </div>
 
                     <div class="relative">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">שישיות ונייר טואלט (חיפוש מהקטלוג)</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-1 flex justify-between">
+                            <span data-i18n="productLabel">מוצרים (חיפוש או סלנג חכם)</span>
+                            <button type="button" onclick="startVoiceSearch()" class="text-red-600 hover:text-red-800 text-xs font-black">🎙️ חיפוש קולי</button>
+                        </label>
                         <div class="flex gap-2">
                             <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
-                                placeholder="הקלד לחיפוש שתייה או נייר טואלט...">
+                                placeholder="הקלד סלנג או מוצר (למשל: טישו, קולה, זירו)...">
                         </div>
                         <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
                     </div>
 
                     <div id="selected-extras-wrapper" class="hidden">
-                        <label class="block text-xs font-bold text-gray-500 mb-1">מוצרים שנבחרו להזמנה:</label>
+                        <label class="block text-xs font-bold text-gray-500 mb-1" data-i18n="selectedProductsLabel">מוצרים שנבחרו להזמנה:</label>
                         <div id="selected-extras-chips" class="flex flex-col gap-2 p-3 bg-red-50 rounded-2xl border border-red-200"></div>
                     </div>
                     <input type="hidden" id="extras" value="">
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">הערות למשלוח</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-1" data-i18n="notesLabel">הערות למשלוח</label>
                         <input type="text" id="notes" oninput="updatePreview()"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" placeholder="למשל: לצלצל באינטרקום">
                     </div>
@@ -228,14 +264,14 @@
             <div class="mt-6 space-y-3">
                 <button type="button" onclick="addToQueue()"
                     class="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black py-4 rounded-2xl shadow-lg hover:from-red-700 hover:to-red-800 transition transform active:scale-98 flex items-center justify-center gap-2 text-lg">
-                    <span>➕</span> הוסף לתור ההדפסה
+                    <span>➕</span> <span data-i18n="addQueueBtn">הוסף לתור ההדפסה</span>
                 </button>
             </div>
         </div>
 
         <div class="lg:col-span-6 space-y-6 flex flex-col">
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center max-w-sm mx-auto w-full">
-                <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
+                <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right" data-i18n="previewTitle">תצוגה מקדימה חיה</h3>
                 <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
                     
                     <div id="prev-box-badge" class="absolute top-3 left-3 bg-gray-100 text-gray-900 text-xs font-black px-3 py-1 rounded-full border-2 border-gray-400">
@@ -248,43 +284,43 @@
 
                     <div class="space-y-2 my-auto text-right">
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">שם:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevName">שם:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-name" class="text-base font-black text-gray-900">שם הלקוח</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">כתובת:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevStreet">כתובת:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-street" class="text-sm font-bold text-gray-900">רחוב ומספר</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">דירה:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevApt">דירה:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-apartment" class="text-sm font-bold text-gray-900">-</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">קומה:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevFloor">קומה:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-floor" class="text-sm font-bold text-gray-900">-</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">עיר:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevCity">עיר:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-city" class="text-sm font-bold text-gray-900">בני ברק</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap">טלפון:</span>
+                            <span class="text-xs font-bold text-gray-600 whitespace-nowrap" data-i18n="prevPhone">טלפון:</span>
                             <div class="flex-1 border-b-2 border-gray-400 pb-0.5">
                                 <span id="prev-phone" class="text-base font-black text-gray-900">050-0000000</span>
                             </div>
                         </div>
                         <div id="prev-extras-container" class="hidden text-sm bg-red-100 text-red-900 p-2 rounded-lg font-black border-2 border-red-300">
-                            תוספות: <span id="prev-extras"></span>
+                            <span data-i18n="prevExtras">תוספות:</span> <span id="prev-extras"></span>
                         </div>
                     </div>
                 </div>
@@ -293,17 +329,23 @@
             <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex-1 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-3 border-b pb-2">
-                        <h3 class="text-base font-black text-gray-800">תור הדפסה מרוכז (<span id="queue-count">0</span>)</h3>
-                        <button onclick="clearQueue()" class="text-xs font-bold text-red-500 hover:underline">ניקוי תור</button>
+                        <h3 class="text-base font-black text-gray-800"><span data-i18n="queueHeader">תור הדפסה מרוכז</span> (<span id="queue-count">0</span>)</h3>
+                        <button onclick="clearQueue()" class="text-xs font-bold text-red-500 hover:underline" data-i18n="clearQueueBtn">ניקוי תור</button>
                     </div>
                     <div id="print-queue-list" class="space-y-2 max-h-48 overflow-y-auto">
-                        <p class="text-xs text-gray-400 text-center py-4">התור ריק. הוסף משלוחים להדפסה.</p>
+                        <p class="text-xs text-gray-400 text-center py-4" data-i18n="emptyQueue">התור ריק. הוסף משלוחים להדפסה.</p>
                     </div>
                 </div>
-                <button onclick="printQueue()" id="print-btn" disabled
-                    class="mt-4 w-full bg-emerald-600 text-white font-black py-3.5 rounded-2xl shadow-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                    🖨️ הדפס את כל התור (4 בעמוד)
-                </button>
+                <div class="grid grid-cols-2 gap-2 mt-4">
+                    <button onclick="printQueue()" id="print-btn" disabled
+                        class="bg-emerald-600 text-white font-black py-3 rounded-2xl shadow-lg hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm">
+                        🖨️ <span data-i18n="printBtnText">הדפס תור (4 בעמוד)</span>
+                    </button>
+                    <button onclick="printDriverManifest()" id="manifest-btn" disabled
+                        class="bg-blue-600 text-white font-black py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 text-sm">
+                        📄 <span data-i18n="manifestBtnText">גיליון מסלול לשליח</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -311,12 +353,12 @@
 
     <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-gray-100 text-center space-y-4">
-            <h3 class="text-lg font-black text-gray-900">בחירת סניף ידנית</h3>
-            <p class="text-xs text-gray-500">בחר את הסניף שאליו ברצונך להתחבר כעת (הבחירה תיזכר תמיד):</p>
+            <h3 class="text-lg font-black text-gray-900" data-i18n="modalBranchTitle">בחירת סניף ידנית</h3>
+            <p class="text-xs text-gray-500" data-i18n="modalBranchDesc">בחר את הסניף שאליו ברצונך להתחבר כעת:</p>
             <select id="manual-branch-select" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none font-bold text-sm"></select>
-            <div class="grid grid-cols-2 gap-3 pt-2">
-                <button onclick="closeBranchModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition">ביטול</button>
-                <button onclick="confirmManualBranch()" class="bg-blue-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition">שמור סניף</button>
+            <div class="grid grid-cols-2 gap-2 pt-2">
+                <button onclick="closeBranchModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition" data-i18n="cancelBtn">ביטול</button>
+                <button onclick="confirmManualBranch()" class="bg-blue-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition" data-i18n="saveBranchBtn">שמור סניף</button>
             </div>
         </div>
     </div>
@@ -324,7 +366,7 @@
     <div id="print-section" style="display: none;"></div>
 
     <div id="print-toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 text-sm font-bold hidden transition-all duration-300 flex items-center gap-2">
-        <span>🖨️️</span> מכין עמודי הדפסה מהאתר...
+        <span>🖨️</span> מכין עמודי הדפסה מהאתר...
     </div>
 
     <div id="qty-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
@@ -336,8 +378,8 @@
                 <button onclick="adjustModalQty(1)" class="w-12 h-12 bg-gray-100 text-gray-800 text-xl font-bold rounded-2xl hover:bg-gray-200 transition">+</button>
             </div>
             <div class="grid grid-cols-2 gap-3 pt-2">
-                <button onclick="closeQtyModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition">ביטול</button>
-                <button onclick="confirmAddProduct()" class="bg-red-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-red-700 transition">הוסף להזמנה</button>
+                <button onclick="closeQtyModal()" class="bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-gray-200 transition" data-i18n="cancelBtn">ביטול</button>
+                <button onclick="confirmAddProduct()" class="bg-red-600 text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-red-700 transition" data-i18n="addOrderBtn">הוסף להזמנה</button>
             </div>
         </div>
     </div>
@@ -351,13 +393,13 @@
         </div>
         <div class="bg-gray-100 px-3 py-1.5 rounded-xl border border-gray-200 text-gray-700 flex items-center gap-2">
             <span>סניף: <strong id="footer-branch-name" class="text-red-700">ירושלים 9, בני ברק</strong></span>
-            <button onclick="openBranchModal()" class="text-blue-600 underline font-bold hover:text-blue-800 ml-1">זה לא הסניף שלי?</button>
+            <button onclick="openBranchModal()" class="text-blue-600 underline font-bold hover:text-blue-800 ml-1" data-i18n="wrongBranchBtn">זה לא הסניף שלי?</button>
         </div>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where, increment, updateDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where, increment, updateDoc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCjDztTO4rTps9J7gF-9jL1Tb0bF_KeFXo",
@@ -371,6 +413,166 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        const translations = {
+            he: {
+                pageTitle: "ניהול והדפסת משלוחים – המשביר לעמו",
+                hdrTitle: "ניהול והדפסת משלוחים",
+                hdrSubtitle: "מערכת ניהול חכמה מתקדמת",
+                adminBtn: "כניסה לאזור ניהול (מנהלים)",
+                savedCustTitle: "👥 לקוחות שמורים בסניף בענן",
+                backupBtn: "💾 גיבוי לסניף",
+                restoreBtn: "📂 שחזור לסניף",
+                loadingCloud: "טוען לקוחות מהענן...",
+                branchLabel: "שלום סניפי:",
+                offlineMode: "מצב אופליין",
+                changeBranchBtn: "שנה סניף ידנית",
+                formTitle: "פרטי משלוח חדש",
+                copySummaryBtn: "📋 העתק סיכום",
+                clearFormBtn: "ניקוי טופס",
+                quickWarehouseTitle: "⚡ מחסן מהיר (לחיצה מהירה להוספה):",
+                custNameLabel: "שם לקוח",
+                streetLabel: "רחוב ומספר בניין",
+                cityLabel: "עיר",
+                apartmentLabel: "מספר דירה",
+                floorLabel: "מספר קומה",
+                phoneLabel: "טלפון נייד",
+                boxesLabel: "כמות ארגזים (עותקים)",
+                productLabel: "מוצרים (חיפוש או סלנג חכם)",
+                selectedProductsLabel: "מוצרים שנבחרו להזמנה:",
+                notesLabel: "הערות למשלוח",
+                addQueueBtn: "הוסף לתור ההדפסה",
+                previewTitle: "תצוגה מקדימה חיה",
+                prevName: "שם:",
+                prevStreet: "כתובת:",
+                prevApt: "דירה:",
+                prevFloor: "קומה:",
+                prevCity: "עיר:",
+                prevPhone: "טלפון:",
+                prevExtras: "תוספות:",
+                queueHeader: "תור הדפסה מרוכז",
+                clearQueueBtn: "ניקוי תור",
+                emptyQueue: "התור ריק. הוסף משלוחים להדפסה.",
+                printBtnText: "הדפס תור (4 בעמוד)",
+                manifestBtnText: "גיליון מסלול לשליח",
+                modalBranchTitle: "בחירת סניף ידנית",
+                modalBranchDesc: "בחר את הסניף שאליו ברצונך להתחבר כעת:",
+                cancelBtn: "ביטול",
+                saveBranchBtn: "שמור סניף",
+                addOrderBtn: "הוסף להזמנה",
+                wrongBranchBtn: "זה לא הסניף שלי?"
+            },
+            yi: {
+                pageTitle: "פירערשאַפט און דעליווערי – המשביר לעמו",
+                hdrTitle: "דעליווערי פירערשאַפט און דרוק",
+                hdrSubtitle: "קלוגע פירערשאַפט סיסטעם",
+                adminBtn: "מנהלים קאָנטראָל",
+                savedCustTitle: "👥 געהיטענע קונהס אין וואָלקן",
+                backupBtn: "💾 באַקאַפּ",
+                restoreBtn: "📂 צוריקשטעלן",
+                loadingCloud: "לאָדנדיק קונהס...",
+                branchLabel: "שלום בראַנטש:",
+                offlineMode: "אָפפלינע מאָדע",
+                changeBranchBtn: "ביטע בייטן בראַנטש",
+                formTitle: "נייע דעליווערי פרטים",
+                copySummaryBtn: "📋 קאָפּירן סיכום",
+                clearFormBtn: "רייניקן פאָרם",
+                quickWarehouseTitle: "⚡ גיך וואַרעהאָוסע:",
+                custNameLabel: "קונה נאָמען",
+                streetLabel: "גאס און נומער",
+                cityLabel: "שטאָט",
+                apartmentLabel: "דירה נומער",
+                floorLabel: "שטאָק",
+                phoneLabel: "טעלעפאָן",
+                boxesLabel: "קעסטלעך צאָל",
+                productLabel: "פּראָדוקטן (קלוגע זוך)",
+                selectedProductsLabel: "אויסגעקליבענע פּראָדוקטן:",
+                notesLabel: "באַמערקונגען",
+                addQueueBtn: "לייג צו צום ריי",
+                previewTitle: "לעבעדיגע פריוויע",
+                prevName: "נאָמען:",
+                prevStreet: "אדרעס:",
+                prevApt: "דירה:",
+                prevFloor: "שטאָק:",
+                prevCity: "שטאָט:",
+                prevPhone: "טעלעפאָן:",
+                prevExtras: "צוגאב:",
+                queueHeader: "דרוק ריי",
+                clearQueueBtn: "רייניקן ריי",
+                emptyQueue: "דער ריי איז ליידיק.",
+                printBtnText: "דרוק ריי (4 אין בלאַט)",
+                manifestBtnText: "דרייווער בלאַט",
+                modalBranchTitle: "אויסקלייַבן בראַנטש",
+                modalBranchDesc: "קלייַבן אייער בראַנטש:",
+                cancelBtn: "באַטייલטיקן",
+                saveBranchBtn: "היטן בראַנטש",
+                addOrderBtn: "לייג צו",
+                wrongBranchBtn: "איז דאָס נישט אייער בראַנטש?"
+            },
+            en: {
+                pageTitle: "Delivery Management & Printing – HaMashbir",
+                hdrTitle: "Delivery Management & Printing",
+                hdrSubtitle: "Advanced Smart Dispatch System",
+                adminBtn: "Admin Dashboard",
+                savedCustTitle: "👥 Branch Saved Customers (Cloud)",
+                backupBtn: "💾 Branch Backup",
+                restoreBtn: "📂 Restore Branch",
+                loadingCloud: "Loading customers...",
+                branchLabel: "Active Branch:",
+                offlineMode: "Offline Mode",
+                changeBranchBtn: "Change Branch Manually",
+                formTitle: "New Delivery Details",
+                copySummaryBtn: "📋 Copy Summary",
+                clearFormBtn: "Clear Form",
+                quickWarehouseTitle: "⚡ Quick Warehouse (Tap to Add):",
+                custNameLabel: "Customer Name",
+                streetLabel: "Street & Building Number",
+                cityLabel: "City",
+                apartmentLabel: "Apartment Number",
+                floorLabel: "Floor",
+                phoneLabel: "Mobile Phone",
+                boxesLabel: "Boxes Count (Copies)",
+                productLabel: "Products (Search or Smart Slang)",
+                selectedProductsLabel: "Selected Products for Order:",
+                notesLabel: "Delivery Notes",
+                addQueueBtn: "Add to Print Queue",
+                previewTitle: "Live Preview",
+                prevName: "Name:",
+                prevStreet: "Address:",
+                prevApt: "Apt:",
+                prevFloor: "Floor:",
+                prevCity: "City:",
+                prevPhone: "Phone:",
+                prevExtras: "Extras:",
+                queueHeader: "Print Queue",
+                clearQueueBtn: "Clear Queue",
+                emptyQueue: "Queue is empty. Add deliveries.",
+                printBtnText: "Print Queue (4 per page)",
+                manifestBtnText: "Driver Manifest Sheet",
+                modalBranchTitle: "Manual Branch Selection",
+                modalBranchDesc: "Select your active branch:",
+                cancelBtn: "Cancel",
+                saveBranchBtn: "Save Branch",
+                addOrderBtn: "Add to Order",
+                wrongBranchBtn: "Not your branch?"
+            }
+        };
+
+        let currentLang = 'he';
+        window.changeLanguage = function(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.he;
+            document.getElementById('html-root').setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+            document.getElementById('page-title').innerText = t.pageTitle;
+            document.getElementById('hdr-title').innerText = t.hdrTitle;
+            document.getElementById('hdr-subtitle').innerText = t.hdrSubtitle;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerText = t[key];
+            });
+            localStorage.setItem('mashbir_lang', lang);
+        }
 
         const branches = [
             { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק' },
@@ -389,8 +591,10 @@
         let printQueueItems = [];
         let selectedProducts = [];
         let activeProductToAdd = "";
+        let allCustomersGlobalCache = [];
 
-        const productCatalog = [
+        // החזרנו את כל הקטלוג המלא המקורי במלואו!
+        let productCatalog = [
             "קוקה קולה רגיל (שישייה)", "קוקה קולה זירו (שישייה)", "קוקה קולה ליטר רגיל (רביעה)", "קוקה קולה ליטר זירו (רביעה)",
             "פפסי רגיל (שישייה)", "פפסי זירו (שישייה)", "סבן אפ רגיל (שישייה)", "סבן אפ זירו (שישייה)",
             "ספרייט רגיל (שישייה)", "ספרייט זירו (שישייה)", "מרינדה (שישייה)", "פאנטה (שישייה)",
@@ -417,6 +621,19 @@
             "סופט נייר טואלט חתוך", "סושי 6 מגבות הפלא", "סנו מגבות הפלא סושי 12 גלילים", "סנו סושי מגבות הפלא 8 יח"
         ];
 
+        const slangDictionary = {
+            "טישו": "נייר טואלט 32 גלילים",
+            "נייר": "נייר טואלט 32 גלילים",
+            "נייר טואלט": "נייר טואלט 32 גלילים",
+            "קולה": "קוקה קולה רגיל (שישייה)",
+            "קוקה": "קוקה קולה רגיל (שישייה)",
+            "זירו": "קוקה קולה זירו (שישייה)",
+            "סודה": "סודה טמפו (שישייה)",
+            "מים": "נביעות - שישיית חצי ליטר (0.5L)",
+            "חלב": "חלב (שקית / קררטון)",
+            "מגבות": "מגבות הפלא 4 שכבות 'סושי'"
+        };
+
         const customerNameInput = document.getElementById('customer-name');
         const autocompleteList = document.getElementById('autocomplete-list');
         const streetInput = document.getElementById('street');
@@ -433,6 +650,48 @@
         const qtyModal = document.getElementById('qty-modal');
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalQtyInput = document.getElementById('modal-qty-input');
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 500);
+            }, 800);
+            checkOnlineStatus();
+
+            let savedLang = localStorage.getItem('mashbir_lang');
+            if (savedLang && translations[savedLang]) {
+                document.getElementById('lang-select').value = savedLang;
+                changeLanguage(savedLang);
+            }
+        });
+
+        window.addEventListener('online', checkOnlineStatus);
+        window.addEventListener('offline', checkOnlineStatus);
+
+        function checkOnlineStatus() {
+            const badge = document.getElementById('offline-badge');
+            if (!navigator.onLine) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        window.toggleDarkMode = function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('mashbir_dark', document.body.classList.contains('dark-mode'));
+        }
+
+        if(localStorage.getItem('mashbir_dark') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        function safeVibrate(pattern) {
+            if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
+                try { navigator.vibrate(pattern); } catch(e) {}
+            }
+        }
 
         window.toggleMenu = function() {
             const menu = document.getElementById('overflow-menu');
@@ -451,7 +710,7 @@
                     localStorage.setItem('mashbir_admin_pass', newPass);
                     alert("הסיסמה שונתה בהצלחה!");
                 } else {
-                    alert("סיסמה קצרה מדי. הפעולה בוטלה.");
+                    alert("סיסמה קצרה מדי.");
                 }
             } else if (current) {
                 alert("סיסמה שגויה.");
@@ -464,41 +723,7 @@
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 document.getElementById('main-workspace').classList.add('hidden');
                 document.getElementById('overflow-menu').classList.add('hidden');
-                
-                try {
-                    const querySnapshot = await getDocs(collection(db, "branch_customers"));
-                    document.getElementById('admin-total-customers').innerText = querySnapshot.size;
-                    
-                    let allCustomersHTML = '';
-                    let totalPrints = 0;
-                    
-                    querySnapshot.forEach(doc => {
-                        let data = doc.data();
-                        let branchName = branches.find(b => b.id === data.branchId)?.name || data.branchId;
-                        let prints = data.printCount || 0;
-                        totalPrints += prints;
-                        
-                        allCustomersHTML += `
-                            <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg border border-gray-600">
-                                <div>
-                                    <p class="font-bold text-white">${data.customerName}</p>
-                                    <p class="text-xs text-gray-400">סניף: ${branchName} | כתובת: ${data.street}, ${data.city}</p>
-                                </div>
-                                <div class="text-center bg-gray-800 px-3 py-1 rounded-lg">
-                                    <p class="text-xs text-gray-400">הדפסות</p>
-                                    <p class="font-black text-blue-400">${prints}</p>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    document.getElementById('admin-total-prints').innerText = totalPrints;
-                    document.getElementById('admin-all-customers-list').innerHTML = allCustomersHTML || '<p class="text-gray-400">אין לקוחות במערכת.</p>';
-                    
-                } catch (e) {
-                    document.getElementById('admin-total-customers').innerText = "שגיאה";
-                    document.getElementById('admin-total-prints').innerText = "שגיאה";
-                }
+                loadAdminData();
             } else if(password) {
                 alert("סיסמה שגויה.");
             }
@@ -507,6 +732,99 @@
         window.closeAdminArea = function() {
             document.getElementById('admin-dashboard').classList.add('hidden');
             document.getElementById('main-workspace').classList.remove('hidden');
+        }
+
+        async function loadAdminData() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "branch_customers"));
+                allCustomersGlobalCache = [];
+                querySnapshot.forEach(doc => allCustomersGlobalCache.push(doc.data()));
+                renderAdminStats();
+                loadLiveTicker();
+            } catch (e) {
+                document.getElementById('admin-total-customers').innerText = "שגיאה באופליין";
+            }
+        }
+
+        async function loadLiveTicker() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "activity_logs"));
+                let tickerHTML = '';
+                let logs = [];
+                querySnapshot.forEach(doc => logs.push(doc.data()));
+                logs.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                
+                logs.slice(0, 10).forEach(log => {
+                    let bName = branches.find(b => b.id === log.branchId)?.name || log.branchId;
+                    tickerHTML += `<p>• [${bName}] <strong>${log.action}</strong> עבור לקוח: ${log.customerName} (${new Date().toLocaleTimeString('he-IL')})</p>`;
+                });
+                document.getElementById('live-activity-ticker').innerHTML = tickerHTML || '<p class="text-gray-400">אין פעילות רשומה לאחרונה.</p>';
+            } catch(e) {
+                document.getElementById('live-activity-ticker').innerHTML = '<p class="text-gray-400">פיד חי פעיל במצב מקומי.</p>';
+            }
+        }
+
+        async function logActivityToCloud(action, customerName) {
+            try {
+                await addDoc(collection(db, "activity_logs"), {
+                    branchId: currentBranchId,
+                    action: action,
+                    customerName: customerName,
+                    timestamp: serverTimestamp()
+                });
+            } catch(e) {}
+        }
+
+        window.filterAdminStats = function() {
+            renderAdminStats();
+        }
+
+        function renderAdminStats() {
+            const filter = document.getElementById('admin-date-filter').value;
+            const now = new Date();
+            
+            let filtered = allCustomersGlobalCache.filter(item => {
+                if (filter === 'all' || !item.updatedAt) return true;
+                let itemDate = item.updatedAt.toDate ? item.updatedAt.toDate() : new Date(item.updatedAt);
+                let diffDays = (now - itemDate) / (1000 * 60 * 60 * 24);
+                if (filter === 'today') return diffDays <= 1;
+                if (filter === 'week') return diffDays <= 7;
+                if (filter === 'month') return diffDays <= 30;
+                return true;
+            });
+
+            document.getElementById('admin-total-customers').innerText = filtered.length;
+            let totalPrints = filtered.reduce((acc, curr) => acc + (curr.printCount || 0), 0);
+            document.getElementById('admin-total-prints').innerText = totalPrints;
+
+            let branchStats = {};
+            filtered.forEach(item => {
+                let bId = item.branchId || 'unknown';
+                if(!branchStats[bId]) branchStats[bId] = { prints: 0, customers: 0 };
+                branchStats[bId].prints += (item.printCount || 0);
+                branchStats[bId].customers += 1;
+            });
+
+            let lbHTML = '';
+            for(let bId in branchStats) {
+                let bName = branches.find(b => b.id === bId)?.name || bId;
+                lbHTML += `
+                    <div class="bg-gray-700 p-3 rounded-xl border border-gray-600">
+                        <p class="font-bold text-white">${bName}</p>
+                        <p class="text-xs text-gray-300 mt-1">הדפסות: <span class="text-blue-400 font-bold">${branchStats[bId].prints}</span> | לקוחות: <span class="text-red-400 font-bold">${branchStats[bId].customers}</span></p>
+                    </div>
+                `;
+            }
+            document.getElementById('admin-branch-leaderboard').innerHTML = lbHTML || '<p class="text-gray-400">אין נתונים להצגה.</p>';
+        }
+
+        window.addNewCatalogProduct = function() {
+            let val = document.getElementById('new-catalog-item').value.trim();
+            if(val) {
+                productCatalog.push(val);
+                alert(`המוצר "${val}" נוסף בהצלחה לקטלוג!`);
+                document.getElementById('new-catalog-item').value = '';
+            }
         }
 
         function initAppBranches() {
@@ -524,7 +842,6 @@
                 setBranch(savedManualBranch);
                 return;
             }
-
             setBranch('bnei_brak_jerusalem9');
         }
 
@@ -560,53 +877,55 @@
         async function loadCustomersFromCloud() {
             customers = {};
             const container = document.getElementById('saved-customers-list');
-            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>';
+            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">טוען לקוחות...</p>';
             try {
-                const q = query(collection(db, "branch_customers"), where("branchId", "==", currentBranchId));
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    customers[data.customerName] = {
-                        street: data.street,
-                        city: data.city,
-                        apartment: data.apartment,
-                        floor: data.floor,
-                        phone: data.phone,
-                        notes: data.notes
-                    };
-                });
+                if (navigator.onLine) {
+                    const q = query(collection(db, "branch_customers"), where("branchId", "==", currentBranchId));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach((docSnap) => {
+                        const data = docSnap.data();
+                        customers[data.customerName] = data;
+                    });
+                    localStorage.setItem(`mashbir_cache_${currentBranchId}`, JSON.stringify(customers));
+                } else {
+                    let cached = localStorage.getItem(`mashbir_cache_${currentBranchId}`);
+                    if (cached) customers = JSON.parse(cached);
+                }
                 updateSavedCustomersUI();
             } catch (e) {
-                console.error("שגיאה בטעינת לקוחות:", e);
-                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בטעינה. ודא שחוקי Firestore פתוחים.</p>';
+                let cached = localStorage.getItem(`mashbir_cache_${currentBranchId}`);
+                if (cached) customers = JSON.parse(cached);
+                updateSavedCustomersUI();
             }
         }
 
         async function saveCustomerToCloud(name, data) {
-            try {
-                await setDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`), {
-                    branchId: currentBranchId,
-                    customerName: name,
-                    ...data,
-                    updatedAt: new Date()
-                }, { merge: true }); 
-                customers[name] = data;
-                updateSavedCustomersUI();
-            } catch (e) {
-                console.error("שגיאה בשמירת לקוח בענן:", e);
-                alert("שגיאה בשמירת הלקוח לענן.");
+            customers[name] = { branchId: currentBranchId, customerName: name, ...data, updatedAt: new Date() };
+            localStorage.setItem(`mashbir_cache_${currentBranchId}`, JSON.stringify(customers));
+            
+            if (navigator.onLine) {
+                try {
+                    await setDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`), {
+                        branchId: currentBranchId,
+                        customerName: name,
+                        ...data,
+                        updatedAt: new Date()
+                    }, { merge: true }); 
+                } catch (e) {}
             }
+            updateSavedCustomersUI();
         }
 
         window.deleteCustomer = async function(name) {
-            if(!confirm(`האם למחוק את הלקוח ${name} מהענן?`)) return;
+            if(!confirm(`האם למחוק את הלקוח ${name}?`)) return;
+            delete customers[name];
+            localStorage.setItem(`mashbir_cache_${currentBranchId}`, JSON.stringify(customers));
             try {
-                await deleteDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`));
-                delete customers[name];
-                updateSavedCustomersUI();
-            } catch (e) {
-                console.error("שגיאה במחיקת לקוח:", e);
-            }
+                if (navigator.onLine) {
+                    await deleteDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`));
+                }
+            } catch (e) {}
+            updateSavedCustomersUI();
         }
 
         customerNameInput.addEventListener('input', function() {
@@ -625,7 +944,7 @@
 
             matches.forEach(name => {
                 const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b border-gray-100 last:border-0';
+                div.className = 'p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer text-sm font-medium border-b border-gray-100 dark:border-gray-700';
                 div.textContent = name;
                 div.onclick = () => {
                     fillCustomerData(name);
@@ -636,12 +955,52 @@
             autocompleteList.classList.remove('hidden');
         });
 
+        window.startVoiceSearch = function() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("הדפדפן שלך אינו תומך בחיפוש קולי.");
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'he-IL';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                let speechResult = event.results[0][0].transcript;
+                productSearchInput.value = speechResult;
+                filterProducts();
+            };
+        }
+
+        window.copyDeliverySummary = function() {
+            let name = customerNameInput.value.trim() || 'ללא שם';
+            let street = streetInput.value.trim() || 'ללא כתובת';
+            let city = cityInput.value.trim() || 'בני ברק';
+            let phone = phoneInput.value.trim() || 'ללא טלפון';
+            let extras = extrasInput.value.trim() || 'אין';
+            let notes = notesInput.value.trim() || 'אין';
+
+            let text = `📦 פרטי משלוח - המשביר לעמו:\nשם: ${name}\nכתובת: ${street}, ${city}\nטלפון: ${phone}\nמוצרים: ${extras}\nהערות: ${notes}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert("פרטי המשלוח הועתקו ללוח בהצלחה!");
+            });
+        }
+
+        window.quickAddProduct = function(productName) {
+            openQtyModal(productName);
+        }
+
         window.filterProducts = function() {
-            const val = productSearchInput.value.trim().toLowerCase();
+            let val = productSearchInput.value.trim().toLowerCase();
             productSuggestions.innerHTML = '';
             if (!val) {
                 productSuggestions.classList.add('hidden');
                 return;
+            }
+
+            if (slangDictionary[val]) {
+                val = slangDictionary[val].toLowerCase();
             }
 
             const matches = productCatalog.filter(p => p.toLowerCase().includes(val));
@@ -658,7 +1017,7 @@
             } else {
                 matches.forEach(prod => {
                     const div = document.createElement('div');
-                    div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b border-gray-100 last:border-0 flex justify-between items-center';
+                    div.className = 'p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer text-sm font-medium border-b border-gray-100 dark:border-gray-700 flex justify-between items-center';
                     div.innerHTML = `<span>📦 ${prod}</span> <span class="text-xs text-red-600 font-bold bg-red-50 px-2 py-1 rounded-lg">בחר</span>`;
                     div.onclick = () => {
                         openQtyModal(prod);
@@ -724,7 +1083,6 @@
 
             selectedProducts.forEach((item, idx) => {
                 stringSummaryParts.push(`${item.qty} יח' ${item.name}`);
-                
                 const chip = document.createElement('div');
                 chip.className = 'flex items-center justify-between bg-white border border-red-300 text-gray-900 px-3 py-2 rounded-xl text-sm font-bold shadow-sm';
                 chip.innerHTML = `
@@ -752,7 +1110,6 @@
             phoneInput.value = data.phone || '';
             notesInput.value = data.notes || '';
             updatePreview();
-            
             document.getElementById('overflow-menu').classList.add('hidden');
         }
 
@@ -820,6 +1177,8 @@
                 return;
             }
 
+            safeVibrate(50);
+
             const customerData = {
                 street: streetInput.value.trim(),
                 city: cityInput.value.trim(),
@@ -830,10 +1189,10 @@
             };
 
             await saveCustomerToCloud(name, customerData);
+            logActivityToCloud('הוספה לתור', name);
 
             const item = {
-                name,
-                street,
+                name, street,
                 city: cityInput.value.trim(),
                 apartment: apartmentInput.value.trim(),
                 floor: floorInput.value.trim(),
@@ -851,9 +1210,11 @@
         function updateQueueUI() {
             const container = document.getElementById('print-queue-list');
             document.getElementById('queue-count').textContent = printQueueItems.length;
-            document.getElementById('print-btn').disabled = printQueueItems.length === 0;
+            const hasItems = printQueueItems.length > 0;
+            document.getElementById('print-btn').disabled = !hasItems;
+            document.getElementById('manifest-btn').disabled = !hasItems;
 
-            if (printQueueItems.length === 0) {
+            if (!hasItems) {
                 container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">התור ריק. הוסף משלוחים להדפסה.</p>';
                 return;
             }
@@ -887,27 +1248,25 @@
             const toast = document.getElementById('print-toast');
             toast.innerHTML = `<span>🖨️</span> ${message}`;
             toast.classList.remove('hidden');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 3000);
+            setTimeout(() => { toast.classList.add('hidden'); }, 3000);
         }
 
         async function updatePrintStatsInCloud() {
             for (const item of printQueueItems) {
                 try {
                     const docRef = doc(db, "branch_customers", `${currentBranchId}_${item.name}`);
-                    await updateDoc(docRef, {
-                        printCount: increment(item.copies)
-                    });
-                } catch (e) {
-                }
+                    await updateDoc(docRef, { printCount: increment(item.copies) });
+                    logActivityToCloud('הדפסה', item.name);
+                } catch (e) {}
             }
         }
 
         window.printQueue = async function() {
             if (printQueueItems.length === 0) return;
-            showToast("מכין עמודי הדפסה מהאתר ומעדכן סטטיסטיקות...");
+            showToast("מכין עמודי הדפסה ומפעיל אנימציה...");
             
+            try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); } catch(e){}
+
             updatePrintStatsInCloud();
 
             let allLabelsHTML = [];
@@ -916,51 +1275,36 @@
                 for (let i = totalCopies; i >= 1; i--) {
                     allLabelsHTML.push(`
                         <div style="border: 2px dashed #374151; width: 105mm; height: 148.5mm; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 14px 14px 14px; background: #fff; box-sizing: border-box; position: relative;">
-                            
                             <div style="position: absolute; top: 14px; left: 14px; background: #f3f4f6; color: #111827; font-size: 13px; font-weight: 900; padding: 3px 10px; border-radius: 9999px; border: 2px solid #9ca3af;">
                                 ארגז ${i} מתוך ${totalCopies}
                             </div>
-
                             <div style="text-align: center; margin-top: 10px;">
                                 <img src="Logo.jpg" alt="משביר לעמו" style="height: 60px; width: auto; object-fit: contain; margin: 0 auto;">
                             </div>
-                            
                             <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">שם:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 19px; font-weight: 900; color: #111827;">${item.name}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">שם:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 19px; font-weight: 900; color: #111827;">${item.name}</span></div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">כתובת:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.street}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">כתובת:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 16px; font-weight: bold; color: #111827;">${item.street}</span></div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">דירה:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.apartment || '-'}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">דירה:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 16px; font-weight: bold; color: #111827;">${item.apartment || '-'}</span></div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">קומה:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 16px; font-weight: bold; color: #111827;">${item.floor || '-'}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">קומה:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 16px; font-weight: bold; color: #111827;">${item.floor || '-'}</span></div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">עיר:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 16px; font-weight: bold; color: #1f2937;">${item.city}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">עיר:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 16px; font-weight: bold; color: #1f2937;">${item.city}</span></div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px; white-space: nowrap;">טלפון:</span>
-                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;">
-                                        <span style="font-size: 18px; font-weight: 900; color: #111827;">${item.phone}</span>
-                                    </div>
+                                    <span style="font-size: 13px; font-weight: bold; color: #4b5563; width: 50px;">טלפון:</span>
+                                    <div style="flex: 1; border-bottom: 2px solid #9ca3af; padding-bottom: 2px;"><span style="font-size: 18px; font-weight: 900; color: #111827;">${item.phone}</span></div>
                                 </div>
                                 ${item.extras ? `<div style="font-size: 15px; font-weight: 900; background: #fee2e2; color: #991b1b; padding: 6px 8px; border-radius: 8px; border: 2px solid #fecaca; margin-top: 4px;">תוספות: ${item.extras}</div>` : ''}
                                 ${item.notes ? `<div style="font-size: 13px; font-weight: bold; color: #374151; margin-top: 2px;">הערות: ${item.notes}</div>` : ''}
@@ -973,7 +1317,6 @@
 
             const printSection = document.getElementById('print-section');
             printSection.innerHTML = '';
-
             let pagesContent = '';
             for (let i = 0; i < allLabelsHTML.length; i += 4) {
                 const chunk = allLabelsHTML.slice(i, i + 4);
@@ -987,6 +1330,62 @@
             }
 
             printSection.innerHTML = pagesContent;
+            setTimeout(() => { window.print(); }, 400);
+        }
+
+        window.printDriverManifest = function() {
+            if (printQueueItems.length === 0) return;
+            
+            let rowsHTML = '';
+            printQueueItems.forEach((item, idx) => {
+                rowsHTML += `
+                    <tr>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${idx + 1}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${item.name}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">${item.street}, ${item.city} (ק': ${item.floor || '-'}, ד': ${item.apartment || '-'})</td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: center; font-weight: bold;">${item.phone}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">${item.extras || 'אין'}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${item.copies}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                    </tr>
+                `;
+            });
+
+            let branchNameText = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
+            let dateStr = new Date().toLocaleDateString('he-IL');
+
+            let manifestHTML = `
+                <div style="font-family: 'Heebo', sans-serif; direction: rtl; padding: 20px; background: white; color: black; width: 210mm; min-height: 297mm; box-sizing: border-box;">
+                    <div style="text-align: center; border-bottom: 3px solid #dc2626; padding-bottom: 10px; margin-bottom: 20px;">
+                        <img src="Logo.jpg" style="height: 50px; object-fit: contain; margin-bottom: 5px;">
+                        <h1 style="margin: 0; font-size: 22px; font-weight: 900;">גיליון מסלול יומי לשליח</h1>
+                        <p style="margin: 5px 0 0 0; font-size: 14px; color: #555;">סניף: <strong>${branchNameText}</strong> | תאריך: <strong>${dateStr}</strong></p>
+                    </div>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #f3f4f6;">
+                                <th style="border: 1px solid #ccc; padding: 8px; width: 30px;">#</th>
+                                <th style="border: 1px solid #ccc; padding: 8px;">שם הלקוח</th>
+                                <th style="border: 1px solid #ccc; padding: 8px;">כתובת מלאה</th>
+                                <th style="border: 1px solid #ccc; padding: 8px; width: 90px;">טלפון</th>
+                                <th style="border: 1px solid #ccc; padding: 8px;">מוצרים ותוספות</th>
+                                <th style="border: 1px solid #ccc; padding: 8px; width: 50px;">ארגזים</th>
+                                <th style="border: 1px solid #ccc; padding: 8px; width: 70px;">חתימת מסירה</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHTML}
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 14px;">
+                        <p>שם השליח: _____________________</p>
+                        <p>חתימת השליח: _____________________</p>
+                    </div>
+                </div>
+            `;
+
+            const printSection = document.getElementById('print-section');
+            printSection.innerHTML = `<div class="page-break">${manifestHTML}</div>`;
             setTimeout(() => { window.print(); }, 400);
         }
 
@@ -1010,9 +1409,9 @@
                     for (const [name, data] of Object.entries(imported)) {
                         await saveCustomerToCloud(name, data);
                     }
-                    alert('הלקוחות שוחזרו בהצלחה לענן עבור סניף זה!');
+                    alert('הלקוחות שוחזרו בהצלחה!');
                 } catch(err) {
-                    alert('קובץ שגוי או פגום.');
+                    alert('קובץ שגוי.');
                 }
             };
             reader.readAsText(file);
