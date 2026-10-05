@@ -9,10 +9,10 @@
     <meta name="application-name" content="ניהול והדפסת משלוחים – המשביר לעמו">
     <meta name="theme-color" content="#dc2626">
     
-    <link rel="apple-touch-icon" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/nNGSM2px/In-Shot-20260903-221725618.jpg">
+    <link rel="apple-touch-icon" href="Logo.jpg">
+    <link rel="icon" type="image/jpeg" href="Logo.jpg">
     
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%A0%D7%99%D7%94%D7%9C%20%D7%95%D7%94%D7%93%D7%A4%D7%A1%D7%AA%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20%E2%80%93%20%D7%94%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FnNGSM2px%2FIn-Shot-20260903-221725618.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D7%A0%D7%99%D7%94%D7%9C%20%D7%95%D7%94%D7%93%D7%A4%D7%A1%D7%AA%20%D7%9E%D7%A9%D7%9C%D7%95%D7%97%D7%99%D7%9D%20%E2%80%93%20%D7%94%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22short_name%22%3A%22%D7%9E%D7%A9%D7%91%D7%99%D7%A8%20%D7%9C%D7%A2%D7%9E%D7%95%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f3f4f6%22%2C%22theme_color%22%3A%22%23dc2626%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22Logo.jpg%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -58,17 +58,40 @@
 </head>
 <body class="min-h-screen flex flex-col text-gray-800">
 
-    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-            <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
-            <div>
-                <h1 class="font-black text-lg">ניהול והדפסת משלוחים – המשביר לעמו</h1>
-                <p class="text-xs text-red-100">מערכת ניהול והפקת פתקיות משלוחים חכמה מחוברת לענן</p>
+    <header class="bg-gradient-to-r from-red-800 to-red-600 text-white shadow-lg p-4 flex flex-col items-center justify-between gap-3 relative">
+        <div class="flex items-center gap-3 w-full justify-between max-w-6xl mx-auto">
+            <div class="flex items-center gap-3">
+                <img src="Logo.jpg" alt="משביר לעמו" class="h-12 w-auto object-contain bg-white rounded-xl p-1 shadow-md">
+                <div>
+                    <h1 class="font-black text-lg">ניהול והדפסת משלוחים</h1>
+                    <p class="text-xs text-red-100 hidden sm:block">מערכת ניהול והפקת פתקיות משלוחים חכמה</p>
+                </div>
             </div>
+            
+            <button onclick="toggleMenu()" class="text-white font-black text-3xl px-2">☰</button>
         </div>
-        <button id="install-btn" style="display: none;" onclick="installApp()" class="bg-white text-red-700 hover:bg-red-50 px-4 py-2 rounded-2xl font-black text-xs shadow-md transition flex items-center gap-1.5">
-            <span>📲</span> התקן אפליקציה במחשב/נייד
-        </button>
+        
+        <div id="overflow-menu" class="hidden absolute top-full left-0 w-full bg-white text-gray-900 border-b border-gray-200 z-40 p-4 shadow-2xl flex flex-col gap-4">
+            
+            <button onclick="openAdminArea()" class="bg-red-700 text-white hover:bg-red-800 px-4 py-3 rounded-xl font-black text-sm shadow-md transition flex items-center justify-center gap-2">
+                <span>🛡️</span> כניסה לאזור ניהול (מנהלים)
+            </button>
+            
+            <hr>
+
+            <div>
+                <h3 class="text-sm font-black text-gray-800 mb-2">👥 לקוחות שמורים בסניף בענן</h3>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <button type="button" onclick="exportData()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition">💾 גיבוי לסניף</button>
+                    <button type="button" onclick="document.getElementById('import-file').click()" class="bg-gray-100 text-gray-700 font-bold py-2 rounded-xl text-xs hover:bg-gray-200 transition">📂 שחזור לסניף</button>
+                    <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
+                </div>
+                <div id="saved-customers-list" class="overflow-y-auto space-y-2 max-h-[300px] border border-gray-100 p-2 rounded-xl bg-gray-50">
+                    <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
+                </div>
+            </div>
+
+        </div>
     </header>
 
     <div class="bg-white border-b shadow-sm py-2.5 px-4">
@@ -84,7 +107,42 @@
         </div>
     </div>
 
-    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div id="admin-dashboard" class="max-w-6xl mx-auto p-4 md:p-6 hidden">
+        <div class="bg-gray-900 rounded-3xl shadow-2xl p-6 border border-gray-700 text-white">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+                <h2 class="text-2xl font-black flex items-center gap-2"><span>🛡️</span> אזור ניהול מערכת</h2>
+                <div class="flex gap-3">
+                    <button onclick="changeAdminPassword()" class="text-sm font-bold text-blue-400 hover:text-blue-300 bg-gray-800 px-3 py-1 rounded-xl">🔑 שנה סיסמה</button>
+                    <button onclick="closeAdminArea()" class="text-sm font-bold text-gray-400 hover:text-white bg-gray-800 px-3 py-1 rounded-xl">סגור X</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-gray-800 p-4 rounded-2xl text-center border border-gray-700">
+                    <p class="text-gray-400 text-sm font-bold">סך הכל לקוחות רשומים (ארצי)</p>
+                    <p id="admin-total-customers" class="text-4xl font-black text-red-500 mt-2">טוען...</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-2xl text-center border border-gray-700">
+                    <p class="text-gray-400 text-sm font-bold">סך הכל הדפסות שבוצעו במערכת</p>
+                    <p id="admin-total-prints" class="text-4xl font-black text-blue-400 mt-2">טוען...</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-2xl flex flex-col justify-center gap-2 border border-gray-700">
+                    <a href="https://console.firebase.google.com/project/_/firestore" target="_blank" class="w-full bg-blue-600 text-white font-bold py-2 rounded-xl text-center hover:bg-blue-700 transition text-sm">
+                        ☁️ מעבר לגיבויים ומסד נתונים (Firebase)
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
+                <h3 class="text-lg font-black mb-3">רשימת לקוחות ארצית (מכל הסניפים)</h3>
+                <div id="admin-all-customers-list" class="overflow-y-auto max-h-[300px] space-y-2 pr-2 custom-scrollbar">
+                    <p class="text-sm text-gray-400">טוען לקוחות מכל הארץ...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-workspace" class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl p-6 flex flex-col justify-between border border-gray-100">
             <div>
@@ -144,18 +202,18 @@
                     </div>
 
                     <div class="relative">
-                        <label class="block text-sm font-bold text-gray-700 mb-1">שישיות ותוספות חיצוניות (חפש מוצר מהקטלוג)</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">שישיות ונייר טואלט (חיפוש מהקטלוג)</label>
                         <div class="flex gap-2">
                             <input type="text" id="product-search" autocomplete="off" oninput="filterProducts()"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-red-500 focus:bg-white focus:outline-none transition" 
-                                placeholder="הקלד לחיפוש מהיר מהקטלוג הענק...">
+                                placeholder="הקלד לחיפוש שתייה או נייר טואלט...">
                         </div>
                         <div id="product-suggestions" class="absolute z-30 w-full bg-white border border-gray-200 rounded-2xl shadow-2xl mt-1 max-h-52 overflow-y-auto hidden"></div>
                     </div>
 
                     <div id="selected-extras-wrapper" class="hidden">
                         <label class="block text-xs font-bold text-gray-500 mb-1">מוצרים שנבחרו להזמנה:</label>
-                        <div id="selected-extras-chips" class="flex flex-wrap gap-2 p-2 bg-red-50 rounded-2xl border border-red-200"></div>
+                        <div id="selected-extras-chips" class="flex flex-col gap-2 p-3 bg-red-50 rounded-2xl border border-red-200"></div>
                     </div>
                     <input type="hidden" id="extras" value="">
 
@@ -172,22 +230,11 @@
                     class="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-black py-4 rounded-2xl shadow-lg hover:from-red-700 hover:to-red-800 transition transform active:scale-98 flex items-center justify-center gap-2 text-lg">
                     <span>➕</span> הוסף לתור ההדפסה
                 </button>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="exportData()"
-                        class="bg-gray-100 text-gray-700 font-bold py-2.5 rounded-2xl text-sm hover:bg-gray-200 transition">
-                        💾 גיבוי לקוחות
-                    </button>
-                    <button type="button" onclick="document.getElementById('import-file').click()"
-                        class="bg-gray-100 text-gray-700 font-bold py-2.5 rounded-2xl text-sm hover:bg-gray-200 transition">
-                        📂 שחזור לקוחות
-                    </button>
-                    <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
-                </div>
             </div>
         </div>
 
-        <div class="lg:col-span-3 space-y-6 flex flex-col">
-            <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center">
+        <div class="lg:col-span-6 space-y-6 flex flex-col">
+            <div class="bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col items-center max-w-sm mx-auto w-full">
                 <h3 class="text-sm font-black text-gray-400 uppercase tracking-wider mb-3 w-full text-right">תצוגה מקדימה חיה</h3>
                 <div id="live-preview" class="w-full aspect-square border-2 border-dashed border-red-300 rounded-2xl p-4 pt-6 flex flex-col justify-between bg-white text-right relative">
                     
@@ -196,7 +243,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" class="h-16 w-auto object-contain mx-auto">
+                        <img src="Logo.jpg" alt="משביר לעמו" class="h-16 w-auto object-contain mx-auto">
                     </div>
 
                     <div class="space-y-2 my-auto text-right">
@@ -240,8 +287,6 @@
                             תוספות: <span id="prev-extras"></span>
                         </div>
                     </div>
-
-                    <div></div>
                 </div>
             </div>
 
@@ -262,13 +307,6 @@
             </div>
         </div>
 
-        <div class="lg:col-span-3 bg-white rounded-3xl shadow-xl p-5 border border-gray-100 flex flex-col">
-            <h3 class="text-base font-black text-gray-800 mb-3 border-b pb-2">לקוחות שמורים בסניף בענן</h3>
-            <div id="saved-customers-list" class="flex-1 overflow-y-auto space-y-2 max-h-[450px]">
-                <p class="text-xs text-gray-400 text-center py-4">טוען לקוחות מהענן...</p>
-            </div>
-        </div>
-
     </main>
 
     <div id="branch-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
@@ -286,7 +324,7 @@
     <div id="print-section" style="display: none;"></div>
 
     <div id="print-toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 text-sm font-bold hidden transition-all duration-300 flex items-center gap-2">
-        <span>🖨️</span> מכין עמודי הדפסה מהאתר...
+        <span>🖨️️</span> מכין עמודי הדפסה מהאתר...
     </div>
 
     <div id="qty-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
@@ -294,7 +332,7 @@
             <h3 id="modal-product-title" class="text-lg font-black text-gray-900">בחר כמות למוצר</h3>
             <div class="flex items-center justify-center gap-4">
                 <button onclick="adjustModalQty(-1)" class="w-12 h-12 bg-gray-100 text-gray-800 text-xl font-bold rounded-2xl hover:bg-gray-200 transition">-</button>
-                <input type="number" id="modal-qty-input" value="1" min="1" max="50" class="w-20 text-center py-3 text-2xl font-black bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none">
+                <input type="number" id="modal-qty-input" value="1" min="1" class="w-24 text-center py-3 text-2xl font-black bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-500">
                 <button onclick="adjustModalQty(1)" class="w-12 h-12 bg-gray-100 text-gray-800 text-xl font-bold rounded-2xl hover:bg-gray-200 transition">+</button>
             </div>
             <div class="grid grid-cols-2 gap-3 pt-2">
@@ -319,7 +357,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        import { getFirestore, collection, setDoc, doc, getDocs, deleteDoc, query, where, increment, updateDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCjDztTO4rTps9J7gF-9jL1Tb0bF_KeFXo",
@@ -335,15 +373,15 @@
         const db = getFirestore(app);
 
         const branches = [
-            { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק', lat: 32.0833, lng: 34.8333 },
-            { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק', lat: 32.0850, lng: 34.8300 },
-            { id: 'bnei_brak_abravanel101', name: 'אברבנל 101, בני ברק', lat: 32.0880, lng: 34.8320 },
-            { id: 'bnei_brak_pardo1', name: 'פרדו 1, בני ברק', lat: 32.0800, lng: 34.8280 },
-            { id: 'bnei_brak_giborey11', name: 'גיבורי ישראל 11, בני ברק', lat: 32.0790, lng: 34.8350 },
-            { id: 'bnei_brak_shevtey15', name: 'שבטי ישראל 15, בני ברק', lat: 32.0910, lng: 34.8340 },
-            { id: 'bnei_brak_rabiorakiva142', name: 'רבי עקיבא 142, בני ברק', lat: 32.0865, lng: 34.8360 },
-            { id: 'bnei_brak_nehemia7', name: 'נחמיה 7, בני ברק', lat: 32.0840, lng: 34.8310 },
-            { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד', lat: 32.0520, lng: 34.9530 }
+            { id: 'bnei_brak_jerusalem9', name: 'ירושלים 9, בני ברק' },
+            { id: 'bnei_brak_pinchas19', name: 'גבעת פנחס 19, בני ברק' },
+            { id: 'bnei_brak_abravanel101', name: 'אברבנל 101, בני ברק' },
+            { id: 'bnei_brak_pardo1', name: 'פרדו 1, בני ברק' },
+            { id: 'bnei_brak_giborey11', name: 'גיבורי ישראל 11, בני ברק' },
+            { id: 'bnei_brak_shevtey15', name: 'שבטי ישראל 15, בני ברק' },
+            { id: 'bnei_brak_rabiorakiva142', name: 'רבי עקיבא 142, בני ברק' },
+            { id: 'bnei_brak_nehemia7', name: 'נחמיה 7, בני ברק' },
+            { id: 'elad_baaley_tosefot5', name: 'בעלי התוספות 5, אלעד' }
         ];
 
         let currentBranchId = 'bnei_brak_jerusalem9';
@@ -362,7 +400,21 @@
             "סודה קריסטל / מותגים נוספים (שישייה)", "סודה עדינה / הגזה עדינה", "נביעות - שישיית חצי ליטר (0.5L)", "נביעות - שישיית ליטר וחצי (1.5L)",
             "מי עדן - שישיית חצי ליטר (0.5L)", "מי עדן - שישיית ליטר וחצי (1.5L)", "עין גדי - שישיית חצי ליטר (0.5L)", "עין גדי - שישיית ליטר וחצי (1.5L)",
             "סן בנדיטו - שישיית חצי ליטר (0.5L)", "סן בנדיטו - שישיית ליטר וחצי (1.5L)", "סן פלגרינו מים מוגזים", "מיץ ענבים תירוש (בקבוק ליטר)",
-            "מיץ תפוזים טבעי / סחוט (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)"
+            "מיץ תפוזים טבעי / סחוט (בקבוק)", "חלב (שקית / קררטון)", "משקה קקאו (שוקו)",
+            "לילי נייר טואלט לבן 32", "לילי נייר טואלט לח רביעייה KIDS", "לילי נייר טואלט לח רביעייה PURE",
+            "לילי נייר טואלט פסטל 32", 'מגבות הפלא 4 שכבות "סושי"', "מגבות הפלא כפול 6 יח' סנו",
+            "מגבות נייר 3 יח' תלת שכבתיות TNX", "מגבות נייר טאצ'", "מגבות נייר עדן שניב",
+            "נייר טואלט 18 גליל כפול שמאי", "נייר טואלט 32 גל' Berrak", "נייר טואלט 32 גליל אמוץ",
+            "נייר טואלט 32 גלילים", "נייר טואלט 32 גלילים (140 דף)", "נייר טואלט 32 גלילים שמאי",
+            "נייר טואלט 48 גלילים", "נייר טואלט אקו 30 יח' סנו", "נייר טואלט דו שכבתי 12גליל",
+            "נייר טואלט חתוך לשבת 100 יח שביעיה", "נייר טואלט חתוך עדן", "נייר טואלט טאצ 30 ג",
+            "נייר טואלט טאצ 32 גל", "נייר טואלט טאצ' 40 גלילים", "נייר טואלט טנו 32 גל' ריחוני כחול",
+            "נייר טואלט טנו 32 יח", "נייר טואלט לובלי 32 יחי' שניב", "נייר טואלט סופט ג'מבו 24 יח",
+            "נייר טואלט סנו סופט 3 שכבות 32 יח", "נייר טואלט עשירייה חתוך עדן",
+            "נייר טואלט צץ רץ 250X36 יח נרקיס תאית ר. שמאי", "נייר טואלט קומפקט 24 גליל שמאי",
+            "נייר טואלט קלינקס 1/9 לבן", "נייר טואלט קלינקס 1/9 פסטל", "נייר טואלט ריחני פמיליה 3 שכבות",
+            "נייר טואלט תלת שכבתי 24 מבושם TNX", "נייר טואלט תלת שכבתי TNX", "נייר סופג 6 יח' שמאי",
+            "סופט נייר טואלט חתוך", "סושי 6 מגבות הפלא", "סנו מגבות הפלא סושי 12 גלילים", "סנו סושי מגבות הפלא 8 יח"
         ];
 
         const customerNameInput = document.getElementById('customer-name');
@@ -381,6 +433,81 @@
         const qtyModal = document.getElementById('qty-modal');
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalQtyInput = document.getElementById('modal-qty-input');
+
+        window.toggleMenu = function() {
+            const menu = document.getElementById('overflow-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function getAdminPassword() {
+            return localStorage.getItem('mashbir_admin_pass') || "2026";
+        }
+
+        window.changeAdminPassword = function() {
+            let current = prompt("הכנס סיסמה נוכחית:");
+            if (current === getAdminPassword()) {
+                let newPass = prompt("הכנס סיסמה חדשה (מינימום 4 תווים):");
+                if (newPass && newPass.length >= 4) {
+                    localStorage.setItem('mashbir_admin_pass', newPass);
+                    alert("הסיסמה שונתה בהצלחה!");
+                } else {
+                    alert("סיסמה קצרה מדי. הפעולה בוטלה.");
+                }
+            } else if (current) {
+                alert("סיסמה שגויה.");
+            }
+        }
+
+        window.openAdminArea = async function() {
+            let password = prompt("הכנס סיסמת מנהל:");
+            if (password === getAdminPassword()) { 
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                document.getElementById('main-workspace').classList.add('hidden');
+                document.getElementById('overflow-menu').classList.add('hidden');
+                
+                try {
+                    const querySnapshot = await getDocs(collection(db, "branch_customers"));
+                    document.getElementById('admin-total-customers').innerText = querySnapshot.size;
+                    
+                    let allCustomersHTML = '';
+                    let totalPrints = 0;
+                    
+                    querySnapshot.forEach(doc => {
+                        let data = doc.data();
+                        let branchName = branches.find(b => b.id === data.branchId)?.name || data.branchId;
+                        let prints = data.printCount || 0;
+                        totalPrints += prints;
+                        
+                        allCustomersHTML += `
+                            <div class="flex justify-between items-center bg-gray-700 p-3 rounded-lg border border-gray-600">
+                                <div>
+                                    <p class="font-bold text-white">${data.customerName}</p>
+                                    <p class="text-xs text-gray-400">סניף: ${branchName} | כתובת: ${data.street}, ${data.city}</p>
+                                </div>
+                                <div class="text-center bg-gray-800 px-3 py-1 rounded-lg">
+                                    <p class="text-xs text-gray-400">הדפסות</p>
+                                    <p class="font-black text-blue-400">${prints}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    document.getElementById('admin-total-prints').innerText = totalPrints;
+                    document.getElementById('admin-all-customers-list').innerHTML = allCustomersHTML || '<p class="text-gray-400">אין לקוחות במערכת.</p>';
+                    
+                } catch (e) {
+                    document.getElementById('admin-total-customers').innerText = "שגיאה";
+                    document.getElementById('admin-total-prints').innerText = "שגיאה";
+                }
+            } else if(password) {
+                alert("סיסמה שגויה.");
+            }
+        }
+
+        window.closeAdminArea = function() {
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('main-workspace').classList.remove('hidden');
+        }
 
         function initAppBranches() {
             const select = document.getElementById('manual-branch-select');
@@ -451,7 +578,7 @@
                 updateSavedCustomersUI();
             } catch (e) {
                 console.error("שגיאה בטעינת לקוחות:", e);
-                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בטעינה. وדא שחוקי Firestore פתוחים.</p>';
+                container.innerHTML = '<p class="text-xs text-red-500 text-center py-4">שגיאה בטעינה. ודא שחוקי Firestore פתוחים.</p>';
             }
         }
 
@@ -462,17 +589,17 @@
                     customerName: name,
                     ...data,
                     updatedAt: new Date()
-                });
+                }, { merge: true }); 
                 customers[name] = data;
                 updateSavedCustomersUI();
             } catch (e) {
                 console.error("שגיאה בשמירת לקוח בענן:", e);
-                alert("שגיאה בשמירת הלקוח לענן. בדוק את חיבור האינטרנט וחוקי ה-Firebase שלך.");
+                alert("שגיאה בשמירת הלקוח לענן.");
             }
         }
 
         window.deleteCustomer = async function(name) {
-            if(!confirm(`האם למחוק את הלקוח ${name}?`)) return;
+            if(!confirm(`האם למחוק את הלקוח ${name} מהענן?`)) return;
             try {
                 await deleteDoc(doc(db, "branch_customers", `${currentBranchId}_${name}`));
                 delete customers[name];
@@ -532,7 +659,7 @@
                 matches.forEach(prod => {
                     const div = document.createElement('div');
                     div.className = 'p-3 hover:bg-gray-50 cursor-pointer text-sm font-medium border-b border-gray-100 last:border-0 flex justify-between items-center';
-                    div.innerHTML = `<span>💧🥤 ${prod}</span> <span class="text-xs text-red-600 font-bold bg-red-50 px-2 py-1 rounded-lg">בחר</span>`;
+                    div.innerHTML = `<span>📦 ${prod}</span> <span class="text-xs text-red-600 font-bold bg-red-50 px-2 py-1 rounded-lg">בחר</span>`;
                     div.onclick = () => {
                         openQtyModal(prod);
                         productSearchInput.value = '';
@@ -565,7 +692,12 @@
 
         window.confirmAddProduct = function() {
             const qty = parseInt(modalQtyInput.value) || 1;
-            selectedProducts.push({ name: activeProductToAdd, qty: qty });
+            const existingIndex = selectedProducts.findIndex(p => p.name === activeProductToAdd);
+            if(existingIndex >= 0) {
+                selectedProducts[existingIndex].qty += qty;
+            } else {
+                selectedProducts.push({ name: activeProductToAdd, qty: qty });
+            }
             closeQtyModal();
             updateSelectedProductsUI();
             updatePreview();
@@ -591,17 +723,21 @@
             let stringSummaryParts = [];
 
             selectedProducts.forEach((item, idx) => {
-                stringSummaryParts.push(`${item.name} (${item.qty})`);
+                stringSummaryParts.push(`${item.qty} יח' ${item.name}`);
+                
                 const chip = document.createElement('div');
-                chip.className = 'flex items-center gap-1.5 bg-white border border-red-300 text-red-900 px-3 py-1.5 rounded-xl text-xs font-black shadow-sm';
+                chip.className = 'flex items-center justify-between bg-white border border-red-300 text-gray-900 px-3 py-2 rounded-xl text-sm font-bold shadow-sm';
                 chip.innerHTML = `
-                    <span>💧🥤 ${item.name} <span class="text-red-600 bg-red-100 px-1.5 py-0.5 rounded-md">(${item.qty})</span></span>
-                    <button type="button" onclick="removeSelectedProduct(${idx})" class="text-gray-400 hover:text-red-600 mr-1 font-bold">✕</button>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-red-600 text-white px-2.5 py-1 rounded-lg text-lg">X${item.qty}</span>
+                        <span>${item.name}</span>
+                    </div>
+                    <button type="button" onclick="removeSelectedProduct(${idx})" class="text-gray-400 hover:text-red-600 px-2 text-lg">✕</button>
                 `;
                 chips.appendChild(chip);
             });
 
-            extrasInput.value = stringSummaryParts.join(", ");
+            extrasInput.value = stringSummaryParts.join(" | ");
             wrapper.classList.remove('hidden');
         }
 
@@ -616,6 +752,8 @@
             phoneInput.value = data.phone || '';
             notesInput.value = data.notes || '';
             updatePreview();
+            
+            document.getElementById('overflow-menu').classList.add('hidden');
         }
 
         window.updatePreview = function() {
@@ -651,13 +789,13 @@
             keys.reverse().forEach(name => {
                 const data = customers[name];
                 const item = document.createElement('div');
-                item.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-2xl hover:bg-gray-100 transition';
+                item.className = 'flex justify-between items-center p-3 bg-white border border-gray-200 rounded-xl hover:shadow-md transition';
                 item.innerHTML = `
                     <div class="cursor-pointer flex-1" onclick="fillCustomerData('${name}')">
                         <p class="font-bold text-sm text-gray-800">${name}</p>
                         <p class="text-xs text-gray-500">${data.street || ''} | ${data.phone || ''}</p>
                     </div>
-                    <button onclick="deleteCustomer('${name}')" class="text-red-400 hover:text-red-600 text-xs px-2 py-1 font-bold">מחיקה</button>
+                    <button onclick="deleteCustomer('${name}')" class="text-red-400 hover:text-red-600 text-xs px-2 py-1 font-bold bg-red-50 rounded-lg">מחיקה</button>
                 `;
                 container.appendChild(item);
             });
@@ -754,9 +892,23 @@
             }, 3000);
         }
 
-        window.printQueue = function() {
+        async function updatePrintStatsInCloud() {
+            for (const item of printQueueItems) {
+                try {
+                    const docRef = doc(db, "branch_customers", `${currentBranchId}_${item.name}`);
+                    await updateDoc(docRef, {
+                        printCount: increment(item.copies)
+                    });
+                } catch (e) {
+                }
+            }
+        }
+
+        window.printQueue = async function() {
             if (printQueueItems.length === 0) return;
-            showToast("מכין עמודי הדפסה מהאתר...");
+            showToast("מכין עמודי הדפסה מהאתר ומעדכן סטטיסטיקות...");
+            
+            updatePrintStatsInCloud();
 
             let allLabelsHTML = [];
             printQueueItems.forEach(item => {
@@ -770,7 +922,7 @@
                             </div>
 
                             <div style="text-align: center; margin-top: 10px;">
-                                <img src="https://i.ibb.co/S4hS8KnR/IMG-20260716-WA0017.png" alt="משביר לעמו" style="height: 60px; width: auto; object-fit: contain; margin: 0 auto;">
+                                <img src="Logo.jpg" alt="משביר לעמו" style="height: 60px; width: auto; object-fit: contain; margin: 0 auto;">
                             </div>
                             
                             <div style="display: flex; flex-direction: column; gap: 6px; margin: auto 0;">
@@ -810,7 +962,7 @@
                                         <span style="font-size: 18px; font-weight: 900; color: #111827;">${item.phone}</span>
                                     </div>
                                 </div>
-                                ${item.extras ? `<div style="font-size: 14px; font-weight: 900; background: #fee2e2; color: #991b1b; padding: 6px 8px; border-radius: 8px; border: 2px solid #fecaca; margin-top: 4px;">תוספות: ${item.extras}</div>` : ''}
+                                ${item.extras ? `<div style="font-size: 15px; font-weight: 900; background: #fee2e2; color: #991b1b; padding: 6px 8px; border-radius: 8px; border: 2px solid #fecaca; margin-top: 4px;">תוספות: ${item.extras}</div>` : ''}
                                 ${item.notes ? `<div style="font-size: 13px; font-weight: bold; color: #374151; margin-top: 2px;">הערות: ${item.notes}</div>` : ''}
                             </div>
                             <div></div>
